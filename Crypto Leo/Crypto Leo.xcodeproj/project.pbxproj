@@ -15,6 +15,7 @@
 		A75674692702B08A004438B5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A75674672702B08A004438B5 /* LaunchScreen.storyboard */; };
 		A75674742702B08B004438B5 /* Crypto_LeoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75674732702B08B004438B5 /* Crypto_LeoTests.swift */; };
 		A756747F2702B08B004438B5 /* Crypto_LeoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A756747E2702B08B004438B5 /* Crypto_LeoUITests.swift */; };
+		A756748E2702BD5A004438B5 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A756748D2702BD5A004438B5 /* Transaction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		A756747A2702B08B004438B5 /* Crypto LeoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Crypto LeoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A756747E2702B08B004438B5 /* Crypto_LeoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto_LeoUITests.swift; sourceTree = "<group>"; };
 		A75674802702B08B004438B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A756748D2702BD5A004438B5 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		A75674582702B088004438B5 /* Crypto Leo */ = {
 			isa = PBXGroup;
 			children = (
+				A756748C2702BC85004438B5 /* Models */,
 				A75674592702B088004438B5 /* AppDelegate.swift */,
 				A756745B2702B088004438B5 /* SceneDelegate.swift */,
 				A756745D2702B088004438B5 /* ViewController.swift */,
@@ -126,6 +129,14 @@
 				A75674802702B08B004438B5 /* Info.plist */,
 			);
 			path = "Crypto LeoUITests";
+			sourceTree = "<group>";
+		};
+		A756748C2702BC85004438B5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A756748D2702BD5A004438B5 /* Transaction.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +272,7 @@
 				A756745A2702B088004438B5 /* AppDelegate.swift in Sources */,
 				A756745C2702B088004438B5 /* SceneDelegate.swift in Sources */,
 				A75674642702B088004438B5 /* Crypto_Leo.xcdatamodeld in Sources */,
+				A756748E2702BD5A004438B5 /* Transaction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
