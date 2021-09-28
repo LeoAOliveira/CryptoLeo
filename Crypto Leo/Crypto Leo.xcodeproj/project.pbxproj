@@ -1,0 +1,615 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A756745A2702B088004438B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75674592702B088004438B5 /* AppDelegate.swift */; };
+		A756745C2702B088004438B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A756745B2702B088004438B5 /* SceneDelegate.swift */; };
+		A756745E2702B088004438B5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A756745D2702B088004438B5 /* ViewController.swift */; };
+		A75674612702B088004438B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A756745F2702B088004438B5 /* Main.storyboard */; };
+		A75674642702B088004438B5 /* Crypto_Leo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A75674622702B088004438B5 /* Crypto_Leo.xcdatamodeld */; };
+		A75674662702B08A004438B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A75674652702B08A004438B5 /* Assets.xcassets */; };
+		A75674692702B08A004438B5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A75674672702B08A004438B5 /* LaunchScreen.storyboard */; };
+		A75674742702B08B004438B5 /* Crypto_LeoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75674732702B08B004438B5 /* Crypto_LeoTests.swift */; };
+		A756747F2702B08B004438B5 /* Crypto_LeoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A756747E2702B08B004438B5 /* Crypto_LeoUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A75674702702B08B004438B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A756744E2702B088004438B5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A75674552702B088004438B5;
+			remoteInfo = "Crypto Leo";
+		};
+		A756747B2702B08B004438B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A756744E2702B088004438B5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A75674552702B088004438B5;
+			remoteInfo = "Crypto Leo";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A75674562702B088004438B5 /* Crypto Leo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crypto Leo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A75674592702B088004438B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A756745B2702B088004438B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		A756745D2702B088004438B5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A75674602702B088004438B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A75674632702B088004438B5 /* Crypto_Leo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Crypto_Leo.xcdatamodel; sourceTree = "<group>"; };
+		A75674652702B08A004438B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A75674682702B08A004438B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A756746A2702B08A004438B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A756746F2702B08B004438B5 /* Crypto LeoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Crypto LeoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A75674732702B08B004438B5 /* Crypto_LeoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto_LeoTests.swift; sourceTree = "<group>"; };
+		A75674752702B08B004438B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A756747A2702B08B004438B5 /* Crypto LeoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Crypto LeoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A756747E2702B08B004438B5 /* Crypto_LeoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto_LeoUITests.swift; sourceTree = "<group>"; };
+		A75674802702B08B004438B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A75674532702B088004438B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A756746C2702B08B004438B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A75674772702B08B004438B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A756744D2702B088004438B5 = {
+			isa = PBXGroup;
+			children = (
+				A75674582702B088004438B5 /* Crypto Leo */,
+				A75674722702B08B004438B5 /* Crypto LeoTests */,
+				A756747D2702B08B004438B5 /* Crypto LeoUITests */,
+				A75674572702B088004438B5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A75674572702B088004438B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A75674562702B088004438B5 /* Crypto Leo.app */,
+				A756746F2702B08B004438B5 /* Crypto LeoTests.xctest */,
+				A756747A2702B08B004438B5 /* Crypto LeoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A75674582702B088004438B5 /* Crypto Leo */ = {
+			isa = PBXGroup;
+			children = (
+				A75674592702B088004438B5 /* AppDelegate.swift */,
+				A756745B2702B088004438B5 /* SceneDelegate.swift */,
+				A756745D2702B088004438B5 /* ViewController.swift */,
+				A756745F2702B088004438B5 /* Main.storyboard */,
+				A75674652702B08A004438B5 /* Assets.xcassets */,
+				A75674672702B08A004438B5 /* LaunchScreen.storyboard */,
+				A756746A2702B08A004438B5 /* Info.plist */,
+				A75674622702B088004438B5 /* Crypto_Leo.xcdatamodeld */,
+			);
+			path = "Crypto Leo";
+			sourceTree = "<group>";
+		};
+		A75674722702B08B004438B5 /* Crypto LeoTests */ = {
+			isa = PBXGroup;
+			children = (
+				A75674732702B08B004438B5 /* Crypto_LeoTests.swift */,
+				A75674752702B08B004438B5 /* Info.plist */,
+			);
+			path = "Crypto LeoTests";
+			sourceTree = "<group>";
+		};
+		A756747D2702B08B004438B5 /* Crypto LeoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A756747E2702B08B004438B5 /* Crypto_LeoUITests.swift */,
+				A75674802702B08B004438B5 /* Info.plist */,
+			);
+			path = "Crypto LeoUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A75674552702B088004438B5 /* Crypto Leo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A75674832702B08B004438B5 /* Build configuration list for PBXNativeTarget "Crypto Leo" */;
+			buildPhases = (
+				A75674522702B088004438B5 /* Sources */,
+				A75674532702B088004438B5 /* Frameworks */,
+				A75674542702B088004438B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Crypto Leo";
+			productName = "Crypto Leo";
+			productReference = A75674562702B088004438B5 /* Crypto Leo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A756746E2702B08B004438B5 /* Crypto LeoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A75674862702B08B004438B5 /* Build configuration list for PBXNativeTarget "Crypto LeoTests" */;
+			buildPhases = (
+				A756746B2702B08B004438B5 /* Sources */,
+				A756746C2702B08B004438B5 /* Frameworks */,
+				A756746D2702B08B004438B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A75674712702B08B004438B5 /* PBXTargetDependency */,
+			);
+			name = "Crypto LeoTests";
+			productName = "Crypto LeoTests";
+			productReference = A756746F2702B08B004438B5 /* Crypto LeoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A75674792702B08B004438B5 /* Crypto LeoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A75674892702B08B004438B5 /* Build configuration list for PBXNativeTarget "Crypto LeoUITests" */;
+			buildPhases = (
+				A75674762702B08B004438B5 /* Sources */,
+				A75674772702B08B004438B5 /* Frameworks */,
+				A75674782702B08B004438B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A756747C2702B08B004438B5 /* PBXTargetDependency */,
+			);
+			name = "Crypto LeoUITests";
+			productName = "Crypto LeoUITests";
+			productReference = A756747A2702B08B004438B5 /* Crypto LeoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A756744E2702B088004438B5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					A75674552702B088004438B5 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					A756746E2702B08B004438B5 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = A75674552702B088004438B5;
+					};
+					A75674792702B08B004438B5 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = A75674552702B088004438B5;
+					};
+				};
+			};
+			buildConfigurationList = A75674512702B088004438B5 /* Build configuration list for PBXProject "Crypto Leo" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A756744D2702B088004438B5;
+			productRefGroup = A75674572702B088004438B5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A75674552702B088004438B5 /* Crypto Leo */,
+				A756746E2702B08B004438B5 /* Crypto LeoTests */,
+				A75674792702B08B004438B5 /* Crypto LeoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A75674542702B088004438B5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A75674692702B08A004438B5 /* LaunchScreen.storyboard in Resources */,
+				A75674662702B08A004438B5 /* Assets.xcassets in Resources */,
+				A75674612702B088004438B5 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A756746D2702B08B004438B5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A75674782702B08B004438B5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A75674522702B088004438B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A756745E2702B088004438B5 /* ViewController.swift in Sources */,
+				A756745A2702B088004438B5 /* AppDelegate.swift in Sources */,
+				A756745C2702B088004438B5 /* SceneDelegate.swift in Sources */,
+				A75674642702B088004438B5 /* Crypto_Leo.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A756746B2702B08B004438B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A75674742702B08B004438B5 /* Crypto_LeoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A75674762702B08B004438B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A756747F2702B08B004438B5 /* Crypto_LeoUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A75674712702B08B004438B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A75674552702B088004438B5 /* Crypto Leo */;
+			targetProxy = A75674702702B08B004438B5 /* PBXContainerItemProxy */;
+		};
+		A756747C2702B08B004438B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A75674552702B088004438B5 /* Crypto Leo */;
+			targetProxy = A756747B2702B08B004438B5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A756745F2702B088004438B5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A75674602702B088004438B5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A75674672702B08A004438B5 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A75674682702B08A004438B5 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A75674812702B08B004438B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A75674822702B08B004438B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A75674842702B08B004438B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4BUKN8ST5B;
+				INFOPLIST_FILE = "Crypto Leo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "LeoAOliveira.Crypto-Leo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A75674852702B08B004438B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4BUKN8ST5B;
+				INFOPLIST_FILE = "Crypto Leo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "LeoAOliveira.Crypto-Leo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A75674872702B08B004438B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4BUKN8ST5B;
+				INFOPLIST_FILE = "Crypto LeoTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "LeoAOliveira.Crypto-LeoTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Crypto Leo.app/Crypto Leo";
+			};
+			name = Debug;
+		};
+		A75674882702B08B004438B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4BUKN8ST5B;
+				INFOPLIST_FILE = "Crypto LeoTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "LeoAOliveira.Crypto-LeoTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Crypto Leo.app/Crypto Leo";
+			};
+			name = Release;
+		};
+		A756748A2702B08B004438B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4BUKN8ST5B;
+				INFOPLIST_FILE = "Crypto LeoUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "LeoAOliveira.Crypto-LeoUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Crypto Leo";
+			};
+			name = Debug;
+		};
+		A756748B2702B08B004438B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4BUKN8ST5B;
+				INFOPLIST_FILE = "Crypto LeoUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "LeoAOliveira.Crypto-LeoUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Crypto Leo";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A75674512702B088004438B5 /* Build configuration list for PBXProject "Crypto Leo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A75674812702B08B004438B5 /* Debug */,
+				A75674822702B08B004438B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A75674832702B08B004438B5 /* Build configuration list for PBXNativeTarget "Crypto Leo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A75674842702B08B004438B5 /* Debug */,
+				A75674852702B08B004438B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A75674862702B08B004438B5 /* Build configuration list for PBXNativeTarget "Crypto LeoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A75674872702B08B004438B5 /* Debug */,
+				A75674882702B08B004438B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A75674892702B08B004438B5 /* Build configuration list for PBXNativeTarget "Crypto LeoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A756748A2702B08B004438B5 /* Debug */,
+				A756748B2702B08B004438B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A75674622702B088004438B5 /* Crypto_Leo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A75674632702B088004438B5 /* Crypto_Leo.xcdatamodel */,
+			);
+			currentVersion = A75674632702B088004438B5 /* Crypto_Leo.xcdatamodel */;
+			path = Crypto_Leo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = A756744E2702B088004438B5 /* Project object */;
+}
