@@ -55,27 +55,33 @@ final class Block {
         return ledger
     }
     
+    /// Creates the string that represents the given hash.
+    /// - Parameter digest: Hash using SHA256 algorithm.
+    /// - Returns: String of the hash value.
+    private func getHashString(digest: SHA256Digest) -> String {
+        
+        let hashElements = digest.compactMap {
+            String(format: "%02x", $0)
+        }
+        
+        return hashElements.joined()
+    }
+    
     /// Creates the block's hash.
     /// - Parameter ledger: Block's ledger, composed by the index, previous hash, transaction and  reward.
     /// - Parameter nonce: Block's proof-of-work.
     /// - Returns: Block's hash using SHA256 algorithm.
-    private func createHash(ledger: String, nonce: Int) -> SHA256Digest? {
-        
+    private func createHash(ledger: String, nonce: Int) -> SHA256Digest {
         key = ledger + "Nonce: \(nonce)"
-        
-        if let keyData = key.data(using: .utf8) {
-            return SHA256.hash(data: keyData)
-        }
-        
-        return nil
+        return SHA256.hash(data: Data(key.utf8))
     }
     
     /// Verifies if the given hash is valid.
     /// - Parameter digest: Hash using SHA256 algorithm.
-    /// - Returns: Boolean describing if the hash has the specified leading zeros to be considered valid..
+    /// - Returns: Boolean describing if the hash has the specified leading zeros to be considered valid.
     private func verifyHash(digest: SHA256Digest) -> Bool {
-        let hash = digest.compactMap { String(format: "%02x", $0) }.joined()
-        return hash.hasPrefix("000")
+        let hashString = getHashString(digest: digest)
+        return hashString.hasPrefix("000")
     }
     
     /// Perform computational work to mine the block.
@@ -98,27 +104,18 @@ final class Block {
         self.previousHash = previousHash
         self.reward = reward
         
-        guard var blockHash = createHash(ledger: ledger, nonce: nonce) else {
-            completion(.failure(.failedToMineBlock))
-            return
-        }
+        var blockHash = createHash(ledger: ledger, nonce: nonce)
         
         while(!verifyHash(digest: blockHash) && availableForMining) {
-            
             nonce += 1
-            
-            guard let newHash = createHash(ledger: ledger, nonce: nonce) else {
-                completion(.failure(.failedToMineBlock))
-                return
-            }
-            
-            blockHash = newHash
+            blockHash = createHash(ledger: ledger, nonce: nonce)
         }
         
         if availableForMining {
             hash = blockHash
             availableForMining = false
             completion(.success(true))
+            
         } else {
             completion(.failure(.blockIsAlreadyMined))
         }

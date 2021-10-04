@@ -39,7 +39,24 @@ final class BlockTests: XCTestCase {
                  miner: miner,
                  privateKey: privateKey) { result in
             
+            // Result
             XCTAssertEqual(result, .success(true))
+            
+            // Index
+            XCTAssertEqual(sut.index, 1)
+            
+            // Previous Hash
+            XCTAssertNotNil(sut.previousHash)
+            
+            // Reward
+            XCTAssertNotNil(sut.reward)
+            XCTAssertNil(sut.reward?.sender)
+            XCTAssertEqual(sut.reward?.receiver, "Leo")
+            XCTAssertEqual(sut.reward?.amount, 10)
+            
+            // Hash
+            let hashString = createHashString(digest: sut.hash!)
+            XCTAssertEqual(hashString.hasPrefix("000"), true)
         }
     }
     
@@ -54,5 +71,9 @@ final class BlockTests: XCTestCase {
             
             XCTAssertEqual(result, .failure(.blockIsAlreadyMined))
         }
+    }
+    
+    private func createHashString(digest: SHA256Digest) -> String {
+        return digest.compactMap({ String(format: "%02x", $0) }).joined()
     }
 }
