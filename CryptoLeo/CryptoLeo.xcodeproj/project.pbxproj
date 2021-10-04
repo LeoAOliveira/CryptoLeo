@@ -10,7 +10,7 @@
 		A756745A2702B088004438B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75674592702B088004438B5 /* AppDelegate.swift */; };
 		A756745C2702B088004438B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A756745B2702B088004438B5 /* SceneDelegate.swift */; };
 		A756745E2702B088004438B5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A756745D2702B088004438B5 /* ViewController.swift */; };
-		A75674642702B088004438B5 /* Crypto_Leo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A75674622702B088004438B5 /* Crypto_Leo.xcdatamodeld */; };
+		A75674642702B088004438B5 /* CryptoLeo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A75674622702B088004438B5 /* CryptoLeo.xcdatamodeld */; };
 		A75674662702B08A004438B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A75674652702B08A004438B5 /* Assets.xcassets */; };
 		A75674692702B08A004438B5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A75674672702B08A004438B5 /* LaunchScreen.storyboard */; };
 		A75674742702B08B004438B5 /* BlockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75674732702B08B004438B5 /* BlockTests.swift */; };
@@ -38,20 +38,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A75674562702B088004438B5 /* Crypto Leo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crypto Leo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A75674562702B088004438B5 /* CryptoLeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoLeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A75674592702B088004438B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A756745B2702B088004438B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A756745D2702B088004438B5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A75674632702B088004438B5 /* Crypto_Leo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Crypto_Leo.xcdatamodel; sourceTree = "<group>"; };
 		A75674652702B08A004438B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A75674682702B08A004438B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A756746A2702B08A004438B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A756746F2702B08B004438B5 /* Crypto LeoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Crypto LeoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A756746A2702B08A004438B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = CryptoLeo/Info.plist; sourceTree = SOURCE_ROOT; };
+		A756746F2702B08B004438B5 /* CryptoLeoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoLeoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A75674732702B08B004438B5 /* BlockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockTests.swift; sourceTree = "<group>"; };
-		A75674752702B08B004438B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A756747A2702B08B004438B5 /* Crypto LeoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Crypto LeoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A75674752702B08B004438B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = CryptoLeoTests/Info.plist; sourceTree = SOURCE_ROOT; };
+		A756747A2702B08B004438B5 /* CryptoLeoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoLeoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A756747E2702B08B004438B5 /* Crypto_LeoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto_LeoUITests.swift; sourceTree = "<group>"; };
-		A75674802702B08B004438B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A75674802702B08B004438B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = CryptoLeoUITests/Info.plist; sourceTree = SOURCE_ROOT; };
 		A756748D2702BD5A004438B5 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		A7A2652A270A0CB300C60947 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		A7A26534270A6D9B00C60947 /* CryptoLeoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoLeoError.swift; sourceTree = "<group>"; };
@@ -85,9 +85,9 @@
 		A756744D2702B088004438B5 = {
 			isa = PBXGroup;
 			children = (
-				A75674582702B088004438B5 /* Crypto Leo */,
-				A75674722702B08B004438B5 /* Crypto LeoTests */,
-				A756747D2702B08B004438B5 /* Crypto LeoUITests */,
+				A75674582702B088004438B5 /* CryptoLeo */,
+				A75674722702B08B004438B5 /* CryptoLeoTests */,
+				A756747D2702B08B004438B5 /* CryptoLeoUITests */,
 				A75674572702B088004438B5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,14 +95,14 @@
 		A75674572702B088004438B5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A75674562702B088004438B5 /* Crypto Leo.app */,
-				A756746F2702B08B004438B5 /* Crypto LeoTests.xctest */,
-				A756747A2702B08B004438B5 /* Crypto LeoUITests.xctest */,
+				A75674562702B088004438B5 /* CryptoLeo.app */,
+				A756746F2702B08B004438B5 /* CryptoLeoTests.xctest */,
+				A756747A2702B08B004438B5 /* CryptoLeoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A75674582702B088004438B5 /* Crypto Leo */ = {
+		A75674582702B088004438B5 /* CryptoLeo */ = {
 			isa = PBXGroup;
 			children = (
 				A756748C2702BC85004438B5 /* Blockchain */,
@@ -112,27 +112,27 @@
 				A75674652702B08A004438B5 /* Assets.xcassets */,
 				A75674672702B08A004438B5 /* LaunchScreen.storyboard */,
 				A756746A2702B08A004438B5 /* Info.plist */,
-				A75674622702B088004438B5 /* Crypto_Leo.xcdatamodeld */,
+				A75674622702B088004438B5 /* CryptoLeo.xcdatamodeld */,
 			);
-			path = "Crypto Leo";
+			path = CryptoLeo;
 			sourceTree = "<group>";
 		};
-		A75674722702B08B004438B5 /* Crypto LeoTests */ = {
+		A75674722702B08B004438B5 /* CryptoLeoTests */ = {
 			isa = PBXGroup;
 			children = (
 				A75674732702B08B004438B5 /* BlockTests.swift */,
 				A75674752702B08B004438B5 /* Info.plist */,
 			);
-			path = "Crypto LeoTests";
+			path = CryptoLeoTests;
 			sourceTree = "<group>";
 		};
-		A756747D2702B08B004438B5 /* Crypto LeoUITests */ = {
+		A756747D2702B08B004438B5 /* CryptoLeoUITests */ = {
 			isa = PBXGroup;
 			children = (
 				A756747E2702B08B004438B5 /* Crypto_LeoUITests.swift */,
 				A75674802702B08B004438B5 /* Info.plist */,
 			);
-			path = "Crypto LeoUITests";
+			path = CryptoLeoUITests;
 			sourceTree = "<group>";
 		};
 		A756748C2702BC85004438B5 /* Blockchain */ = {
@@ -156,9 +156,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A75674552702B088004438B5 /* Crypto Leo */ = {
+		A75674552702B088004438B5 /* CryptoLeo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A75674832702B08B004438B5 /* Build configuration list for PBXNativeTarget "Crypto Leo" */;
+			buildConfigurationList = A75674832702B08B004438B5 /* Build configuration list for PBXNativeTarget "CryptoLeo" */;
 			buildPhases = (
 				A75674522702B088004438B5 /* Sources */,
 				A75674532702B088004438B5 /* Frameworks */,
@@ -168,14 +168,14 @@
 			);
 			dependencies = (
 			);
-			name = "Crypto Leo";
+			name = CryptoLeo;
 			productName = "Crypto Leo";
-			productReference = A75674562702B088004438B5 /* Crypto Leo.app */;
+			productReference = A75674562702B088004438B5 /* CryptoLeo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A756746E2702B08B004438B5 /* Crypto LeoTests */ = {
+		A756746E2702B08B004438B5 /* CryptoLeoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A75674862702B08B004438B5 /* Build configuration list for PBXNativeTarget "Crypto LeoTests" */;
+			buildConfigurationList = A75674862702B08B004438B5 /* Build configuration list for PBXNativeTarget "CryptoLeoTests" */;
 			buildPhases = (
 				A756746B2702B08B004438B5 /* Sources */,
 				A756746C2702B08B004438B5 /* Frameworks */,
@@ -186,14 +186,14 @@
 			dependencies = (
 				A75674712702B08B004438B5 /* PBXTargetDependency */,
 			);
-			name = "Crypto LeoTests";
+			name = CryptoLeoTests;
 			productName = "Crypto LeoTests";
-			productReference = A756746F2702B08B004438B5 /* Crypto LeoTests.xctest */;
+			productReference = A756746F2702B08B004438B5 /* CryptoLeoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		A75674792702B08B004438B5 /* Crypto LeoUITests */ = {
+		A75674792702B08B004438B5 /* CryptoLeoUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A75674892702B08B004438B5 /* Build configuration list for PBXNativeTarget "Crypto LeoUITests" */;
+			buildConfigurationList = A75674892702B08B004438B5 /* Build configuration list for PBXNativeTarget "CryptoLeoUITests" */;
 			buildPhases = (
 				A75674762702B08B004438B5 /* Sources */,
 				A75674772702B08B004438B5 /* Frameworks */,
@@ -204,9 +204,9 @@
 			dependencies = (
 				A756747C2702B08B004438B5 /* PBXTargetDependency */,
 			);
-			name = "Crypto LeoUITests";
+			name = CryptoLeoUITests;
 			productName = "Crypto LeoUITests";
-			productReference = A756747A2702B08B004438B5 /* Crypto LeoUITests.xctest */;
+			productReference = A756747A2702B08B004438B5 /* CryptoLeoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -231,7 +231,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A75674512702B088004438B5 /* Build configuration list for PBXProject "Crypto Leo" */;
+			buildConfigurationList = A75674512702B088004438B5 /* Build configuration list for PBXProject "CryptoLeo" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -244,9 +244,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A75674552702B088004438B5 /* Crypto Leo */,
-				A756746E2702B08B004438B5 /* Crypto LeoTests */,
-				A75674792702B08B004438B5 /* Crypto LeoUITests */,
+				A75674552702B088004438B5 /* CryptoLeo */,
+				A756746E2702B08B004438B5 /* CryptoLeoTests */,
+				A75674792702B08B004438B5 /* CryptoLeoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -287,7 +287,7 @@
 				A756745C2702B088004438B5 /* SceneDelegate.swift in Sources */,
 				A7A26535270A6D9B00C60947 /* CryptoLeoError.swift in Sources */,
 				A7A2652B270A0CB300C60947 /* Block.swift in Sources */,
-				A75674642702B088004438B5 /* Crypto_Leo.xcdatamodeld in Sources */,
+				A75674642702B088004438B5 /* CryptoLeo.xcdatamodeld in Sources */,
 				A756748E2702BD5A004438B5 /* Transaction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -313,12 +313,12 @@
 /* Begin PBXTargetDependency section */
 		A75674712702B08B004438B5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A75674552702B088004438B5 /* Crypto Leo */;
+			target = A75674552702B088004438B5 /* CryptoLeo */;
 			targetProxy = A75674702702B08B004438B5 /* PBXContainerItemProxy */;
 		};
 		A756747C2702B08B004438B5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A75674552702B088004438B5 /* Crypto Leo */;
+			target = A75674552702B088004438B5 /* CryptoLeo */;
 			targetProxy = A756747B2702B08B004438B5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -458,7 +458,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4BUKN8ST5B;
-				INFOPLIST_FILE = "Crypto Leo/Info.plist";
+				INFOPLIST_FILE = CryptoLeo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -478,7 +478,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4BUKN8ST5B;
-				INFOPLIST_FILE = "Crypto Leo/Info.plist";
+				INFOPLIST_FILE = CryptoLeo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -498,18 +498,18 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4BUKN8ST5B;
-				INFOPLIST_FILE = "Crypto LeoTests/Info.plist";
+				INFOPLIST_FILE = CryptoLeoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "LeoAOliveira.Crypto-LeoTests";
+				PRODUCT_BUNDLE_IDENTIFIER = LeoAOliveira.CryptoLeoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Crypto Leo.app/Crypto Leo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CryptoLeo.app/CryptoLeo";
 			};
 			name = Debug;
 		};
@@ -520,18 +520,18 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4BUKN8ST5B;
-				INFOPLIST_FILE = "Crypto LeoTests/Info.plist";
+				INFOPLIST_FILE = CryptoLeoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "LeoAOliveira.Crypto-LeoTests";
+				PRODUCT_BUNDLE_IDENTIFIER = LeoAOliveira.CryptoLeoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Crypto Leo.app/Crypto Leo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CryptoLeo.app/CryptoLeo";
 			};
 			name = Release;
 		};
@@ -541,17 +541,18 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4BUKN8ST5B;
-				INFOPLIST_FILE = "Crypto LeoUITests/Info.plist";
+				INFOPLIST_FILE = CryptoLeoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "LeoAOliveira.Crypto-LeoUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = LeoAOliveira.CryptoLeoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Crypto Leo";
+				TEST_TARGET_NAME = CryptoLeo;
 			};
 			name = Debug;
 		};
@@ -561,24 +562,25 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4BUKN8ST5B;
-				INFOPLIST_FILE = "Crypto LeoUITests/Info.plist";
+				INFOPLIST_FILE = CryptoLeoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "LeoAOliveira.Crypto-LeoUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = LeoAOliveira.CryptoLeoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Crypto Leo";
+				TEST_TARGET_NAME = CryptoLeo;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A75674512702B088004438B5 /* Build configuration list for PBXProject "Crypto Leo" */ = {
+		A75674512702B088004438B5 /* Build configuration list for PBXProject "CryptoLeo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A75674812702B08B004438B5 /* Debug */,
@@ -587,7 +589,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A75674832702B08B004438B5 /* Build configuration list for PBXNativeTarget "Crypto Leo" */ = {
+		A75674832702B08B004438B5 /* Build configuration list for PBXNativeTarget "CryptoLeo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A75674842702B08B004438B5 /* Debug */,
@@ -596,7 +598,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A75674862702B08B004438B5 /* Build configuration list for PBXNativeTarget "Crypto LeoTests" */ = {
+		A75674862702B08B004438B5 /* Build configuration list for PBXNativeTarget "CryptoLeoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A75674872702B08B004438B5 /* Debug */,
@@ -605,7 +607,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A75674892702B08B004438B5 /* Build configuration list for PBXNativeTarget "Crypto LeoUITests" */ = {
+		A75674892702B08B004438B5 /* Build configuration list for PBXNativeTarget "CryptoLeoUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A756748A2702B08B004438B5 /* Debug */,
@@ -617,13 +619,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A75674622702B088004438B5 /* Crypto_Leo.xcdatamodeld */ = {
+		A75674622702B088004438B5 /* CryptoLeo.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				A75674632702B088004438B5 /* Crypto_Leo.xcdatamodel */,
 			);
 			currentVersion = A75674632702B088004438B5 /* Crypto_Leo.xcdatamodel */;
-			path = Crypto_Leo.xcdatamodeld;
+			path = CryptoLeo.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

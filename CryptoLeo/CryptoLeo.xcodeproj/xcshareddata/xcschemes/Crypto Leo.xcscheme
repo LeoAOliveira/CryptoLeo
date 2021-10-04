@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A75674552702B088004438B5"
-               BuildableName = "Crypto Leo.app"
-               BlueprintName = "Crypto Leo"
-               ReferencedContainer = "container:Crypto Leo.xcodeproj">
+               BuildableName = "CryptoLeo.app"
+               BlueprintName = "CryptoLeo"
+               ReferencedContainer = "container:CryptoLeo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A75674552702B088004438B5"
-            BuildableName = "Crypto Leo.app"
-            BlueprintName = "Crypto Leo"
-            ReferencedContainer = "container:Crypto Leo.xcodeproj">
+            BuildableName = "CryptoLeo.app"
+            BlueprintName = "CryptoLeo"
+            ReferencedContainer = "container:CryptoLeo.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
@@ -44,9 +44,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A756746E2702B08B004438B5"
-               BuildableName = "Crypto LeoTests.xctest"
-               BlueprintName = "Crypto LeoTests"
-               ReferencedContainer = "container:Crypto Leo.xcodeproj">
+               BuildableName = "CryptoLeoTests.xctest"
+               BlueprintName = "CryptoLeoTests"
+               ReferencedContainer = "container:CryptoLeo.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -54,9 +54,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A75674792702B08B004438B5"
-               BuildableName = "Crypto LeoUITests.xctest"
-               BlueprintName = "Crypto LeoUITests"
-               ReferencedContainer = "container:Crypto Leo.xcodeproj">
+               BuildableName = "CryptoLeoUITests.xctest"
+               BlueprintName = "CryptoLeoUITests"
+               ReferencedContainer = "container:CryptoLeo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A75674552702B088004438B5"
-            BuildableName = "Crypto Leo.app"
-            BlueprintName = "Crypto Leo"
-            ReferencedContainer = "container:Crypto Leo.xcodeproj">
+            BuildableName = "CryptoLeo.app"
+            BlueprintName = "CryptoLeo"
+            ReferencedContainer = "container:CryptoLeo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -93,9 +93,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A75674552702B088004438B5"
-            BuildableName = "Crypto Leo.app"
-            BlueprintName = "Crypto Leo"
-            ReferencedContainer = "container:Crypto Leo.xcodeproj">
+            BuildableName = "CryptoLeo.app"
+            BlueprintName = "CryptoLeo"
+            ReferencedContainer = "container:CryptoLeo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

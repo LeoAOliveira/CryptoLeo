@@ -8,7 +8,7 @@
 import XCTest
 import CryptoKit
 
-@testable import Crypto_Leo
+@testable import CryptoLeo
 
 final class BlockTests: XCTestCase {
     
