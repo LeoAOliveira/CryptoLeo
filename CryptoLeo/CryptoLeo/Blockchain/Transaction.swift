@@ -20,7 +20,7 @@ final class Transaction {
     let amount: Double
     
     /// When the transaction is being made.
-    let timestamp: Timestamp = Timestamp()
+    let timestamp: String = Timestamp.string()
     
     /// Transaction message.
     private(set) lazy var message: String = createMessage()
@@ -32,7 +32,7 @@ final class Transaction {
     /// - Parameter sender: Peer that is sending the cryptocurrency. If it's s a mining reward, the value must be `nil`.
     /// - Parameter receiver: Peer that is receiving the cryptocurrency.
     /// - Parameter amount: Amount of cryptocurrency that is being transacted.
-    /// - Parameter privateKey: Transaction author's private key, that will be used to sign the transaction.
+    /// - Parameter privateKey: Transaction sender's private key, that will be used to sign the transaction.
     init(sender: Peer, receiver: Peer, amount: Double) {
         self.sender = sender
         self.receiver = receiver
@@ -40,25 +40,27 @@ final class Transaction {
     }
     
     /// Signs the transaction.
-    /// - Parameter privateKey: Transaction author's private key, that will be used to sign the transaction.
-    /// - Parameter completion: Result of the signing.
-    func sign(with privateKey: Curve25519.Signing.PrivateKey, completion: (Result<Bool, CryptoLeoError>) -> Void) {
+    /// - Parameter message: Transaction's message.
+    /// - Parameter privateKey: Transaction sender's private key, that will be used to sign the transaction.
+    /// - Parameter publicKey: Transaction sender's public key, that will be used to validate the signature.
+    /// - throws: Transaction signing error.
+    func sign(privateKey: Curve25519.Signing.PrivateKey, publicKey: Data) throws {
         
-        let signature = DigitalSignature.sign(message: message, privateKey: privateKey, publicKey: sender.publicKey)
+        let messageData = Data(message.utf8)
         
-        if signature != nil {
-            self.signature = signature
-            completion(.success(true))
+        guard let signature = try? privateKey.signature(for: messageData),
+              let signingPublicKey = try? Curve25519.Signing.PublicKey(rawRepresentation: publicKey),
+              signingPublicKey.isValidSignature(signature, for: messageData) else {
             
-        } else {
-            completion(.failure(.failedToSignTransaction))
+            throw CryptoLeoError.failedToSignTransaction
         }
+        
+        self.signature = signature
     }
     
     /// Creates a message describing the transaction.
     /// - Returns: Message describing the transaction.
     private func createMessage() -> String {
-        
-        return "\(sender) pays \(receiver) L$ \(String(format: "%.2f", amount)) on \(timestamp.date)"
+        return "\(sender.name) pays \(receiver.name) L$ \(String(format: "%.2f", amount)) on \(timestamp)"
     }
 }

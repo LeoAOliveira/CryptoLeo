@@ -9,11 +9,12 @@ import Foundation
 
 struct Timestamp {
     
-    /// Current date.
-    let date: String = {
+    /// Creates a string with the current date.
+    /// - Returns: String with current date, formatted as `dd/MM/yyyy HH:mm:ss`.
+    static func string() -> String {
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
         return dateFormatter.string(from: date)
-    }()
+    }
 }
