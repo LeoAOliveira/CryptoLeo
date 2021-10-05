@@ -1,2 +1,2 @@
 # CryptoLeo
-An iOS crypto currency made with MultipeerConnectivity blockchain.
+An iOS cryptocurrency built with a CryptoKit and MultipeerConnectivity based blockchain.
