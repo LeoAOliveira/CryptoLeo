@@ -1,5 +1,5 @@
 //
-//  InvalidBlockKey.swift
+//  CryptoLeoError.swift
 //  Crypto Leo
 //
 //  Created by Leonardo Oliveira on 03/10/21.

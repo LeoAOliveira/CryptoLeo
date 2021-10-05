@@ -1,5 +1,5 @@
 //
-//  Person.swift
+//  Peer.swift
 //  CryptoLeo
 //
 //  Created by Leonardo Oliveira on 04/10/21.
