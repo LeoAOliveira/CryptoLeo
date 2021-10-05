@@ -16,6 +16,10 @@
 		A75674742702B08B004438B5 /* BlockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75674732702B08B004438B5 /* BlockTests.swift */; };
 		A756747F2702B08B004438B5 /* Crypto_LeoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A756747E2702B08B004438B5 /* Crypto_LeoUITests.swift */; };
 		A756748E2702BD5A004438B5 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A756748D2702BD5A004438B5 /* Transaction.swift */; };
+		A7721FD0270BD60400BB7FD5 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FCF270BD60400BB7FD5 /* Peer.swift */; };
+		A7721FD2270BEB2100BB7FD5 /* Reward.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FD1270BEB2100BB7FD5 /* Reward.swift */; };
+		A7721FD4270BEF5E00BB7FD5 /* DigitalSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FD3270BEF5E00BB7FD5 /* DigitalSignature.swift */; };
+		A7721FD7270BF3F100BB7FD5 /* Timestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FD6270BF3F100BB7FD5 /* Timestamp.swift */; };
 		A7A2652B270A0CB300C60947 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A2652A270A0CB300C60947 /* Block.swift */; };
 		A7A26535270A6D9B00C60947 /* CryptoLeoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A26534270A6D9B00C60947 /* CryptoLeoError.swift */; };
 /* End PBXBuildFile section */
@@ -53,6 +57,10 @@
 		A756747E2702B08B004438B5 /* Crypto_LeoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto_LeoUITests.swift; sourceTree = "<group>"; };
 		A75674802702B08B004438B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = CryptoLeoUITests/Info.plist; sourceTree = SOURCE_ROOT; };
 		A756748D2702BD5A004438B5 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		A7721FCF270BD60400BB7FD5 /* Peer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
+		A7721FD1270BEB2100BB7FD5 /* Reward.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reward.swift; sourceTree = "<group>"; };
+		A7721FD3270BEF5E00BB7FD5 /* DigitalSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignature.swift; sourceTree = "<group>"; };
+		A7721FD6270BF3F100BB7FD5 /* Timestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timestamp.swift; sourceTree = "<group>"; };
 		A7A2652A270A0CB300C60947 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		A7A26534270A6D9B00C60947 /* CryptoLeoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoLeoError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -138,19 +146,23 @@
 		A756748C2702BC85004438B5 /* Blockchain */ = {
 			isa = PBXGroup;
 			children = (
-				A7A26533270A6D7500C60947 /* Errors */,
+				A7721FD5270BF34B00BB7FD5 /* Helpers */,
 				A756748D2702BD5A004438B5 /* Transaction.swift */,
+				A7721FD1270BEB2100BB7FD5 /* Reward.swift */,
 				A7A2652A270A0CB300C60947 /* Block.swift */,
+				A7721FCF270BD60400BB7FD5 /* Peer.swift */,
 			);
 			path = Blockchain;
 			sourceTree = "<group>";
 		};
-		A7A26533270A6D7500C60947 /* Errors */ = {
+		A7721FD5270BF34B00BB7FD5 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				A7A26534270A6D9B00C60947 /* CryptoLeoError.swift */,
+				A7721FD3270BEF5E00BB7FD5 /* DigitalSignature.swift */,
+				A7721FD6270BF3F100BB7FD5 /* Timestamp.swift */,
 			);
-			path = Errors;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,11 +295,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A756745E2702B088004438B5 /* ViewController.swift in Sources */,
+				A7721FD4270BEF5E00BB7FD5 /* DigitalSignature.swift in Sources */,
+				A7721FD2270BEB2100BB7FD5 /* Reward.swift in Sources */,
+				A7721FD7270BF3F100BB7FD5 /* Timestamp.swift in Sources */,
 				A756745A2702B088004438B5 /* AppDelegate.swift in Sources */,
 				A756745C2702B088004438B5 /* SceneDelegate.swift in Sources */,
 				A7A26535270A6D9B00C60947 /* CryptoLeoError.swift in Sources */,
 				A7A2652B270A0CB300C60947 /* Block.swift in Sources */,
 				A75674642702B088004438B5 /* CryptoLeo.xcdatamodeld in Sources */,
+				A7721FD0270BD60400BB7FD5 /* Peer.swift in Sources */,
 				A756748E2702BD5A004438B5 /* Transaction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

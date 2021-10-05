@@ -8,6 +8,7 @@
 import Foundation
 
 enum CryptoLeoError: Error {
-    case failedToMineBlock
+    case failedToSignTransaction
+    case failedToSignReward
     case blockIsAlreadyMined
 }

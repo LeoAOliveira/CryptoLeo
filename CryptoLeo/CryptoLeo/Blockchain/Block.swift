@@ -17,7 +17,7 @@ final class Block {
     let transaction: Transaction
     
     /// Reward given to the block's miner.
-    private(set) var reward: Transaction?
+    private(set) var reward: Reward?
     
     /// Block's position on the blockchain.
     private(set) var index: Int?
@@ -39,18 +39,18 @@ final class Block {
     init(transaction: Transaction) {
         self.transaction = transaction
     }
-
+    
     /// Creates the block's ledger.
     /// - Parameter index: Block's position on the blockchain.
     /// - Parameter previousHash: Previous block's hash using SHA256 algorithm.
-    /// - Parameter reward: Reward given to the block's miner.
+    /// - Parameter rewardMessage: Reward's message given to the block's miner.
     /// - Returns: Block's ledger, composed by the index, previous hash, transaction and  reward.
-    private func createLedger(index: Int, previousHash: SHA256Digest, reward: Transaction) -> String {
+    private func createLedger(index: Int, previousHash: SHA256Digest, rewardMessage: String) -> String {
         
         var ledger: String = "Index: \(index) | "
-        ledger += "Previous hash: \(previousHash.description) | "
+        ledger += "Previous hash: \(getHashString(digest: previousHash)) | "
         ledger += "Transaction: \(transaction.message) | "
-        ledger += "Reward: \(reward.message) | "
+        ledger += "Reward: \(rewardMessage) | "
         
         return ledger
     }
@@ -87,22 +87,22 @@ final class Block {
     /// Perform computational work to mine the block.
     /// - Parameter previousIndex: Previous block's position on the blockchain.
     /// - Parameter previousHash: Previous block's hash using SHA256 algorithm.
-    /// - Parameter miner: The party that will mine the block.
+    /// - Parameter miner: The peer that will mine the block.
     /// - Parameter privateKey: Miner's private key, that will be used to sign the reward transaction.
     /// - Parameter completion: Result of the computational work.
     func mine(previousIndex: Int,
               previousHash: SHA256Digest,
-              miner: String,
-              privateKey: String,
+              miner: Peer,
+              privateKey: Curve25519.Signing.PrivateKey,
               completion: (Result<Bool, CryptoLeoError>) -> Void) {
         
         let index = previousIndex + 1
-        let reward = Transaction(sender: nil, receiver: miner, amount: 10, privateKey: privateKey)
-        let ledger = createLedger(index: index, previousHash: previousHash, reward: reward)
+        let reward = Reward(miner: miner)
+        let ledger = createLedger(index: index, previousHash: previousHash, rewardMessage: reward.message)
         
         self.index = index
-        self.previousHash = previousHash
         self.reward = reward
+        self.previousHash = previousHash
         
         var blockHash = createHash(ledger: ledger, nonce: nonce)
         

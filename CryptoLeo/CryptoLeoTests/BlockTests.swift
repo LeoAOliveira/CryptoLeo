@@ -14,16 +14,26 @@ final class BlockTests: XCTestCase {
     
     var sut: Block!
     var transaction: Transaction!
+    var miner: Peer!
     
     let previousIndex: Int = 0
     let previousHash: SHA256Digest = SHA256.hash(data: "00000".data(using: .utf8)!)
-    let miner: String = "Leo"
-    let privateKey: String = "12345"
+    
+    let privateKey1 = Curve25519.Signing.PrivateKey()
+    let privateKey2 = Curve25519.Signing.PrivateKey()
     
     override func setUp() {
         super.setUp()
-        transaction = Transaction(sender: "Leonardo", receiver: "Ricardo", amount: 10, privateKey: "12345")
+        
+        let person1 = Peer(name: "Leo", publicKey: privateKey1.publicKey.rawRepresentation)
+        let person2 = Peer(name: "Rick", publicKey: privateKey2.publicKey.rawRepresentation)
+        
+        transaction = Transaction(sender: person1,
+                                  receiver: person2,
+                                  amount: 100)
+        
         sut = Block(transaction: transaction)
+        miner = person1
     }
     
     override func tearDown() {
@@ -37,7 +47,7 @@ final class BlockTests: XCTestCase {
         sut.mine(previousIndex: previousIndex,
                  previousHash: previousHash,
                  miner: miner,
-                 privateKey: privateKey) { result in
+                 privateKey: privateKey1) { result in
             
             // Result
             XCTAssertEqual(result, .success(true))
@@ -50,9 +60,9 @@ final class BlockTests: XCTestCase {
             
             // Reward
             XCTAssertNotNil(sut.reward)
-            XCTAssertNil(sut.reward?.sender)
-            XCTAssertEqual(sut.reward?.receiver, "Leo")
-            XCTAssertEqual(sut.reward?.amount, 10)
+            XCTAssertEqual(sut.reward?.miner.name, "Leo")
+            XCTAssertEqual(sut.reward?.miner.publicKey, privateKey1.publicKey.rawRepresentation)
+            XCTAssertEqual(sut.reward?.amount, 5)
             
             // Hash
             let hashString = createHashString(digest: sut.hash!)
@@ -67,7 +77,7 @@ final class BlockTests: XCTestCase {
         sut.mine(previousIndex: previousIndex,
                  previousHash: previousHash,
                  miner: miner,
-                 privateKey: privateKey) { result in
+                 privateKey: privateKey1) { result in
             
             XCTAssertEqual(result, .failure(.blockIsAlreadyMined))
         }
