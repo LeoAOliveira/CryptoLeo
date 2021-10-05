@@ -47,10 +47,10 @@ final class Block {
     /// - Returns: Block's ledger, composed by the index, previous hash, transaction and  reward.
     private func createLedger(index: Int, previousHash: SHA256Digest, rewardMessage: String) -> String {
         
-        var ledger: String = "Index: \(index) | "
-        ledger += "Previous hash: \(getHashString(digest: previousHash)) | "
-        ledger += "Transaction: \(transaction.message) | "
-        ledger += "Reward: \(rewardMessage) | "
+        var ledger: String = "Index: \(index)\n"
+        ledger += "Previous hash: \(getHashString(digest: previousHash))\n"
+        ledger += "Transaction: \(transaction.message)\n"
+        ledger += "Reward: \(rewardMessage)\n"
         
         return ledger
     }
@@ -96,6 +96,11 @@ final class Block {
               privateKey: Curve25519.Signing.PrivateKey,
               completion: (Result<Bool, CryptoLeoError>) -> Void) {
         
+        if transaction.signature == nil {
+            completion(.failure(.transactionIsNotSigned))
+            return
+        }
+        
         let index = previousIndex + 1
         let reward = Reward(miner: miner)
         let ledger = createLedger(index: index, previousHash: previousHash, rewardMessage: reward.message)
@@ -109,6 +114,7 @@ final class Block {
         while(!verifyHash(digest: blockHash) && availableForMining) {
             nonce += 1
             blockHash = createHash(ledger: ledger, nonce: nonce)
+            print("Nonce: \(nonce) | Hash: \(getHashString(digest: blockHash))")
         }
         
         if availableForMining {
