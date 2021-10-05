@@ -44,7 +44,7 @@ final class Transaction {
     /// - Parameter privateKey: Transaction sender's private key, that will be used to sign the transaction.
     /// - Parameter publicKey: Transaction sender's public key, that will be used to validate the signature.
     /// - throws: Transaction signing error.
-    func sign(message: String, privateKey: Curve25519.Signing.PrivateKey, publicKey: Data) throws {
+    func sign(privateKey: Curve25519.Signing.PrivateKey, publicKey: Data) throws {
         
         let messageData = Data(message.utf8)
         

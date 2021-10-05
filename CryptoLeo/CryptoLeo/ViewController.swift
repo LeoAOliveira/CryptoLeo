@@ -26,9 +26,7 @@ final class ViewController: UIViewController {
         let transaction = Transaction(sender: person1, receiver: person2, amount: 100)
 
         do {
-            try transaction.sign(message: transaction.message,
-                                 privateKey: privateKey1,
-                                 publicKey: person1.publicKey)
+            try transaction.sign(privateKey: privateKey1, publicKey: person1.publicKey)
         } catch let error {
             print(error.localizedDescription)
         }
