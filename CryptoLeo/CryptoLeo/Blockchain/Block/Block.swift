@@ -8,13 +8,13 @@
 import Foundation
 import CryptoKit
 
-final class Block {
+final class Block: BlockType {
     
     /// If the block is available for mining.
     var availableForMining: Bool = true
     
     /// Transaction included in the block.
-    let transaction: Transaction
+    let transaction: Transaction?
     
     /// Reward given to the block's miner.
     private(set) var reward: Reward?
@@ -49,8 +49,13 @@ final class Block {
         
         var ledger: String = "Index: \(index)\n"
         ledger += "Previous hash: \(getHashString(digest: previousHash))\n"
-        ledger += "Transaction: \(transaction.message)\n"
         ledger += "Reward: \(rewardMessage)\n"
+        
+        if let transactionMessage = transaction?.message {
+            ledger += "Transaction: \(transactionMessage)\n"
+        } else {
+            ledger += "Genesis: created on \(Timestamp.string())"
+        }
         
         return ledger
     }
@@ -81,7 +86,7 @@ final class Block {
     /// - Returns: Boolean describing if the hash has the specified leading zeros to be considered valid.
     private func verifyHash(digest: SHA256Digest) -> Bool {
         let hashString = getHashString(digest: digest)
-        return hashString.hasPrefix("000")
+        return hashString.hasPrefix("0000")
     }
     
     /// Perform computational work to mine the block.
@@ -96,7 +101,7 @@ final class Block {
               privateKey: Curve25519.Signing.PrivateKey,
               completion: (Result<Bool, CryptoLeoError>) -> Void) {
         
-        if transaction.signature == nil {
+        if let transaction = self.transaction, transaction.signature == nil {
             completion(.failure(.transactionIsNotSigned))
             return
         }
@@ -114,7 +119,6 @@ final class Block {
         while(!verifyHash(digest: blockHash) && availableForMining) {
             nonce += 1
             blockHash = createHash(ledger: ledger, nonce: nonce)
-            print("Nonce: \(nonce) | Hash: \(getHashString(digest: blockHash))")
         }
         
         if availableForMining {
