@@ -14,5 +14,6 @@ enum CryptoLeoError: Error {
     case transactionIsNotSigned
     
     // Mining errors
+    case blockIsNotMined
     case blockIsAlreadyMined
 }
