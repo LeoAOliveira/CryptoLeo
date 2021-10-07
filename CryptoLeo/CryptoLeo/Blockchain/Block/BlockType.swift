@@ -8,7 +8,7 @@
 import Foundation
 import CryptoKit
 
-protocol BlockType {
+protocol BlockType: Codable {
     
     /// Transaction included in the block.
     var transaction: Transaction? { get }
@@ -17,10 +17,10 @@ protocol BlockType {
     var index: Int? { get }
     
     /// Block's hash using SHA256 algorithm.
-    var hash: SHA256Digest? { get }
+    var hash: String? { get }
     
     /// Previous block's hash using SHA256 algorithm.
-    var previousHash: SHA256Digest? { get }
+    var previousHash: String? { get }
     
     /// Proof-of-work that must be incremented until a value is found that gives the block's hash the required zero bits..
     var nonce: Int { get }

@@ -8,7 +8,7 @@
 import Foundation
 import CryptoKit
 
-final class Transaction {
+final class Transaction: Codable {
     
     /// Peer that is sending the cryptocurrency.
     let sender: Peer
@@ -20,7 +20,7 @@ final class Transaction {
     let amount: Double
     
     /// When the transaction is being made.
-    let timestamp: String = Timestamp.string()
+    let timestamp: String
     
     /// Transaction message.
     private(set) lazy var message: String = createMessage()
@@ -37,6 +37,7 @@ final class Transaction {
         self.sender = sender
         self.receiver = receiver
         self.amount = amount
+        self.timestamp = Timestamp.string()
     }
     
     /// Signs the transaction.

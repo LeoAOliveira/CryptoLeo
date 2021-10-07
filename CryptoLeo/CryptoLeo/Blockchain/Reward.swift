@@ -8,16 +8,16 @@
 import Foundation
 import CryptoKit
 
-final class Reward {
+final class Reward: Codable {
     
     /// Peer that's being rewarded with cryptocurrency.
     let miner: Peer
     
     /// Amount of cryptocurrency that the miner is being rewarded with.
-    let amount: Double = 10
+    let amount: Double
     
     /// When the transaction is being made.
-    let timestamp: String = Timestamp.string()
+    let timestamp: String
     
     /// Reward message.
     private(set) lazy var message: String = createMessage()
@@ -26,6 +26,8 @@ final class Reward {
     /// - Parameter miner: Peer that's being rewarded with cryptocurrency.
     init(miner: Peer) {
         self.miner = miner
+        self.amount = 10
+        self.timestamp = Timestamp.string()
     }
     
     /// Creates a message describing the reward.
