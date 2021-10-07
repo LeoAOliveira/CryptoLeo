@@ -31,27 +31,27 @@ final class ViewController: UIViewController {
 
         let privateKey1 = Curve25519.Signing.PrivateKey()
         let person1 = Peer(name: "Leo", publicKey: privateKey1.publicKey.rawRepresentation)
-
+        
         let privateKey2 = Curve25519.Signing.PrivateKey()
         let person2 = Peer(name: "Rick", publicKey: privateKey2.publicKey.rawRepresentation)
-
+        
         // Blockchain
-
-        let blockchainManager = BlockchainManager(name: "Leo's Blockchain",
-                                                  creator: person1,
-                                                  session: mcSession)
-
-        blockchainManager.creationCompleted = {
+        
+        let transactor = CryptoLeoTransactor(name: "Leo's Blockchain",
+                                             creator: person1,
+                                             session: mcSession)
+        
+        transactor.didCreateBlockchain = {
             print("\n===================\nBlockchain created!\n===================\n\n")
         }
-
+        
         // Transaction
-
+        
         do {
-            try blockchainManager.sendTransaction(amount: 100,
-                                                  receiver: person2,
-                                                  privateKey: privateKey1,
-                                                  mineOwnBlock: true)
+            try transactor.sendTransaction(amount: 100,
+                                           receiver: person2,
+                                           privateKey: privateKey1,
+                                           mineOwnBlock: true)
         } catch {
             print(error.localizedDescription)
         }

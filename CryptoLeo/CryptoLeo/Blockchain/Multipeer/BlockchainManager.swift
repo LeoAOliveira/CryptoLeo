@@ -9,12 +9,13 @@ import Foundation
 import CryptoKit
 import MultipeerConnectivity
 
-final class BlockchainManager {
+final class CryptoLeoTransactor {
     
-    var creationCompleted: (() -> Void)?
+    var didCreateBlockchain: (() -> Void)?
+    var didTransferCrypto: (() -> Void)?
+    var didFinishMining: (() -> Void)?
     
-    private(set) var blockchain: Blockchain
-    
+    private var blockchain: Blockchain
     private let session: MCSession
     
     init(name: String, creator: Peer, session: MCSession) {
@@ -31,22 +32,9 @@ final class BlockchainManager {
         let publicKey = privateKey.publicKey.rawRepresentation
         let sender = Peer(name: "Leo", publicKey: publicKey)
         
-        let message = "\(sender.name) pays \(receiver.name) L$ \(String(format: "%.2f", amount)) on \(Timestamp.string())"
-        
-        let signature: Data
-        
-        do {
-            signature = try sign(message: message, privateKey: privateKey, publicKey: publicKey)
-            
-        } catch {
+        guard let transaction = createTransaction(amount: amount, receiver: receiver, privateKey: privateKey) else {
             throw CryptoLeoError.failedToSignTransaction
         }
-        
-        let transaction = Transaction(sender: sender,
-                                      receiver: receiver,
-                                      amount: amount,
-                                      message: message,
-                                      signature: signature)
         
         if mineOwnBlock {
             
@@ -66,9 +54,29 @@ final class BlockchainManager {
         }
     }
     
+    private func createTransaction(amount: Double,
+                                   receiver: Peer,
+                                   privateKey: Curve25519.Signing.PrivateKey) -> Transaction? {
+        
+        let publicKey = privateKey.publicKey.rawRepresentation
+        let sender = Peer(name: "Leo", publicKey: publicKey)
+        
+        let message = "\(sender.name) pays \(receiver.name) L$ \(String(format: "%.2f", amount)) on \(Timestamp.string())"
+        
+        guard let signature = sign(message: message, privateKey: privateKey, publicKey: publicKey) else {
+            return nil
+        }
+        
+        return Transaction(sender: sender,
+                           receiver: receiver,
+                           amount: amount,
+                           message: message,
+                           signature: signature)
+    }
+    
     private func sign(message: String,
                       privateKey: Curve25519.Signing.PrivateKey,
-                      publicKey: Data) throws -> Data {
+                      publicKey: Data) -> Data? {
         
         let messageData = Data(message.utf8)
         
@@ -76,7 +84,7 @@ final class BlockchainManager {
               let signingPublicKey = try? Curve25519.Signing.PublicKey(rawRepresentation: publicKey),
               signingPublicKey.isValidSignature(signature, for: messageData) else {
             
-            throw CryptoLeoError.failedToSignTransaction
+            return nil
         }
         
         return signature
@@ -104,7 +112,7 @@ final class BlockchainManager {
         
         mineGenesisBlock(miner: miner) { [weak self] block in
             self?.blockchain.blocks.append(block)
-            self?.creationCompleted?()
+            self?.didCreateBlockchain?()
         }
     }
     
