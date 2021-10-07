@@ -10,11 +10,11 @@ import MultipeerConnectivity
 
 final class BlockchainSession: NSObject {
     
-    let blockchain: Blockchain
-    
-    init(blockchain: Blockchain) {
-        self.blockchain = blockchain
-    }
+//    let blockchainManager: BlockchainManager
+//    
+//    init(blockchainManager: BlockchainManager) {
+//        self.blockchainManager = blockchainManager
+//    }
     
     private func updateBlockchain(with data: Data) {
         

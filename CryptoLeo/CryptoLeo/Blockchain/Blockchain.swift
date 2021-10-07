@@ -9,5 +9,5 @@ import Foundation
 
 struct Blockchain {
     let name: String
-    var blocks: [BlockType]
+    var blocks: [Block]
 }

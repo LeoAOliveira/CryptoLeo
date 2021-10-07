@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Peer: Codable {
+struct Peer {
     
     /// Peer's name.
     let name: String
