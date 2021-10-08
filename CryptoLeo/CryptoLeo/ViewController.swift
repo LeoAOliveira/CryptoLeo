@@ -37,9 +37,7 @@ final class ViewController: UIViewController {
         
         // Blockchain
         
-        let transactor = CryptoLeoTransactor(name: "Leo's Blockchain",
-                                             creator: person1,
-                                             session: mcSession)
+        let transactor = Transactor(name: "Leo's Blockchain", creator: person1, session: mcSession)
         
         transactor.didCreateBlockchain = {
             print("\n===================\nBlockchain created!\n===================\n\n")
@@ -50,7 +48,6 @@ final class ViewController: UIViewController {
         do {
             try transactor.sendTransaction(amount: 100,
                                            receiver: person2,
-                                           privateKey: privateKey1,
                                            mineOwnBlock: true)
         } catch {
             print(error.localizedDescription)

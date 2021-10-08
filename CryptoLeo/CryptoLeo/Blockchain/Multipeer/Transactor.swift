@@ -1,5 +1,5 @@
 //
-//  CryptoLeoTransactor.swift
+//  Transactor.swift
 //  CryptoLeo
 //
 //  Created by Leonardo Oliveira on 05/10/21.
