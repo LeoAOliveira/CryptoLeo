@@ -7,7 +7,16 @@
 
 import Foundation
 
+/// Blockchain model.
+///
+/// A blockchain contains:
+/// - **Name**: Identifier given to the blockchain.
+/// - **Block**: Array of blocks that compose the blockchain.
 struct Blockchain {
+    
+    /// Blockchain's given identifier.
     let name: String
+    
+    /// Array of `Block` that constitutes the blockchain (the chain it self).
     var blocks: [Block]
 }

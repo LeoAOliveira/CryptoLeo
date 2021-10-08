@@ -7,6 +7,14 @@
 
 import Foundation
 
+/// Transaction of cryptocurrency between two `Peers`.
+///
+/// - **Sender**: Peer responsible for performing the needed computational work to mine a block.
+/// - **Receiver**: Cryptocurrencies given as reward for mining a block.
+/// - **Amount**: Cryptocurrencies given as reward for mining a block.
+/// - **Timestamp**: Date and time of the transaction.
+/// - **Message**: Description of the transaction.
+/// - **Signature**: Unique digital signature (private-public key cryptography) that signed the transaction.
 struct Transaction {
     
     /// Peer that is sending the cryptocurrency.
