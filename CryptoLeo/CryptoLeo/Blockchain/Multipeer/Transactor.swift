@@ -31,6 +31,9 @@ final class Transactor {
     /// Multipeer session that enables the communication between the peers.
     private let session: MCSession
     
+    /// Number of zeros as hash's first characters, proof that the block has being mined (computational work put into to it),
+    private let proofOfWork: String = "0000"
+    
     // MARK: - Initializers
     
     /// Initializes a Transactor by creating a blockchain and mining the genesis block (fist block to be added in the blockchain).
@@ -91,7 +94,7 @@ final class Transactor {
     ///
     /// This method mines a block by iterating a nonce util the hash of the block's key
     /// (composed by index, previous block's hash, reward's message, transaction's message and nonce)
-    /// has five zeros as the first five characters. When the mining computational work is done, the
+    /// has four zeros as the first four characters. When the mining computational work is done, the
     /// `completion` closure is called, passing the mined `Block` as parameter.
     ///
     ///
@@ -120,7 +123,7 @@ final class Transactor {
         
         var blockHash = createHash(key: key)
         
-        while(!blockHash.hasPrefix("00000")) {
+        while(!blockHash.hasPrefix(proofOfWork)) {
             nonce += 1
             blockHash = createHash(key: key)
         }
@@ -256,7 +259,7 @@ final class Transactor {
     /// Performs computational work to mine the genesis block.
     ///
     /// This method mines the genesis block by iterating a nonce util the hash of the block's key
-    /// (composed by index, message and nonce) has five zeros as the first five characters.
+    /// (composed by index, message and nonce) has four zeros as the first four characters.
     /// When the mining computational work is done, the `completion` closure is called,
     /// passing the mined `Block` as parameter.
     ///
@@ -274,7 +277,7 @@ final class Transactor {
         
         var blockHash = createHash(key: key)
         
-        while(!blockHash.hasPrefix("00000")) {
+        while(!blockHash.hasPrefix(proofOfWork)) {
             nonce += 1
             blockHash = createHash(key: key)
         }
