@@ -2,40 +2,21 @@
 //  Blockchain.swift
 //  CryptoLeo
 //
-//  Created by Leonardo Oliveira on 05/10/21.
+//  Created by Leonardo Oliveira on 06/10/21.
 //
 
 import Foundation
 
-final class Blockchain {
+/// Blockchain model.
+///
+/// A blockchain contains:
+/// - **Name**: Identifier given to the blockchain.
+/// - **Block**: Array of blocks that compose the blockchain.
+struct Blockchain {
     
-    var creationCompleted: (() -> Void)?
-    
+    /// Blockchain's given identifier.
     let name: String
     
-    private(set) var blocks: [BlockType] = [BlockType]()
-    
-    init(name: String, creator: Peer) {
-        self.name = name
-        createGenesisBlock(miner: creator)
-    }
-    
-    private func createGenesisBlock(miner: Peer) {
-        
-        let genesisBlock = GenesisBlock()
-        
-        genesisBlock.mine(miner: miner) { [weak self] in
-            self?.blocks.append(genesisBlock)
-            self?.creationCompleted?()
-        }
-    }
-    
-    func addBlock(_ block: Block) throws {
-        
-        if block.hash == nil {
-            throw CryptoLeoError.blockIsNotMined
-        }
-        
-        blocks.append(block)
-    }
+    /// Array of `Block` that constitutes the blockchain (the chain it self).
+    var blocks: [Block]
 }

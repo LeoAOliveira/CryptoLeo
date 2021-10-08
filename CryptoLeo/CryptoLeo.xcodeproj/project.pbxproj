@@ -19,9 +19,9 @@
 		A7721FD0270BD60400BB7FD5 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FCF270BD60400BB7FD5 /* Peer.swift */; };
 		A7721FD2270BEB2100BB7FD5 /* Reward.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FD1270BEB2100BB7FD5 /* Reward.swift */; };
 		A7721FD7270BF3F100BB7FD5 /* Timestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FD6270BF3F100BB7FD5 /* Timestamp.swift */; };
-		A7721FD9270D02FF00BB7FD5 /* Blockchain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FD8270D02FF00BB7FD5 /* Blockchain.swift */; };
-		A7721FE0270D1E2A00BB7FD5 /* BlockType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FDF270D1E2A00BB7FD5 /* BlockType.swift */; };
-		A7721FE2270D1F0E00BB7FD5 /* GenesisBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FE1270D1F0E00BB7FD5 /* GenesisBlock.swift */; };
+		A7721FD9270D02FF00BB7FD5 /* Transactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FD8270D02FF00BB7FD5 /* Transactor.swift */; };
+		A7721FE9270D4F2700BB7FD5 /* BlockchainSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FE8270D4F2700BB7FD5 /* BlockchainSession.swift */; };
+		A7721FEE270E837600BB7FD5 /* Blockchain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FED270E837600BB7FD5 /* Blockchain.swift */; };
 		A7A2652B270A0CB300C60947 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A2652A270A0CB300C60947 /* Block.swift */; };
 		A7A26535270A6D9B00C60947 /* CryptoLeoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A26534270A6D9B00C60947 /* CryptoLeoError.swift */; };
 /* End PBXBuildFile section */
@@ -62,9 +62,9 @@
 		A7721FCF270BD60400BB7FD5 /* Peer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		A7721FD1270BEB2100BB7FD5 /* Reward.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reward.swift; sourceTree = "<group>"; };
 		A7721FD6270BF3F100BB7FD5 /* Timestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timestamp.swift; sourceTree = "<group>"; };
-		A7721FD8270D02FF00BB7FD5 /* Blockchain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blockchain.swift; sourceTree = "<group>"; };
-		A7721FDF270D1E2A00BB7FD5 /* BlockType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockType.swift; sourceTree = "<group>"; };
-		A7721FE1270D1F0E00BB7FD5 /* GenesisBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenesisBlock.swift; sourceTree = "<group>"; };
+		A7721FD8270D02FF00BB7FD5 /* Transactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transactor.swift; sourceTree = "<group>"; };
+		A7721FE8270D4F2700BB7FD5 /* BlockchainSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainSession.swift; sourceTree = "<group>"; };
+		A7721FED270E837600BB7FD5 /* Blockchain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blockchain.swift; sourceTree = "<group>"; };
 		A7A2652A270A0CB300C60947 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		A7A26534270A6D9B00C60947 /* CryptoLeoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoLeoError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,11 +151,12 @@
 			isa = PBXGroup;
 			children = (
 				A7721FD5270BF34B00BB7FD5 /* Helpers */,
-				A7721FE5270D308400BB7FD5 /* Block */,
-				A756748D2702BD5A004438B5 /* Transaction.swift */,
-				A7721FD1270BEB2100BB7FD5 /* Reward.swift */,
+				A7721FEA270E749400BB7FD5 /* Multipeer */,
+				A7A2652A270A0CB300C60947 /* Block.swift */,
+				A7721FED270E837600BB7FD5 /* Blockchain.swift */,
 				A7721FCF270BD60400BB7FD5 /* Peer.swift */,
-				A7721FD8270D02FF00BB7FD5 /* Blockchain.swift */,
+				A7721FD1270BEB2100BB7FD5 /* Reward.swift */,
+				A756748D2702BD5A004438B5 /* Transaction.swift */,
 			);
 			path = Blockchain;
 			sourceTree = "<group>";
@@ -169,14 +170,13 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		A7721FE5270D308400BB7FD5 /* Block */ = {
+		A7721FEA270E749400BB7FD5 /* Multipeer */ = {
 			isa = PBXGroup;
 			children = (
-				A7A2652A270A0CB300C60947 /* Block.swift */,
-				A7721FE1270D1F0E00BB7FD5 /* GenesisBlock.swift */,
-				A7721FDF270D1E2A00BB7FD5 /* BlockType.swift */,
+				A7721FD8270D02FF00BB7FD5 /* Transactor.swift */,
+				A7721FE8270D4F2700BB7FD5 /* BlockchainSession.swift */,
 			);
-			path = Block;
+			path = Multipeer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,19 +308,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7721FE9270D4F2700BB7FD5 /* BlockchainSession.swift in Sources */,
 				A756745E2702B088004438B5 /* ViewController.swift in Sources */,
 				A7721FD2270BEB2100BB7FD5 /* Reward.swift in Sources */,
 				A7721FD7270BF3F100BB7FD5 /* Timestamp.swift in Sources */,
 				A756745A2702B088004438B5 /* AppDelegate.swift in Sources */,
 				A756745C2702B088004438B5 /* SceneDelegate.swift in Sources */,
-				A7721FE2270D1F0E00BB7FD5 /* GenesisBlock.swift in Sources */,
-				A7721FD9270D02FF00BB7FD5 /* Blockchain.swift in Sources */,
+				A7721FD9270D02FF00BB7FD5 /* Transactor.swift in Sources */,
 				A7A26535270A6D9B00C60947 /* CryptoLeoError.swift in Sources */,
-				A7721FE0270D1E2A00BB7FD5 /* BlockType.swift in Sources */,
 				A7A2652B270A0CB300C60947 /* Block.swift in Sources */,
 				A75674642702B088004438B5 /* CryptoLeo.xcdatamodeld in Sources */,
 				A7721FD0270BD60400BB7FD5 /* Peer.swift in Sources */,
 				A756748E2702BD5A004438B5 /* Transaction.swift in Sources */,
+				A7721FEE270E837600BB7FD5 /* Blockchain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

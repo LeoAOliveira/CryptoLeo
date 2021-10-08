@@ -16,4 +16,7 @@ enum CryptoLeoError: Error {
     // Mining errors
     case blockIsNotMined
     case blockIsAlreadyMined
+    
+    // Hash errors
+    case previousHashIsIncorrect
 }
