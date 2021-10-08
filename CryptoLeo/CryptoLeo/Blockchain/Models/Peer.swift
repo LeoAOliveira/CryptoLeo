@@ -11,7 +11,7 @@ import Foundation
 ///
 /// - **Name**: Person's name.
 /// - **Public Key**: Personal public key, used for verifying transaction's signatures.
-struct Peer {
+struct Peer: Codable, Equatable {
     
     /// Peer's name.
     let name: String

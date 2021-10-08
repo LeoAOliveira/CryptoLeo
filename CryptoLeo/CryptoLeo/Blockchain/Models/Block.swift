@@ -17,7 +17,7 @@ import Foundation
 /// - **Reward**:  Reward given to the block's miner for the computational work effort.
 /// - **Key**:  Unique key with all the block's information, composed by index, previous hash, transaction, reward and nonce.
 /// - **Nonce**:  Proof-of-work that must be incremented until a value is found that gives the block's hash the required zero bits.
-struct Block {
+struct Block: Codable, Equatable {
     
     /// Block's position on the blockchain.
     let index: Int

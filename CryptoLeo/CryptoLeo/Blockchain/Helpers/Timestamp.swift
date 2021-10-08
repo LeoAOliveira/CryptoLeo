@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Current date and time.
 struct Timestamp {
     
     /// Creates a string with the current date.

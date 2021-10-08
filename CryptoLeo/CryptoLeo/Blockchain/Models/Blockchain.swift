@@ -12,7 +12,7 @@ import Foundation
 /// A blockchain contains:
 /// - **Name**: Identifier given to the blockchain.
 /// - **Block**: Array of blocks that compose the blockchain.
-struct Blockchain {
+struct Blockchain: Codable, Equatable {
     
     /// Blockchain's given identifier.
     let name: String

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CryptoKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,8 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         
+        let privateKey = Curve25519.Signing.PrivateKey()
+        let publicKey = privateKey.publicKey.rawRepresentation
+        let sender = Peer(name: "Leo", publicKey: publicKey)
+        
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = ViewController()
+        window?.rootViewController = BlockchainViewController(blockchainName: "Leo's Blockchain", userPeer: sender)
         window?.makeKeyAndVisible()
     }
 
