@@ -156,7 +156,6 @@
 				A7721FD5270BF34B00BB7FD5 /* Helpers */,
 				A79F85E52710B51E0043E432 /* Models */,
 				A7721FD8270D02FF00BB7FD5 /* Transactor.swift */,
-				A7721FE8270D4F2700BB7FD5 /* BlockchainSession.swift */,
 				A79F85E82710DD830043E432 /* BroadcastInformation.swift */,
 			);
 			path = Blockchain;
@@ -183,8 +182,7 @@
 		A79F85DF271092170043E432 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				A756745D2702B088004438B5 /* BlockchainViewController.swift */,
-				A7A1F0402711D139004F8F55 /* BlockchainView.swift */,
+				A7A1F09A271229A0004F8F55 /* Blockchain */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -199,6 +197,16 @@
 				A756748D2702BD5A004438B5 /* Transaction.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		A7A1F09A271229A0004F8F55 /* Blockchain */ = {
+			isa = PBXGroup;
+			children = (
+				A756745D2702B088004438B5 /* BlockchainViewController.swift */,
+				A7721FE8270D4F2700BB7FD5 /* BlockchainSession.swift */,
+				A7A1F0402711D139004F8F55 /* BlockchainView.swift */,
+			);
+			path = Blockchain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

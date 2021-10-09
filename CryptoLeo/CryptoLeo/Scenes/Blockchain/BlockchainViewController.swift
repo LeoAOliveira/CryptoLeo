@@ -69,6 +69,7 @@ final class BlockchainViewController: UIViewController {
                                                      serviceType: "cl-lo")
         
         super.init(nibName: nil, bundle: nil)
+        setup()
     }
     
     /// Unavailable required initializer.
@@ -84,15 +85,14 @@ final class BlockchainViewController: UIViewController {
         view = containerView
     }
     
-    /// Calls bind events functions when the view is loaded.
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    // MARK: - Private methods
+    
+    /// Setups the class by setting up multi-peer delegates and binding view and blockchain events.
+    private func setup() {
+        setupDelegates()
         bindBlockchainEvents()
         bindViewEvents()
     }
-    
-    // MARK: - Private methods
     
     /// Setups all multi-peer related delegates, such as:
     /// - `MCSessionDelegate`
