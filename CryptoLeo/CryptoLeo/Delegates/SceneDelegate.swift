@@ -23,9 +23,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let publicKey = privateKey.publicKey.rawRepresentation
         let sender = Peer(name: "Leo", publicKey: publicKey)
         
+        let rootViewController = BlockchainViewController(blockchainName: "Leo's Blockchain",
+                                                          userPeer: sender)
+        
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = BlockchainViewController(blockchainName: "Leo's Blockchain", userPeer: sender)
-        window?.makeKeyAndVisible()
+        window?.rootViewController = navigationController
+        window?.isHidden = false
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

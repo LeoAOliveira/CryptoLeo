@@ -40,7 +40,7 @@ final class Transactor {
     
     // MARK: - Initializers
     
-    /// Initializes a Transactor by creating a blockchain and mining the genesis block (fist block to be added in the blockchain).
+    /// Initializes a `Transactor` by creating a blockchain and mining the genesis block (fist block to be added in the blockchain).
     /// - Parameter blockchainName: Name for the blockchain.
     /// - Parameter creator: Blockchain's creator.
     /// - Parameter session: Multipeer session that enables the communication between the peers.
@@ -124,7 +124,6 @@ final class Transactor {
     /// (composed by index, previous block's hash, reward's message, transaction's message and nonce)
     /// has four zeros as the first four characters. When the mining computational work is done, the
     /// `completion` closure is called, passing the mined `Block` as parameter.
-    ///
     ///
     /// - Parameter transaction: Transaction to be included in the block.
     func mineBlock(transaction: Transaction) {

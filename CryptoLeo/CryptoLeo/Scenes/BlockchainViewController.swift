@@ -5,43 +5,73 @@
 //  Created by Leonardo Oliveira on 27/09/21.
 //
 
+import Foundation
 import UIKit
 import CryptoKit
 import MultipeerConnectivity
 
 final class BlockchainViewController: UIViewController {
     
+    // MARK: - Internal properties
+    
+    /// Multi-peer session that enables the blockchain peer-to-peer communication.
+    let mcSession: MCSession
+    
     // MARK: - Private properties
     
-    private let userPeer: Peer
+    /// Name given to the blockchain.
     private let blockchainName: String
     
-    private(set) lazy var transactor = Transactor(blockchainName: blockchainName, userPeer: userPeer)
+    /// User information modeled into the `Peer` struct, containing the user's name and public key.
+    private let userPeer: Peer
     
-    private lazy var blockchainSession: BlockchainSession = {
-        let session = BlockchainSession(mcSession: mcSession)
-        session.controller = self
-        return session
-    }()
+    /// Reference to `Transactor`, responsible for intermediating blockchain operations.
+    private let transactor: Transactor
     
-    private lazy var peerID = MCPeerID(displayName: UIDevice.current.name)
+    /// Identification of the peer in the multi-peer session. Is set as the `name` property of `Peer` model.
+    private let peerID: MCPeerID
     
-    private lazy var mcSession = MCSession(peer: peerID,
-                                           securityIdentity: nil,
-                                           encryptionPreference: .required)
+    /// Object in charge of advertising that the user is available for joining a nearby session. Through its delegate
+    /// (declared in *BlockchainSession.swift*) it handles invitations from other peers.
+    private let serviceAdvertiser: MCNearbyServiceAdvertiser
     
-    private lazy var mcAssistant = MCAdvertiserAssistant(serviceType: "cl-lo",
-                                                         discoveryInfo: nil,
-                                                         session: mcSession)
+    /// Object in charge of browsing for available nearby peers to join the user's session. Through its delegate
+    /// (declared in *BlockchainSession.swift*) it handles discovered peers nearby.
+    private let serviceBrowser: MCNearbyServiceBrowser
+    
+    /// View controlled by this class, responsible for the interface.
+    private let containerView = BlockchainView()
     
     // MARK: - Initializers
     
+    /// Initializes a `BlockchainViewController`.
+    /// - Parameter blockchainName: Name for the blockchain.
+    /// - Parameter creator: User information modeled into the `Peer` struct.
     init(blockchainName: String, userPeer: Peer) {
+        
         self.userPeer = userPeer
         self.blockchainName = blockchainName
+        
+        self.transactor = Transactor(blockchainName: blockchainName,
+                                     userPeer: userPeer)
+        
+        self.peerID = MCPeerID(displayName: userPeer.name)
+        
+        self.mcSession = MCSession(peer: peerID,
+                                 securityIdentity: nil,
+                                 encryptionPreference: .required)
+        
+        self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: peerID,
+                                                           discoveryInfo: nil,
+                                                           serviceType: "cl-lo")
+        
+        self.serviceBrowser = MCNearbyServiceBrowser(peer: peerID,
+                                                     serviceType: "cl-lo")
+        
         super.init(nibName: nil, bundle: nil)
     }
     
+    /// Unavailable required initializer.
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -49,11 +79,38 @@ final class BlockchainViewController: UIViewController {
     
     // MARK: - Life cycle methods
     
+    /// Loads the view as the container view (of type `BlockchainView`).
+    override func loadView() {
+        view = containerView
+    }
+    
+    /// Calls bind events functions when the view is loaded.
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mcAssistant.start()
         bindBlockchainEvents()
+        bindViewEvents()
+    }
+    
+    // MARK: - Private methods
+    
+    /// Setups all multi-peer related delegates, such as:
+    /// - `MCSessionDelegate`
+    /// - `MCNearbyServiceAdvertiserDelegate`
+    /// - `MCNearbyServiceBrowserDelegate`
+    private func setupDelegates() {
+        mcSession.delegate = self
+        serviceAdvertiser.delegate = self
+        serviceBrowser.delegate = self
+    }
+    
+    /// Bind all events from `containerView`.
+    private func bindViewEvents() {
+        containerView.didTapTransfer = { [weak self] in
+            print("clicked")
+            self?.serviceAdvertiser.startAdvertisingPeer()
+            self?.serviceBrowser.startBrowsingForPeers()
+        }
     }
 }
 
@@ -61,6 +118,12 @@ final class BlockchainViewController: UIViewController {
 
 extension BlockchainViewController {
     
+    /// Bind all events from blockchain`Transactor`:
+    /// - When blockchain creation is completed;
+    /// - When block chain is updated;
+    /// - When a transaction is created;
+    /// - When a new block is added to the blockchain;
+    /// - When finishes mining a block.
     func bindBlockchainEvents() {
         
         transactor.didCreateBlockchain = { blockchain in
@@ -72,7 +135,7 @@ extension BlockchainViewController {
         }
         
         transactor.didTransferCrypto = { [weak self] transaction in
-            self?.blockchainSession.broadcast(information: .newTransaction(transaction))
+            self?.broadcast(information: .newTransaction(transaction))
             print(transaction.message)
         }
         
@@ -85,24 +148,30 @@ extension BlockchainViewController {
         }
     }
     
+    /// Updates the stored blockchain with a received one (send by a connected peer) by
+    /// calling `updateBlockchain` method from `Transactor`.
+    /// - Parameter blockchain: The updated blockchain received from a peer.
     func updateBlockchain(with blockchain: Blockchain) {
         transactor.updateBlockchain(with: blockchain)
     }
     
+    /// Adds a new block to the blockchain by calling `addBlockToBlockchain` method from `Transactor`.
     func addBlockToBlockchain(block: Block) {
-        
         do {
             try transactor.addBlockToBlockchain(block: block)
-            
         } catch {
             print(error.localizedDescription)
         }
     }
     
+    /// Mines a received block from a connected peer by calling `mineBlock` method from `Transactor`.
+    /// - Parameter transaction: A received transaction available for mining.
     func mineBlock(transaction: Transaction) {
         transactor.mineBlock(transaction: transaction)
     }
     
+    /// Gets the current stored blockchain.
+    /// - Returns: Current `Blockchain` model.
     func getCurrentBlockchain() -> Blockchain {
         return transactor.blockchain
     }

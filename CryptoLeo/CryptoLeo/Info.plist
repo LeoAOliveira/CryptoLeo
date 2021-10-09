@@ -20,6 +20,13 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_cl-lo._tcp</string>
+		<string>_cl-lo._udp</string>
+	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>CryptoLeo uses the local network to discover blockchain peers around you.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
