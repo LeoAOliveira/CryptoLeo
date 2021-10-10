@@ -9,43 +9,56 @@ import Foundation
 import UIKit
 import MultipeerConnectivity
 
-enum SessionRole {
-    case host
-    case guest
-}
-
+/// Object responsible for controlling the multi-peer session lobby, both connectivity and interface. It communicates
+/// with nearby peers in the local network by implementing `MCNearbyService` delegate protocols.
 final class LobbyViewController: UIViewController {
     
     // MARK: - Private properties
     
+    /// Role that the user is playing in the current session.
     private let sessionRole: SessionRole
     
-    private let sessionDelegate: BlockchainSessionDelegate = BlockchainSessionDelegate()
-    
-    private let broadcaster: BlockchainBroadcaster
-    
-    /// Multi-peer session that enables the blockchain peer-to-peer communication.
-    private let mcSession: MCSession
+    /// User information modeled into `Peer` struct, containing the user's name and public key.
+    private let userPeer: Peer
     
     /// Identification of the peer in the multi-peer session. Is set as the `name` property of `Peer` model.
     private let peerID: MCPeerID
     
-    /// User information modeled into the `Peer` struct, containing the user's name and public key.
-    private let userPeer: Peer
+    /// Multi-peer session that enables the blockchain peer-to-peer communication.
+    private let mcSession: MCSession
     
-    /// Object in charge of advertising that the user is available for joining a nearby session. Through its delegate
-    /// (declared in *BlockchainSession.swift*) it handles invitations from other peers.
+    /// Object in charge of advertising that the user is available for joining a nearby session.
+    /// Through its delegate (declared in this class extension)  it handles invitations from other peers.
     private let serviceAdvertiser: MCNearbyServiceAdvertiser
     
-    /// Object in charge of browsing for available nearby peers to join the user's session. Through its delegate
-    /// (declared in *BlockchainSession.swift*) it handles discovered peers nearby.
+    /// Object in charge of browsing for available nearby peers to join the user's session.
+    /// Through its delegate (declared in this class extension) it handles discovered peers nearby.
     private let serviceBrowser: MCNearbyServiceBrowser
+    
+    /// Object that conforms with `MCSessionDelegate`. It's responsible for handling session-related events,
+    /// such as connected peers in the local network session and received data.
+    private let sessionDelegate = BlockchainSessionDelegate()
+    
+    /// Object responsible to broadcast blockchain-related events to all connected peers in the local network.
+    private let broadcaster: BlockchainBroadcaster
     
     /// View controlled by this class, responsible for the interface.
     private let containerView: LobbyView
     
     // MARK: - Initializers
     
+    /// Initializes a `LobbyViewController`.
+    ///
+    /// Initializes the object and the following properties:
+    /// - `peerID`: Identification of the peer in the multi-peer session.
+    /// -  `mcSession`: Multi-peer session that enables the blockchain peer-to-peer communication.
+    /// - `serviceAdvertiser`: Object in charge of advertising that the user is available for joining a nearby session.
+    /// -  `serviceBrowser`: Object in charge of browsing for available nearby peers to join the user's session.
+    /// -  `broadcaster`: Object responsible to broadcast blockchain-related events to all connected peers.
+    /// - `containerView`: View controlled by this class, responsible for the interface.
+    ///
+    /// - Parameter sessionRole: Role that the user is playing in the current session.
+    /// - Parameter userPeer: User information modeled into `Peer` struct.
     init(sessionRole: SessionRole, userPeer: Peer) {
         
         self.sessionRole = sessionRole
@@ -56,20 +69,23 @@ final class LobbyViewController: UIViewController {
                                    securityIdentity: nil,
                                    encryptionPreference: .required)
         
+        /// "cl-lo" stands for "CryptoLeo-LeonardoOliveira"
         self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: peerID,
                                                            discoveryInfo: nil,
                                                            serviceType: "cl-lo")
         
+        /// "cl-lo" stands for "CryptoLeo-LeonardoOliveira"
         self.serviceBrowser = MCNearbyServiceBrowser(peer: peerID,
                                                      serviceType: "cl-lo")
+        
+        self.broadcaster = BlockchainBroadcaster(mcSession: mcSession)
         
         self.containerView = LobbyView(sessionRole: sessionRole,
                                        mcSession: mcSession,
                                        userPeer: userPeer)
         
-        self.broadcaster = BlockchainBroadcaster(mcSession: mcSession)
-        
         super.init(nibName: nil, bundle: nil)
+        
         setup()
     }
     
@@ -86,6 +102,7 @@ final class LobbyViewController: UIViewController {
         view = containerView
     }
     
+    /// Configures the navigation bar when the view is loaded.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -95,6 +112,8 @@ final class LobbyViewController: UIViewController {
     
     // MARK: - Private methods
     
+    /// Setup the object by binding the container view events, attributing multi-peer related objects delegates, and
+    /// starts browsing (when user is the session host) or advertising (when user is a guest in session) for nearby peers.
     private func setup() {
         
         bindViewEvents()
@@ -111,19 +130,24 @@ final class LobbyViewController: UIViewController {
         }
     }
     
+    /// Binds all container view events.
     private func bindViewEvents() {
         
-        containerView.didTapStart = { [weak self] in
+        containerView.didStartSession = { [weak self] in
             self?.startSession()
         }
     }
     
-    private func acceptInvite() {
-        serviceAdvertiser.stopAdvertisingPeer()
-    }
-    
-    private func showInviteAlert(host: MCPeerID,
-                                 invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+    /// Presents an alert with an invitation to join a nearby session.
+    ///
+    /// Creates an `UIAlertController` with 2 actions:
+    /// - Accept: stops advertising peers nearby and calls `invitationHandler` with `true` and the current session.
+    /// - Decline: calls `invitationHandler` with `false`.
+    ///
+    /// - Parameter host: The `MCPeerID` of the session host.
+    /// - Parameter invitationHandler: Response to the invitation.
+    private func presentInviteAlert(host: MCPeerID,
+                                    invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         
         let alert = UIAlertController(title: "Convite de sessão",
                                       message: "Gostaria de ingressar na sessão de \(host.displayName)?",
@@ -135,7 +159,7 @@ final class LobbyViewController: UIViewController {
         
         let acceptAction = UIAlertAction(title: "Aceitar", style: .default) { [weak self] _ in
             guard let self = self else { return }
-            self.acceptInvite()
+            self.serviceAdvertiser.stopAdvertisingPeer()
             invitationHandler(true, self.mcSession)
         }
         
@@ -145,6 +169,10 @@ final class LobbyViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    /// Starts the blockchain session.
+    ///
+    /// Navigates to `BlockchainViewController` and, if the user is the session host, it stops
+    /// browsing for nearby peers and broadcast to the connected ones a "Start session" message.
     private func startSession() {
         
         if sessionRole == .host {
@@ -167,13 +195,13 @@ final class LobbyViewController: UIViewController {
 /// Basically, it deals with scenarios where the pair is looking for a session to join. The main scenario covered
 /// by this delegate is when invite to join a session arrives from another nearby peer.
 extension LobbyViewController: MCNearbyServiceAdvertiserDelegate {
-
+    
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser,
                     didReceiveInvitationFromPeer peerID: MCPeerID,
                     withContext context: Data?,
                     invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         
-        showInviteAlert(host: peerID, invitationHandler: invitationHandler)
+        presentInviteAlert(host: peerID, invitationHandler: invitationHandler)
     }
 }
 
@@ -184,7 +212,7 @@ extension LobbyViewController: MCNearbyServiceAdvertiserDelegate {
 /// 1. A new peer is discovered nearby and should be invited to join the session.
 /// 2. A nearby peer identified by the browser is lost.
 extension LobbyViewController: MCNearbyServiceBrowserDelegate {
-
+    
     func browser(_ browser: MCNearbyServiceBrowser,
                  foundPeer peerID: MCPeerID,
                  withDiscoveryInfo info: [String: String]?) {
@@ -192,7 +220,7 @@ extension LobbyViewController: MCNearbyServiceBrowserDelegate {
         print("ServiceBrowser found peer: \(peerID)")
         browser.invitePeer(peerID, to: mcSession, withContext: nil, timeout: 10)
     }
-
+    
     func browser(_ browser: MCNearbyServiceBrowser,
                  lostPeer peerID: MCPeerID) {
         

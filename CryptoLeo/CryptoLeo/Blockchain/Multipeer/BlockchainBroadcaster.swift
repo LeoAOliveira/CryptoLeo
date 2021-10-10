@@ -31,8 +31,8 @@ final class BlockchainBroadcaster {
     /// This method encodes the given `BroadcastInformation` to `Data` (with a `JSONEncoder`) and sends it
     /// to all connected peers.
     ///
-    /// - Parameter information: A `BroadcastInformation`, that can be the current `Blockchain` model,
-    /// a recently mined and added `Block` model or a recently created `Transaction`.
+    /// - Parameter information: A `BroadcastInformation`, that can be an updated `Blockchain` model,
+    /// a recently mined and added `Block` model, a recently created `Transaction` or a `String` custom message.
     func broadcast(information: BroadcastInformation) {
         
         var data: Data?

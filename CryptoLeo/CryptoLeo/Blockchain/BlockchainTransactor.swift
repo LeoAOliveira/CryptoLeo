@@ -28,6 +28,7 @@ final class BlockchainTransactor {
     /// Closure called when finishes to mine a given block.
     var didFinishMining: ((Block) -> Void)?
     
+    /// Closure called when proof-of-work value changes.
     var didUpdateProofOfWork: ((String) -> Void)?
     
     /// The blockchain it self, containing all the blocks.
@@ -43,10 +44,10 @@ final class BlockchainTransactor {
     
     // MARK: - Initializers
     
-    /// Initializes a `Transactor` by creating a blockchain and mining the genesis block (fist block to be added in the blockchain).
-    /// - Parameter blockchainName: Name for the blockchain.
-    /// - Parameter creator: Blockchain's creator.
-    /// - Parameter session: Multipeer session that enables the communication between the peers.
+    /// Initializes a `Transactor` by creating an empty blockchain. If `sessionRole` is `.host`
+    /// it starts mining the genesis block in a background thread (first block to be added in the blockchain).
+    /// - Parameter sessionRole: Role that the user has in the multi-peer session.
+    /// - Parameter userPeer: User information modeled into `Peer`.
     init(sessionRole: SessionRole, userPeer: Peer) {
         
         self.userPeer = userPeer
@@ -61,6 +62,12 @@ final class BlockchainTransactor {
     
     // MARK: - Internal methods
     
+    /// Updates the stored blockchain with a received updated version.
+    ///
+    /// If the incoming blockchain has more blocks than the currently stored blockchain, it updates the blockchain
+    /// and calls `didUpdateBlockchain` event closure with the updated blockchain as parameter.
+    ///
+    /// - Parameter incomingBlockchain: Received blockchain, sent by another connected peer.
     func updateBlockchain(with incomingBlockchain: Blockchain) {
         
         if incomingBlockchain.blocks.count > blockchain.blocks.count {
@@ -69,6 +76,18 @@ final class BlockchainTransactor {
         }
     }
     
+    /// Adds the given block to blockchain.
+    ///
+    /// This method validates 3 essential information before adding the given block to blockchain:
+    /// 1. Validates if there is a transaction stored inside the block. If it doesn't have one, a
+    /// `.blockDoesNotHaveStoredTransaction` error is thrown.
+    /// 2. Validates the veracity of the digital signature (using private-public key cryptography)
+    /// attached to the transaction. If is invalid, it throws a `transactionSignatureIsInvalid` error.
+    /// 3. Validates if the 5 first hash characters are all zeros, meaning that the block as been mined
+    /// as proof-of-work. If there aren't, a `.blockHasInvalidHash` error is thrown.
+    ///
+    /// - Parameter block: Received block, sent by another connected peer.
+    /// - throws: An `CryptoLeoError` describing the validation failure.
     func addBlockToBlockchain(block: Block) throws {
         
         guard let transaction = block.transaction else {
@@ -129,10 +148,11 @@ final class BlockchainTransactor {
     
     /// Performs computational work to mine a block.
     ///
-    /// This method mines a block by iterating a nonce util the hash of the block's key
-    /// (composed by index, previous block's hash, reward's message, transaction's message and nonce)
-    /// has four zeros as the first four characters. When the mining computational work is done, the
-    /// `completion` closure is called, passing the mined `Block` as parameter.
+    /// This method mines a block by iterating a nonce util the hash of the block's key (composed by index,
+    /// previous block's hash, reward's message, transaction's message and nonce) has 5 zeros as the first 5
+    /// characters. Due to this hash processing, is recommended to call this method in the background thread.
+    /// When the mining computational work is done, the resulting block is added to the blockchain and the
+    /// `didFinishMining` closure is called in the main thread, passing the mined `Block` as parameter.
     ///
     /// - Parameter transaction: Transaction to be included in the block.
     func mineBlock(transaction: Transaction) {
@@ -161,9 +181,15 @@ final class BlockchainTransactor {
         
         var blockHash = createHash(key: key)
         
-        while(!blockHash.hasPrefix(proofOfWork)) {
-            nonce += 1
-            blockHash = createHash(key: key)
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            
+            guard let proofOfWork = self?.proofOfWork else { return }
+            
+            while(!blockHash.hasPrefix(proofOfWork)) {
+                nonce += 1
+                guard let hash = self?.createHash(key: key) else { return }
+                blockHash = hash
+            }
         }
         
         let block = Block(index: index,
@@ -175,7 +201,10 @@ final class BlockchainTransactor {
                           nonce: nonce)
         
         blockchain.blocks.append(block)
-        didFinishMining?(block)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.didFinishMining?(block)
+        }
     }
     
     // MARK: - Private methods
@@ -284,8 +313,12 @@ final class BlockchainTransactor {
     
     /// Performs computational work to mine the genesis block.
     ///
-    /// This method mines the genesis block by iterating a nonce util the hash of the block's key
-    /// (composed by index, message and nonce) has four zeros as the first four characters.
+    /// This method mines the genesis block by iterating a nonce util the hash of the block's key (composed by index,
+    /// message and nonce) has 5 zeros as the first 5 characters. During the hash processing, the `didUpdateProofOfWork`
+    /// closure is called when the nonce is divisible by 5000. Due to this hash processing, is recommended to call this method in
+    /// the background thread. When the mining computational work is done, the resulting genesis block is added to the blockchain
+    /// and the `didCreateBlockchain` and `didUpdateProofOfWork` closures are called in the main thread, passing
+    /// the mined `Block` as parameter.
     ///
     /// - Parameter miner: Peer that will mine the genesis block.
     private func mineGenesisBlock(miner: Peer) {
@@ -301,6 +334,7 @@ final class BlockchainTransactor {
         var blockHash = createHash(key: key)
         
         while(!blockHash.hasPrefix(proofOfWork)) {
+            
             nonce += 1
             blockHash = createHash(key: key)
             

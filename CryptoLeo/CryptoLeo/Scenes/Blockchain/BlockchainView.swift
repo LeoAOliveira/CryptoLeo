@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+/// Object responsible for multi-peer blockchain session interface.
 final class BlockchainView: UIView {
     
     var didTapTransfer: (() -> Void)?

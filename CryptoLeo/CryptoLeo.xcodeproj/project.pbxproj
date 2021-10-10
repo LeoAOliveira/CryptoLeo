@@ -22,6 +22,7 @@
 		A7721FD9270D02FF00BB7FD5 /* BlockchainTransactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FD8270D02FF00BB7FD5 /* BlockchainTransactor.swift */; };
 		A7721FE9270D4F2700BB7FD5 /* BlockchainSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FE8270D4F2700BB7FD5 /* BlockchainSessionDelegate.swift */; };
 		A7721FEE270E837600BB7FD5 /* Blockchain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7721FED270E837600BB7FD5 /* Blockchain.swift */; };
+		A77310DA27133BA000C1FAC6 /* SessionRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310D927133BA000C1FAC6 /* SessionRole.swift */; };
 		A79F85E92710DD830043E432 /* BroadcastInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79F85E82710DD830043E432 /* BroadcastInformation.swift */; };
 		A7A1F0412711D139004F8F55 /* BlockchainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A1F0402711D139004F8F55 /* BlockchainView.swift */; };
 		A7A1F09E271245AA004F8F55 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A1F09D271245AA004F8F55 /* LobbyViewController.swift */; };
@@ -73,6 +74,7 @@
 		A7721FD8270D02FF00BB7FD5 /* BlockchainTransactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainTransactor.swift; sourceTree = "<group>"; };
 		A7721FE8270D4F2700BB7FD5 /* BlockchainSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainSessionDelegate.swift; sourceTree = "<group>"; };
 		A7721FED270E837600BB7FD5 /* Blockchain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blockchain.swift; sourceTree = "<group>"; };
+		A77310D927133BA000C1FAC6 /* SessionRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRole.swift; sourceTree = "<group>"; };
 		A79F85E82710DD830043E432 /* BroadcastInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastInformation.swift; sourceTree = "<group>"; };
 		A7A1F0402711D139004F8F55 /* BlockchainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainView.swift; sourceTree = "<group>"; };
 		A7A1F09D271245AA004F8F55 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
@@ -167,9 +169,8 @@
 			children = (
 				A7721FD5270BF34B00BB7FD5 /* Helpers */,
 				A79F85E52710B51E0043E432 /* Models */,
+				A77310D727133B5500C1FAC6 /* Multipeer */,
 				A7721FD8270D02FF00BB7FD5 /* BlockchainTransactor.swift */,
-				A79F85E82710DD830043E432 /* BroadcastInformation.swift */,
-				A7A1F0A827129700004F8F55 /* BlockchainBroadcaster.swift */,
 			);
 			path = Blockchain;
 			sourceTree = "<group>";
@@ -181,6 +182,35 @@
 				A7721FD6270BF3F100BB7FD5 /* Timestamp.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		A77310D727133B5500C1FAC6 /* Multipeer */ = {
+			isa = PBXGroup;
+			children = (
+				A77310DB27133C0000C1FAC6 /* Enums */,
+				A77310D827133B7100C1FAC6 /* Protocols */,
+				A7721FE8270D4F2700BB7FD5 /* BlockchainSessionDelegate.swift */,
+				A7A1F0A827129700004F8F55 /* BlockchainBroadcaster.swift */,
+			);
+			path = Multipeer;
+			sourceTree = "<group>";
+		};
+		A77310D827133B7100C1FAC6 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				A7A1F0AF27129881004F8F55 /* BlockchainDelegate.swift */,
+				A7A1F0AD27129863004F8F55 /* LobbyDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		A77310DB27133C0000C1FAC6 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				A77310D927133BA000C1FAC6 /* SessionRole.swift */,
+				A79F85E82710DD830043E432 /* BroadcastInformation.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		A79F85DE271091FC0043E432 /* Delegates */ = {
@@ -219,8 +249,6 @@
 			children = (
 				A756745D2702B088004438B5 /* BlockchainViewController.swift */,
 				A7A1F0402711D139004F8F55 /* BlockchainView.swift */,
-				A7721FE8270D4F2700BB7FD5 /* BlockchainSessionDelegate.swift */,
-				A7A1F0AF27129881004F8F55 /* BlockchainDelegate.swift */,
 			);
 			path = Blockchain;
 			sourceTree = "<group>";
@@ -230,7 +258,6 @@
 			children = (
 				A7A1F09D271245AA004F8F55 /* LobbyViewController.swift */,
 				A7A1F0A427124960004F8F55 /* LobbyView.swift */,
-				A7A1F0AD27129863004F8F55 /* LobbyDelegate.swift */,
 			);
 			path = Lobby;
 			sourceTree = "<group>";
@@ -378,6 +405,7 @@
 				A7A26535270A6D9B00C60947 /* CryptoLeoError.swift in Sources */,
 				A7A2652B270A0CB300C60947 /* Block.swift in Sources */,
 				A75674642702B088004438B5 /* CryptoLeo.xcdatamodeld in Sources */,
+				A77310DA27133BA000C1FAC6 /* SessionRole.swift in Sources */,
 				A7A1F09E271245AA004F8F55 /* LobbyViewController.swift in Sources */,
 				A7A1F0A527124960004F8F55 /* LobbyView.swift in Sources */,
 				A7721FD0270BD60400BB7FD5 /* Peer.swift in Sources */,
