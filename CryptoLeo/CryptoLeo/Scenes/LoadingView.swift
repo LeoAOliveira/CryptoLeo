@@ -72,7 +72,7 @@ final class LoadingView: UIView {
     
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "SFMono-Regular", size: 17)
+        label.font = .preferredFont(forTextStyle: .body)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = .label

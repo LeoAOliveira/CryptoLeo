@@ -315,7 +315,7 @@ final class BlockchainTransactor {
     ///
     /// This method mines the genesis block by iterating a nonce util the hash of the block's key (composed by index,
     /// message and nonce) has 5 zeros as the first 5 characters. During the hash processing, the `didUpdateProofOfWork`
-    /// closure is called when the nonce is divisible by 5000. Due to this hash processing, is recommended to call this method in
+    /// closure is called when the nonce is divisible by 10000. Due to this hash processing, is recommended to call this method in
     /// the background thread. When the mining computational work is done, the resulting genesis block is added to the blockchain
     /// and the `didCreateBlockchain` and `didUpdateProofOfWork` closures are called in the main thread, passing
     /// the mined `Block` as parameter.
@@ -338,7 +338,7 @@ final class BlockchainTransactor {
             nonce += 1
             blockHash = createHash(key: key)
             
-            if nonce % 5000 == 0 {
+            if nonce % 10000 == 0 {
                 DispatchQueue.main.async { [weak self] in
                     self?.didUpdateProofOfWork?("\(blockHash.prefix(5))")
                 }
