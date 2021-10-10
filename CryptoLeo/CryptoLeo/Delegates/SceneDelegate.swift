@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CryptoKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,9 +19,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         
+        let privateKey = Curve25519.Signing.PrivateKey()
+        let publicKey = privateKey.publicKey.rawRepresentation
+        
+        let user = Peer(name: "Leo", publicKey: publicKey)
+        let rootViewController = LobbyViewController(sessionRole: .host, userPeer: user)
+
+//        let user = Peer(name: "Leonardo", publicKey: publicKey)
+//        let rootViewController = LobbyViewController(sessionRole: .guest, userPeer: user)
+        
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = ViewController()
-        window?.makeKeyAndVisible()
+        window?.rootViewController = navigationController
+        window?.isHidden = false
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

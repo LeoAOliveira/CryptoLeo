@@ -1,5 +1,5 @@
 //
-//  Transactor.swift
+//  BlockchainTransactor.swift
 //  CryptoLeo
 //
 //  Created by Leonardo Oliveira on 05/10/21.
@@ -7,53 +7,117 @@
 
 import Foundation
 import CryptoKit
-import MultipeerConnectivity
 
 /// Object responsible to intermediate cryptocurrency transactions and to mine blocks into the blockchain.
-final class Transactor {
+final class BlockchainTransactor {
     
     // MARK: - Internal properties
     
     /// Closure called when peer finishes to mine the genesis block, creating the blockchain.
-    var didCreateBlockchain: (() -> Void)?
+    var didCreateBlockchain: ((Block) -> Void)?
+    
+    /// Closure called when the blockchain is updated.
+    var didUpdateBlockchain: ((Blockchain) -> Void)?
     
     /// Closure called when cryptocurrency transaction is completed.
-    var didTransferCrypto: (() -> Void)?
+    var didTransferCrypto: ((Transaction) -> Void)?
+    
+    /// Closure called when a new block is added to blockchain.
+    var didAddNewBlock: ((Block) -> Void)?
     
     /// Closure called when finishes to mine a given block.
-    var didFinishMining: (() -> Void)?
+    var didFinishMining: ((Block) -> Void)?
+    
+    /// Closure called when proof-of-work value changes.
+    var didUpdateProofOfWork: ((String) -> Void)?
+    
+    /// The blockchain it self, containing all the blocks.
+    private(set) var blockchain: Blockchain
     
     // MARK: - Private properties
     
-    /// The blockchain it self, containing all the blocks.
-    private var blockchain: Blockchain
-    
-    /// Multipeer session that enables the communication between the peers.
-    private let session: MCSession
-    
     /// Number of zeros as hash's first characters, proof that the block has being mined (computational work put into to it),
-    private let proofOfWork: String = "0000"
+    private let proofOfWork: String = "00000"
+    
+    /// User information modeled into the `Peer` struct, containing the user's name and public key.
+    private let userPeer: Peer
     
     // MARK: - Initializers
     
-    /// Initializes a Transactor by creating a blockchain and mining the genesis block (fist block to be added in the blockchain).
-    /// - Parameter name: Name for the blockchain.
-    /// - Parameter creator: Blockchain's creator.
-    /// - Parameter session: Multipeer session that enables the communication between the peers.
-    init(name: String, creator: Peer, session: MCSession) {
-        self.blockchain = Blockchain(name: name, blocks: [])
-        self.session = session
-        createGenesisBlock(miner: creator)
+    /// Initializes a `Transactor` by creating an empty blockchain. If `sessionRole` is `.host`
+    /// it starts mining the genesis block in a background thread (first block to be added in the blockchain).
+    /// - Parameter sessionRole: Role that the user has in the multi-peer session.
+    /// - Parameter userPeer: User information modeled into `Peer`.
+    init(sessionRole: SessionRole, userPeer: Peer) {
+        
+        self.userPeer = userPeer
+        self.blockchain = Blockchain(name: "Blockchain", blocks: [])
+        
+        if sessionRole == .host {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                self?.mineGenesisBlock(miner: userPeer)
+            }
+        }
     }
     
     // MARK: - Internal methods
+    
+    /// Updates the stored blockchain with a received updated version.
+    ///
+    /// If the incoming blockchain has more blocks than the currently stored blockchain, it updates the blockchain
+    /// and calls `didUpdateBlockchain` event closure with the updated blockchain as parameter.
+    ///
+    /// - Parameter incomingBlockchain: Received blockchain, sent by another connected peer.
+    func updateBlockchain(with incomingBlockchain: Blockchain) {
+        
+        if incomingBlockchain.blocks.count > blockchain.blocks.count {
+            blockchain = incomingBlockchain
+            didUpdateBlockchain?(blockchain)
+        }
+    }
+    
+    /// Adds the given block to blockchain.
+    ///
+    /// This method validates 3 essential information before adding the given block to blockchain:
+    /// 1. Validates if there is a transaction stored inside the block. If it doesn't have one, a
+    /// `.blockDoesNotHaveStoredTransaction` error is thrown.
+    /// 2. Validates the veracity of the digital signature (using private-public key cryptography)
+    /// attached to the transaction. If is invalid, it throws a `transactionSignatureIsInvalid` error.
+    /// 3. Validates if the 5 first hash characters are all zeros, meaning that the block as been mined
+    /// as proof-of-work. If there aren't, a `.blockHasInvalidHash` error is thrown.
+    ///
+    /// - Parameter block: Received block, sent by another connected peer.
+    /// - throws: An `CryptoLeoError` describing the validation failure.
+    func addBlockToBlockchain(block: Block) throws {
+        
+        guard let transaction = block.transaction else {
+            throw CryptoLeoError.blockDoesNotHaveStoredTransaction
+        }
+        
+        let messageData = Data(transaction.message.utf8)
+        let signature = transaction.signature
+        let senderPublicKey = transaction.sender.publicKey
+        
+        guard let publicKey = try? Curve25519.Signing.PublicKey(rawRepresentation: senderPublicKey),
+              publicKey.isValidSignature(signature, for: messageData) else {
+            
+            throw CryptoLeoError.transactionSignatureIsInvalid
+        }
+        
+        guard block.hash.hasPrefix(proofOfWork) else {
+            throw CryptoLeoError.blockHasInvalidHash
+        }
+        
+        blockchain.blocks.append(block)
+        didAddNewBlock?(block)
+    }
     
     /// Sends a cryptocurrency transaction to another peer.
     ///
     /// First, this method fetches the sender `Peer` model and it's personal private key from the `UserDefaults`.
     /// Then, a `Transaction` model is created, secured with a private-public key cryptographic signature.
     /// If `mineOwnBlock` parameter is `true`, the sender `Peer` will mine the own block.
-    /// Else, the connected miners in the multipeer session will be communicated that a new block is available for mining.
+    /// Else, the connected miners in the multi-peer session will be communicated that a new block is available for mining.
     ///
     /// - Parameter amount: Amount of cryptocurrency to be transfer.
     /// - Parameter receiver: Peer that will receive the amount to be transferred.
@@ -75,43 +139,37 @@ final class Transactor {
         }
         
         if mineOwnBlock {
+            mineBlock(transaction: transaction)
             
-            print("MINING BLOCK...\n\n")
-            
-            mineBlock(miner: sender, transaction: transaction) { [weak self] block in
-                
-                self?.blockchain.blocks.append(block)
-                
-                print("BLOCKCHAIN:\n")
-                for block in blockchain.blocks {
-                    print("\(block.key)\n")
-                }
-            }
+        } else {
+            didTransferCrypto?(transaction)
         }
     }
     
     /// Performs computational work to mine a block.
     ///
-    /// This method mines a block by iterating a nonce util the hash of the block's key
-    /// (composed by index, previous block's hash, reward's message, transaction's message and nonce)
-    /// has four zeros as the first four characters. When the mining computational work is done, the
-    /// `completion` closure is called, passing the mined `Block` as parameter.
+    /// This method mines a block by iterating a nonce util the hash of the block's key (composed by index,
+    /// previous block's hash, reward's message, transaction's message and nonce) has 5 zeros as the first 5
+    /// characters. Due to this hash processing, is recommended to call this method in the background thread.
+    /// When the mining computational work is done, the resulting block is added to the blockchain and the
+    /// `didFinishMining` closure is called in the main thread, passing the mined `Block` as parameter.
     ///
-    ///
-    /// - Parameter miner: Peer that will mine the block.
     /// - Parameter transaction: Transaction to be included in the block.
-    /// - Parameter completion: Block resulted from the computational work.
-    func mineBlock(miner: Peer,
-                   transaction: Transaction,
-                   completion: (Block) -> Void) {
+    func mineBlock(transaction: Transaction) {
         
         var nonce = 0
         
         let blocks = blockchain.blocks
         let previousHash = blocks[blocks.count-1].hash
         let index = blocks.count
-        let message = "\(miner.name) gets L$ 5.00 for mining the block on \(Timestamp.string())"
-        let reward = Reward(miner: miner, message: message)
+        let timestamp = Timestamp.string()
+        let message = "\(userPeer.name) gets L$ 5.00 for mining the block on \(timestamp)"
+        
+        let reward = Reward(miner: userPeer,
+                            amount: 5,
+                            timestamp: timestamp,
+                            message: message)
+        
         let ledger = createLedger(index: index,
                                   previousHash: previousHash,
                                   rewardMessage: reward.message,
@@ -123,9 +181,15 @@ final class Transactor {
         
         var blockHash = createHash(key: key)
         
-        while(!blockHash.hasPrefix(proofOfWork)) {
-            nonce += 1
-            blockHash = createHash(key: key)
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            
+            guard let proofOfWork = self?.proofOfWork else { return }
+            
+            while(!blockHash.hasPrefix(proofOfWork)) {
+                nonce += 1
+                guard let hash = self?.createHash(key: key) else { return }
+                blockHash = hash
+            }
         }
         
         let block = Block(index: index,
@@ -136,7 +200,11 @@ final class Transactor {
                           key: key,
                           nonce: nonce)
         
-        completion(block)
+        blockchain.blocks.append(block)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.didFinishMining?(block)
+        }
     }
     
     // MARK: - Private methods
@@ -167,6 +235,7 @@ final class Transactor {
         return Transaction(sender: sender,
                            receiver: receiver,
                            amount: amount,
+                           timestamp: Timestamp.string(),
                            message: message,
                            signature: signature)
     }
@@ -242,30 +311,17 @@ final class Transactor {
         return hash
     }
     
-    /// Creates the blockchain's genesis block.
-    ///
-    /// Mines the genesis block and, when it's done, adds it to the empty
-    /// blockchain and calls `didCreateBlockchain` closure.
-    ///
-    /// - Parameter miner: Peer that will mine the genesis block.
-    private func createGenesisBlock(miner: Peer) {
-        
-        mineGenesisBlock(miner: miner) { [weak self] block in
-            self?.blockchain.blocks.append(block)
-            self?.didCreateBlockchain?()
-        }
-    }
-    
     /// Performs computational work to mine the genesis block.
     ///
-    /// This method mines the genesis block by iterating a nonce util the hash of the block's key
-    /// (composed by index, message and nonce) has four zeros as the first four characters.
-    /// When the mining computational work is done, the `completion` closure is called,
-    /// passing the mined `Block` as parameter.
+    /// This method mines the genesis block by iterating a nonce util the hash of the block's key (composed by index,
+    /// message and nonce) has 5 zeros as the first 5 characters. During the hash processing, the `didUpdateProofOfWork`
+    /// closure is called when the nonce is divisible by 10000. Due to this hash processing, is recommended to call this method in
+    /// the background thread. When the mining computational work is done, the resulting genesis block is added to the blockchain
+    /// and the `didCreateBlockchain` and `didUpdateProofOfWork` closures are called in the main thread, passing
+    /// the mined `Block` as parameter.
     ///
     /// - Parameter miner: Peer that will mine the genesis block.
-    /// - Parameter completion: Genesis block resulted from the computational work.
-    private func mineGenesisBlock(miner: Peer, completion: (Block) -> Void) {
+    private func mineGenesisBlock(miner: Peer) {
         
         let ledger = "Index: 0\nMessage: Genesis Block, created by \(miner.name) on \(Timestamp.string())\n"
         
@@ -278,8 +334,15 @@ final class Transactor {
         var blockHash = createHash(key: key)
         
         while(!blockHash.hasPrefix(proofOfWork)) {
+            
             nonce += 1
             blockHash = createHash(key: key)
+            
+            if nonce % 10000 == 0 {
+                DispatchQueue.main.async { [weak self] in
+                    self?.didUpdateProofOfWork?("\(blockHash.prefix(5))")
+                }
+            }
         }
         
         let genesisBlock = Block(index: 0,
@@ -290,6 +353,11 @@ final class Transactor {
                                  key: key,
                                  nonce: nonce)
         
-        completion(genesisBlock)
+        blockchain.blocks.append(genesisBlock)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.didUpdateProofOfWork?("\(blockHash.prefix(5))\nem \(nonce) iterações")
+            self?.didCreateBlockchain?(genesisBlock)
+        }
     }
 }

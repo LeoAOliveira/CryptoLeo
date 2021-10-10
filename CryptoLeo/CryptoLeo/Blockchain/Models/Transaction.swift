@@ -15,7 +15,7 @@ import Foundation
 /// - **Timestamp**: Date and time of the transaction.
 /// - **Message**: Description of the transaction.
 /// - **Signature**: Unique digital signature (private-public key cryptography) that signed the transaction.
-struct Transaction {
+struct Transaction: Codable, Equatable {
     
     /// Peer that is sending the cryptocurrency.
     let sender: Peer
@@ -27,7 +27,7 @@ struct Transaction {
     let amount: Double
     
     /// When the transaction is being made.
-    let timestamp: String = Timestamp.string()
+    let timestamp: String
     
     /// Transaction message.
     let message: String
