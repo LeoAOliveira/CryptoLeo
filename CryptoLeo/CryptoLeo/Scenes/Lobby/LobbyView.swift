@@ -63,16 +63,12 @@ final class LobbyView: UIView {
         addConstraints()
         addActions()
         backgroundColor = .tertiarySystemBackground
+        startButton.isHidden = true
     }
     
     private func buildView() {
-        
         addSubview(tableView)
-        
-        if sessionRole == .host {
-            addSubview(startButton)
-            startButton.isHidden = true
-        }
+        addSubview(startButton)
     }
     
     private func addConstraints() {
@@ -81,10 +77,9 @@ final class LobbyView: UIView {
         startButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            
             tableView.topAnchor.constraint(equalTo: topAnchor),
             tableView.leftAnchor.constraint(equalTo: leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: rightAnchor),
+            tableView.rightAnchor.constraint(equalTo: rightAnchor)
         ])
         
         if sessionRole == .host {
@@ -94,19 +89,25 @@ final class LobbyView: UIView {
                 startButton.heightAnchor.constraint(equalToConstant: 40),
                 startButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
                 startButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -20),
-                startButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -40),
+                startButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -40)
             ])
             
         } else {
             
             NSLayoutConstraint.activate([
-                tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+                tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
         }
     }
     
     private func addActions() {
         startButton.addTarget(self, action: #selector(startButtonHandler), for: .touchUpInside)
+    }
+    
+    private func configureStartButton() {
+        if sessionRole == .host {
+            startButton.isHidden = mcSession.connectedPeers.count < 1
+        }
     }
     
     @objc
@@ -157,11 +158,17 @@ extension LobbyView: UITableViewDataSource, UITableViewDelegate {
 
 extension LobbyView: LobbyDelegate {
     
+    func startSession() {
+        DispatchQueue.main.async { [weak self] in
+            self?.didTapStart?()
+        }
+    }
+    
     func connectNewPeerToSession() {
         
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
-            self?.startButton.isHidden = (self?.mcSession.connectedPeers.count ?? 0) < 1
+            self?.configureStartButton()
         }
     }
 }

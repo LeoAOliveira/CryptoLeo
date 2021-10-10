@@ -21,8 +21,13 @@ final class BlockchainView: UIView {
         let button = UIButton()
         button.setTitle("Transferir", for: .normal)
         button.setTitleColor(.blue, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+    
+    private let loadingView: LoadingView = {
+        let view = LoadingView()
+        view.isHidden = true
+        return view
     }()
     
     override init(frame: CGRect) {
@@ -35,6 +40,29 @@ final class BlockchainView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setGenesisBlockLoading(isHidden: Bool, sessionRole: SessionRole? = nil) {
+        
+        loadingView.isHidden = isHidden
+        
+        guard let role = sessionRole else {
+            return
+        }
+        
+        if role == .host {
+            loadingView.titleText = "Minerando o bloco gênesis"
+        
+        } else {
+            loadingView.titleText = "O host está minerando o bloco gênesis"
+        }
+    }
+    
+    func updateLoadingProofOfWork(message: String) {
+        
+        if !loadingView.isHidden {
+            loadingView.subtitleText = message
+        }
+    }
+    
     private func setup() {
         backgroundColor = .white
         buildView()
@@ -44,11 +72,21 @@ final class BlockchainView: UIView {
     
     private func buildView() {
         addSubview(button)
+        addSubview(loadingView)
     }
     
     private func addConstraints() {
         
+        button.translatesAutoresizingMaskIntoConstraints = false
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
+            
+            loadingView.topAnchor.constraint(equalTo: topAnchor),
+            loadingView.leftAnchor.constraint(equalTo: leftAnchor),
+            loadingView.rightAnchor.constraint(equalTo: rightAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
             button.centerXAnchor.constraint(equalTo: centerXAnchor),
             button.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])

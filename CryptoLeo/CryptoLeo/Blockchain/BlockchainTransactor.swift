@@ -14,7 +14,7 @@ final class BlockchainTransactor {
     // MARK: - Internal properties
     
     /// Closure called when peer finishes to mine the genesis block, creating the blockchain.
-    var didCreateBlockchain: ((Blockchain) -> Void)?
+    var didCreateBlockchain: ((Block) -> Void)?
     
     /// Closure called when the blockchain is updated.
     var didUpdateBlockchain: ((Blockchain) -> Void)?
@@ -28,13 +28,15 @@ final class BlockchainTransactor {
     /// Closure called when finishes to mine a given block.
     var didFinishMining: ((Block) -> Void)?
     
+    var didUpdateProofOfWork: ((String) -> Void)?
+    
     /// The blockchain it self, containing all the blocks.
     private(set) var blockchain: Blockchain
     
     // MARK: - Private properties
     
     /// Number of zeros as hash's first characters, proof that the block has being mined (computational work put into to it),
-    private let proofOfWork: String = "0000"
+    private let proofOfWork: String = "00000"
     
     /// User information modeled into the `Peer` struct, containing the user's name and public key.
     private let userPeer: Peer
@@ -45,19 +47,16 @@ final class BlockchainTransactor {
     /// - Parameter blockchainName: Name for the blockchain.
     /// - Parameter creator: Blockchain's creator.
     /// - Parameter session: Multipeer session that enables the communication between the peers.
-    init(blockchainName: String, userPeer: Peer) {
+    init(sessionRole: SessionRole, userPeer: Peer) {
+        
         self.userPeer = userPeer
-        self.blockchain = Blockchain(name: blockchainName, blocks: [])
-        createGenesisBlock(miner: userPeer)
-    }
-    
-    /// Initializes a `Transactor` by creating a blockchain and mining the genesis block (fist block to be added in the blockchain).
-    /// - Parameter blockchainName: Name for the blockchain.
-    /// - Parameter creator: Blockchain's creator.
-    /// - Parameter session: Multipeer session that enables the communication between the peers.
-    init(userPeer: Peer) {
-        self.userPeer = userPeer
-        self.blockchain = Blockchain(name: "", blocks: [])
+        self.blockchain = Blockchain(name: "Blockchain", blocks: [])
+        
+        if sessionRole == .host {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                self?.mineGenesisBlock(miner: userPeer)
+            }
+        }
     }
     
     // MARK: - Internal methods
@@ -283,30 +282,13 @@ final class BlockchainTransactor {
         return hash
     }
     
-    /// Creates the blockchain's genesis block.
-    ///
-    /// Mines the genesis block and, when it's done, adds it to the empty
-    /// blockchain and calls `didCreateBlockchain` closure.
-    ///
-    /// - Parameter miner: Peer that will mine the genesis block.
-    private func createGenesisBlock(miner: Peer) {
-        
-        mineGenesisBlock(miner: miner) { [weak self] block in
-            self?.blockchain.blocks.append(block)
-            self?.didCreateBlockchain?(blockchain)
-        }
-    }
-    
     /// Performs computational work to mine the genesis block.
     ///
     /// This method mines the genesis block by iterating a nonce util the hash of the block's key
     /// (composed by index, message and nonce) has four zeros as the first four characters.
-    /// When the mining computational work is done, the `completion` closure is called,
-    /// passing the mined `Block` as parameter.
     ///
     /// - Parameter miner: Peer that will mine the genesis block.
-    /// - Parameter completion: Genesis block resulted from the computational work.
-    private func mineGenesisBlock(miner: Peer, completion: (Block) -> Void) {
+    private func mineGenesisBlock(miner: Peer) {
         
         let ledger = "Index: 0\nMessage: Genesis Block, created by \(miner.name) on \(Timestamp.string())\n"
         
@@ -321,6 +303,12 @@ final class BlockchainTransactor {
         while(!blockHash.hasPrefix(proofOfWork)) {
             nonce += 1
             blockHash = createHash(key: key)
+            
+            if nonce % 10000 == 0 {
+                DispatchQueue.main.async { [weak self] in
+                    self?.didUpdateProofOfWork?("\(blockHash.prefix(5))")
+                }
+            }
         }
         
         let genesisBlock = Block(index: 0,
@@ -331,6 +319,11 @@ final class BlockchainTransactor {
                                  key: key,
                                  nonce: nonce)
         
-        completion(genesisBlock)
+        blockchain.blocks.append(genesisBlock)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.didUpdateProofOfWork?("\(blockHash.prefix(5))\nem \(nonce) iterações")
+            self?.didCreateBlockchain?(genesisBlock)
+        }
     }
 }

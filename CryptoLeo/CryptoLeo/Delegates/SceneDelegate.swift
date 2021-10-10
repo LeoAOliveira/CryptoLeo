@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let user = Peer(name: "Leo", publicKey: publicKey)
         let rootViewController = LobbyViewController(sessionRole: .host, userPeer: user)
-        
+
 //        let user = Peer(name: "Leonardo", publicKey: publicKey)
 //        let rootViewController = LobbyViewController(sessionRole: .guest, userPeer: user)
         

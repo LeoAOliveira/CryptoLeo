@@ -22,6 +22,8 @@ final class LobbyViewController: UIViewController {
     
     private let sessionDelegate: BlockchainSessionDelegate = BlockchainSessionDelegate()
     
+    private let broadcaster: BlockchainBroadcaster
+    
     /// Multi-peer session that enables the blockchain peer-to-peer communication.
     private let mcSession: MCSession
     
@@ -64,6 +66,8 @@ final class LobbyViewController: UIViewController {
         self.containerView = LobbyView(sessionRole: sessionRole,
                                        mcSession: mcSession,
                                        userPeer: userPeer)
+        
+        self.broadcaster = BlockchainBroadcaster(mcSession: mcSession)
         
         super.init(nibName: nil, bundle: nil)
         setup()
@@ -145,11 +149,14 @@ final class LobbyViewController: UIViewController {
         
         if sessionRole == .host {
             serviceBrowser.stopBrowsingForPeers()
+            broadcaster.broadcast(information: .message("Start session"))
         }
         
         let controller = BlockchainViewController(sessionDelegate: sessionDelegate,
                                                   mcSession: mcSession,
-                                                  userPeer: userPeer)
+                                                  broadcaster: broadcaster,
+                                                  userPeer: userPeer,
+                                                  sessionRole: sessionRole)
         
         navigationController?.pushViewController(controller, animated: true)
     }

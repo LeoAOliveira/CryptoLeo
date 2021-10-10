@@ -61,15 +61,17 @@ final class BlockchainSessionDelegate: NSObject, MCSessionDelegate {
     /// - Parameter data: The received information.
     private func decodeReceivedData(data: Data) {
         
-        if let blockchain = try? JSONDecoder().decode(Blockchain.self, from: data) {
+        if let startSessionString = String(data: data, encoding: .utf8),
+           startSessionString.contains("Start session") {
+            lobbyDelegate?.startSession()
+            
+        } else if let blockchain = try? JSONDecoder().decode(Blockchain.self, from: data) {
             blockchainDelegate?.updateBlockchain(with: blockchain)
-        }
-        
-        if let block = try? JSONDecoder().decode(Block.self, from: data) {
+            
+        } else if let block = try? JSONDecoder().decode(Block.self, from: data) {
             blockchainDelegate?.addBlockToBlockchain(block: block)
-        }
-        
-        if let transaction = try? JSONDecoder().decode(Transaction.self, from: data) {
+            
+        } else if let transaction = try? JSONDecoder().decode(Transaction.self, from: data) {
             blockchainDelegate?.mineBlock(transaction: transaction)
         }
     }

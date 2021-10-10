@@ -9,4 +9,5 @@ import Foundation
 
 protocol LobbyDelegate: AnyObject {
     func connectNewPeerToSession()
+    func startSession()
 }

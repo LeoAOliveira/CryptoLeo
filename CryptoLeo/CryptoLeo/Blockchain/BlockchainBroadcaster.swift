@@ -39,7 +39,7 @@ final class BlockchainBroadcaster {
         
         switch information {
         
-        case .currentBlockchain(let blockchain):
+        case .updatedBlockchain(let blockchain):
             data = try? JSONEncoder().encode(blockchain)
             
         case .newBlock(let block):
@@ -47,6 +47,9 @@ final class BlockchainBroadcaster {
             
         case .newTransaction(let transaction):
             data = try? JSONEncoder().encode(transaction)
+        
+        case .message(let message):
+            data = try? JSONEncoder().encode(message)
         }
         
         guard let broadcastData = data else {

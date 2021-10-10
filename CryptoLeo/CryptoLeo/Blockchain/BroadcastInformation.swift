@@ -15,8 +15,11 @@ import Foundation
 /// - Newt `Transaction` available for mining.
 enum BroadcastInformation {
     
-    /// Currently stored `Blockchain`.
-    case currentBlockchain(Blockchain)
+    /// A custom `String` message.
+    case message(String)
+    
+    /// Updated `Blockchain`.
+    case updatedBlockchain(Blockchain)
     
     /// Recently mined and added `Block`.
     case newBlock(Block)

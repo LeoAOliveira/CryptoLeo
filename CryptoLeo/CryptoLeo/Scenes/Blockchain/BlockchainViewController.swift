@@ -16,6 +16,8 @@ final class BlockchainViewController: UIViewController {
     /// Multi-peer session that enables the blockchain peer-to-peer communication.
     private let mcSession: MCSession
     
+    private let sessionRole: SessionRole
+    
     private let sessionDelegate: BlockchainSessionDelegate
     
     private let broadcaster: BlockchainBroadcaster
@@ -34,13 +36,18 @@ final class BlockchainViewController: UIViewController {
     /// Initializes a `BlockchainViewController`.
     /// - Parameter blockchainName: Name for the blockchain.
     /// - Parameter creator: User information modeled into the `Peer` struct.
-    init(sessionDelegate: BlockchainSessionDelegate, mcSession: MCSession, userPeer: Peer) {
+    init(sessionDelegate: BlockchainSessionDelegate,
+         mcSession: MCSession,
+         broadcaster: BlockchainBroadcaster,
+         userPeer: Peer,
+         sessionRole: SessionRole) {
         
         self.sessionDelegate = sessionDelegate
         self.mcSession = mcSession
         self.userPeer = userPeer
-        self.transactor = BlockchainTransactor(blockchainName: "Blockchain", userPeer: userPeer)
-        self.broadcaster = BlockchainBroadcaster(mcSession: mcSession)
+        self.sessionRole = sessionRole
+        self.transactor = BlockchainTransactor(sessionRole: sessionRole, userPeer: userPeer)
+        self.broadcaster = broadcaster
         
         super.init(nibName: nil, bundle: nil)
         setup()
@@ -57,6 +64,11 @@ final class BlockchainViewController: UIViewController {
     /// Loads the view as the container view (of type `BlockchainView`).
     override func loadView() {
         view = containerView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        containerView.setGenesisBlockLoading(isHidden: false, sessionRole: sessionRole)
     }
     
     // MARK: - Private methods
@@ -83,8 +95,10 @@ final class BlockchainViewController: UIViewController {
     /// - When finishes mining a block.
     func bindBlockchainEvents() {
         
-        transactor.didCreateBlockchain = { blockchain in
-            print("\(blockchain.name) created")
+        transactor.didCreateBlockchain = { [weak self] block in
+            self?.broadcaster.broadcast(information: .newBlock(block))
+            self?.containerView.setGenesisBlockLoading(isHidden: true)
+            print("Blockchain created and genesis block mined")
         }
         
         transactor.didUpdateBlockchain = { blockchain in
@@ -102,6 +116,10 @@ final class BlockchainViewController: UIViewController {
         
         transactor.didFinishMining = { block in
             print("Finished mining: \(block.hash)")
+        }
+        
+        transactor.didUpdateProofOfWork = { [weak self] message in
+            self?.containerView.updateLoadingProofOfWork(message: message)
         }
     }
 }
@@ -121,6 +139,7 @@ extension BlockchainViewController: BlockchainDelegate {
     func addBlockToBlockchain(block: Block) {
         do {
             try transactor.addBlockToBlockchain(block: block)
+            containerView.setGenesisBlockLoading(isHidden: true)
         } catch {
             print(error.localizedDescription)
         }
