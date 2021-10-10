@@ -139,9 +139,12 @@ extension BlockchainViewController: BlockchainDelegate {
     func addBlockToBlockchain(block: Block) {
         do {
             try transactor.addBlockToBlockchain(block: block)
-            containerView.setGenesisBlockLoading(isHidden: true)
         } catch {
             print(error.localizedDescription)
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.containerView.setGenesisBlockLoading(isHidden: true)
         }
     }
     

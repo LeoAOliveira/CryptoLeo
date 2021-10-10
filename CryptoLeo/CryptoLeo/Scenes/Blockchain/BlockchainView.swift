@@ -50,9 +50,11 @@ final class BlockchainView: UIView {
         
         if role == .host {
             loadingView.titleText = "Minerando o bloco gênesis"
+            loadingView.activityIndicatorIsHidden = true
         
         } else {
             loadingView.titleText = "O host está minerando o bloco gênesis"
+            loadingView.activityIndicatorIsHidden = false
         }
     }
     

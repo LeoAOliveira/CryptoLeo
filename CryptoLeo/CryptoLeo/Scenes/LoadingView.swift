@@ -24,6 +24,30 @@ final class LoadingView: UIView {
         }
     }
     
+    var activityIndicatorIsHidden: Bool = false {
+        
+        didSet {
+            if activityIndicatorIsHidden {
+                activityIndicator.stopAnimating()
+            } else {
+                activityIndicator.startAnimating()
+            }
+        }
+    }
+    
+    override var isHidden: Bool {
+        
+        didSet {
+            if isHidden {
+                activityIndicator.stopAnimating()
+            } else {
+                activityIndicator.startAnimating()
+            }
+        }
+    }
+    
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    
     private let blurEffectView: UIVisualEffectView = {
         let effect = UIBlurEffect(style: .regular)
         return UIVisualEffectView(effect: effect)
@@ -61,6 +85,10 @@ final class LoadingView: UIView {
         setup()
     }
     
+    deinit {
+        activityIndicator.stopAnimating()
+    }
+    
     /// Unavailable required initializer.
     @available(*, unavailable)
     required init?(coder: NSCoder) {
@@ -75,6 +103,7 @@ final class LoadingView: UIView {
     private func buildView() {
         addSubview(blurEffectView)
         addSubview(stackView)
+        stackView.addArrangedSubview(activityIndicator)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(subtitleLabel)
     }
@@ -83,8 +112,9 @@ final class LoadingView: UIView {
         
         blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             

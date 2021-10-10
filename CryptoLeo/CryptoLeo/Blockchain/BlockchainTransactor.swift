@@ -304,7 +304,7 @@ final class BlockchainTransactor {
             nonce += 1
             blockHash = createHash(key: key)
             
-            if nonce % 10000 == 0 {
+            if nonce % 5000 == 0 {
                 DispatchQueue.main.async { [weak self] in
                     self?.didUpdateProofOfWork?("\(blockHash.prefix(5))")
                 }
