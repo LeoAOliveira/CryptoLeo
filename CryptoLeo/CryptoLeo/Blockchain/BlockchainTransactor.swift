@@ -1,5 +1,5 @@
 //
-//  Transactor.swift
+//  BlockchainTransactor.swift
 //  CryptoLeo
 //
 //  Created by Leonardo Oliveira on 05/10/21.
@@ -9,7 +9,7 @@ import Foundation
 import CryptoKit
 
 /// Object responsible to intermediate cryptocurrency transactions and to mine blocks into the blockchain.
-final class Transactor {
+final class BlockchainTransactor {
     
     // MARK: - Internal properties
     
@@ -36,6 +36,7 @@ final class Transactor {
     /// Number of zeros as hash's first characters, proof that the block has being mined (computational work put into to it),
     private let proofOfWork: String = "0000"
     
+    /// User information modeled into the `Peer` struct, containing the user's name and public key.
     private let userPeer: Peer
     
     // MARK: - Initializers
@@ -48,6 +49,15 @@ final class Transactor {
         self.userPeer = userPeer
         self.blockchain = Blockchain(name: blockchainName, blocks: [])
         createGenesisBlock(miner: userPeer)
+    }
+    
+    /// Initializes a `Transactor` by creating a blockchain and mining the genesis block (fist block to be added in the blockchain).
+    /// - Parameter blockchainName: Name for the blockchain.
+    /// - Parameter creator: Blockchain's creator.
+    /// - Parameter session: Multipeer session that enables the communication between the peers.
+    init(userPeer: Peer) {
+        self.userPeer = userPeer
+        self.blockchain = Blockchain(name: "", blocks: [])
     }
     
     // MARK: - Internal methods

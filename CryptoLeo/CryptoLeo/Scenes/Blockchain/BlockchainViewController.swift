@@ -7,37 +7,24 @@
 
 import Foundation
 import UIKit
-import CryptoKit
 import MultipeerConnectivity
 
 final class BlockchainViewController: UIViewController {
     
-    // MARK: - Internal properties
-    
-    /// Multi-peer session that enables the blockchain peer-to-peer communication.
-    let mcSession: MCSession
-    
     // MARK: - Private properties
     
-    /// Name given to the blockchain.
-    private let blockchainName: String
+    /// Multi-peer session that enables the blockchain peer-to-peer communication.
+    private let mcSession: MCSession
+    
+    private let sessionDelegate: BlockchainSessionDelegate
+    
+    private let broadcaster: BlockchainBroadcaster
     
     /// User information modeled into the `Peer` struct, containing the user's name and public key.
     private let userPeer: Peer
     
     /// Reference to `Transactor`, responsible for intermediating blockchain operations.
-    private let transactor: Transactor
-    
-    /// Identification of the peer in the multi-peer session. Is set as the `name` property of `Peer` model.
-    private let peerID: MCPeerID
-    
-    /// Object in charge of advertising that the user is available for joining a nearby session. Through its delegate
-    /// (declared in *BlockchainSession.swift*) it handles invitations from other peers.
-    private let serviceAdvertiser: MCNearbyServiceAdvertiser
-    
-    /// Object in charge of browsing for available nearby peers to join the user's session. Through its delegate
-    /// (declared in *BlockchainSession.swift*) it handles discovered peers nearby.
-    private let serviceBrowser: MCNearbyServiceBrowser
+    private let transactor: BlockchainTransactor
     
     /// View controlled by this class, responsible for the interface.
     private let containerView = BlockchainView()
@@ -47,26 +34,13 @@ final class BlockchainViewController: UIViewController {
     /// Initializes a `BlockchainViewController`.
     /// - Parameter blockchainName: Name for the blockchain.
     /// - Parameter creator: User information modeled into the `Peer` struct.
-    init(blockchainName: String, userPeer: Peer) {
+    init(sessionDelegate: BlockchainSessionDelegate, mcSession: MCSession, userPeer: Peer) {
         
+        self.sessionDelegate = sessionDelegate
+        self.mcSession = mcSession
         self.userPeer = userPeer
-        self.blockchainName = blockchainName
-        
-        self.transactor = Transactor(blockchainName: blockchainName,
-                                     userPeer: userPeer)
-        
-        self.peerID = MCPeerID(displayName: userPeer.name)
-        
-        self.mcSession = MCSession(peer: peerID,
-                                 securityIdentity: nil,
-                                 encryptionPreference: .required)
-        
-        self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: peerID,
-                                                           discoveryInfo: nil,
-                                                           serviceType: "cl-lo")
-        
-        self.serviceBrowser = MCNearbyServiceBrowser(peer: peerID,
-                                                     serviceType: "cl-lo")
+        self.transactor = BlockchainTransactor(blockchainName: "Blockchain", userPeer: userPeer)
+        self.broadcaster = BlockchainBroadcaster(mcSession: mcSession)
         
         super.init(nibName: nil, bundle: nil)
         setup()
@@ -89,34 +63,17 @@ final class BlockchainViewController: UIViewController {
     
     /// Setups the class by setting up multi-peer delegates and binding view and blockchain events.
     private func setup() {
-        setupDelegates()
         bindBlockchainEvents()
         bindViewEvents()
-    }
-    
-    /// Setups all multi-peer related delegates, such as:
-    /// - `MCSessionDelegate`
-    /// - `MCNearbyServiceAdvertiserDelegate`
-    /// - `MCNearbyServiceBrowserDelegate`
-    private func setupDelegates() {
-        mcSession.delegate = self
-        serviceAdvertiser.delegate = self
-        serviceBrowser.delegate = self
+        sessionDelegate.blockchainDelegate = self
     }
     
     /// Bind all events from `containerView`.
     private func bindViewEvents() {
-        containerView.didTapTransfer = { [weak self] in
+        containerView.didTapTransfer = {
             print("clicked")
-            self?.serviceAdvertiser.startAdvertisingPeer()
-            self?.serviceBrowser.startBrowsingForPeers()
         }
     }
-}
-
-// MARK: - Blockchain's transactor methods
-
-extension BlockchainViewController {
     
     /// Bind all events from blockchain`Transactor`:
     /// - When blockchain creation is completed;
@@ -135,7 +92,7 @@ extension BlockchainViewController {
         }
         
         transactor.didTransferCrypto = { [weak self] transaction in
-            self?.broadcast(information: .newTransaction(transaction))
+            self?.broadcaster.broadcast(information: .newTransaction(transaction))
             print(transaction.message)
         }
         
@@ -147,6 +104,11 @@ extension BlockchainViewController {
             print("Finished mining: \(block.hash)")
         }
     }
+}
+
+// MARK: - Blockchain's transactor methods
+
+extension BlockchainViewController: BlockchainDelegate {
     
     /// Updates the stored blockchain with a received one (send by a connected peer) by
     /// calling `updateBlockchain` method from `Transactor`.
@@ -175,4 +137,20 @@ extension BlockchainViewController {
     func getCurrentBlockchain() -> Blockchain {
         return transactor.blockchain
     }
+}
+
+// MARK: - Navigation
+
+extension BlockchainViewController {
+    
+//    private func presentLobby() {
+//        
+//        let controller = LobbyViewController(sessionRole: sessionRole,
+//                                             mcSession: mcSession,
+//                                             peerID: peerID)
+//        
+//        controller.isModalInPresentation = true
+//        
+//        present(controller, animated: true)
+//    }
 }
