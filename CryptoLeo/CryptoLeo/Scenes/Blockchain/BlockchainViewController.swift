@@ -75,10 +75,16 @@ final class BlockchainViewController: UIViewController {
         view = containerView
     }
     
-    /// When the view is loaded, presents a `LoadingView` while host is mining the genesis block.
+    /// When the view is loaded, configures the navigation bar and
+    /// presents a `LoadingView` while host is mining the genesis block.
     override func viewDidLoad() {
         super.viewDidLoad()
-        containerView.setGenesisBlockLoading(isHidden: false, sessionRole: sessionRole)
+        
+        title = "Blockchain"
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.setHidesBackButton(true, animated: true)
+        
+        setGenesisBlockLoading(isHidden: false)
     }
     
     // MARK: - Private methods
@@ -110,7 +116,7 @@ final class BlockchainViewController: UIViewController {
         /// connected peers and hides the `LoadingView`.
         transactor.didCreateBlockchain = { [weak self] block in
             self?.broadcaster.broadcast(information: .newBlock(block))
-            self?.containerView.setGenesisBlockLoading(isHidden: true)
+            self?.setGenesisBlockLoading(isHidden: true)
             print("Blockchain created and genesis block mined")
         }
         
@@ -137,6 +143,11 @@ final class BlockchainViewController: UIViewController {
             self?.containerView.updateLoadingProofOfWork(message: message)
         }
     }
+    
+    private func setGenesisBlockLoading(isHidden: Bool) {
+        containerView.setGenesisBlockLoading(isHidden: isHidden,
+                                             sessionRole: sessionRole)
+    }
 }
 
 // MARK: - BlockchainDelegate
@@ -159,8 +170,10 @@ extension BlockchainViewController: BlockchainDelegate {
             print(error.localizedDescription)
         }
         
-        DispatchQueue.main.async { [weak self] in
-            self?.containerView.setGenesisBlockLoading(isHidden: true)
+        if block.previousHash == nil {
+            DispatchQueue.main.async { [weak self] in
+                self?.setGenesisBlockLoading(isHidden: true)
+            }
         }
     }
     

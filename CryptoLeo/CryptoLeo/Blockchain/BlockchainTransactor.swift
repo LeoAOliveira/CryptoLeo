@@ -37,7 +37,7 @@ final class BlockchainTransactor {
     // MARK: - Private properties
     
     /// Number of zeros as hash's first characters, proof that the block has being mined (computational work put into to it),
-    private let proofOfWork: String = "00000"
+    private let proofOfWork: String = "0000"
     
     /// User information modeled into the `Peer` struct, containing the user's name and public key.
     private let userPeer: Peer
@@ -83,7 +83,7 @@ final class BlockchainTransactor {
     /// `.blockDoesNotHaveStoredTransaction` error is thrown.
     /// 2. Validates the veracity of the digital signature (using private-public key cryptography)
     /// attached to the transaction. If is invalid, it throws a `transactionSignatureIsInvalid` error.
-    /// 3. Validates if the 5 first hash characters are all zeros, meaning that the block as been mined
+    /// 3. Validates if the 4 first hash characters are all zeros, meaning that the block as been mined
     /// as proof-of-work. If there aren't, a `.blockHasInvalidHash` error is thrown.
     ///
     /// - Parameter block: Received block, sent by another connected peer.
@@ -149,7 +149,7 @@ final class BlockchainTransactor {
     /// Performs computational work to mine a block.
     ///
     /// This method mines a block by iterating a nonce util the hash of the block's key (composed by index,
-    /// previous block's hash, reward's message, transaction's message and nonce) has 5 zeros as the first 5
+    /// previous block's hash, reward's message, transaction's message and nonce) has 4 zeros as the first 5
     /// characters. Due to this hash processing, is recommended to call this method in the background thread.
     /// When the mining computational work is done, the resulting block is added to the blockchain and the
     /// `didFinishMining` closure is called in the main thread, passing the mined `Block` as parameter.
@@ -314,8 +314,8 @@ final class BlockchainTransactor {
     /// Performs computational work to mine the genesis block.
     ///
     /// This method mines the genesis block by iterating a nonce util the hash of the block's key (composed by index,
-    /// message and nonce) has 5 zeros as the first 5 characters. During the hash processing, the `didUpdateProofOfWork`
-    /// closure is called when the nonce is divisible by 10000. Due to this hash processing, is recommended to call this method in
+    /// message and nonce) has 4 zeros as the first 4 characters. During the hash processing, the `didUpdateProofOfWork`
+    /// closure is called when the nonce is divisible by 5000. Due to this hash processing, is recommended to call this method in
     /// the background thread. When the mining computational work is done, the resulting genesis block is added to the blockchain
     /// and the `didCreateBlockchain` and `didUpdateProofOfWork` closures are called in the main thread, passing
     /// the mined `Block` as parameter.
@@ -338,9 +338,9 @@ final class BlockchainTransactor {
             nonce += 1
             blockHash = createHash(key: key)
             
-            if nonce % 10000 == 0 {
+            if nonce % 5000 == 0 {
                 DispatchQueue.main.async { [weak self] in
-                    self?.didUpdateProofOfWork?("\(blockHash.prefix(5))")
+                    self?.didUpdateProofOfWork?("\(blockHash.prefix(4))")
                 }
             }
         }
@@ -356,7 +356,7 @@ final class BlockchainTransactor {
         blockchain.blocks.append(genesisBlock)
         
         DispatchQueue.main.async { [weak self] in
-            self?.didUpdateProofOfWork?("\(blockHash.prefix(5))\nem \(nonce) iterações")
+            self?.didUpdateProofOfWork?("\(blockHash.prefix(4)) em \(nonce) iterações")
             self?.didCreateBlockchain?(genesisBlock)
         }
     }
