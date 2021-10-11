@@ -22,7 +22,9 @@ final class SessionInfoView: UIStackView {
     var infoNumber: Int = 0 {
         
         didSet {
-            imageView.image = UIImage(systemName: "\(infoNumber).square")
+            DispatchQueue.main.async {
+                self.imageView.image = UIImage(systemName: "\(self.infoNumber).square")
+            }
         }
     }
     
