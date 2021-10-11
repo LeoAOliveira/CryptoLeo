@@ -183,8 +183,8 @@ extension LobbyView: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-// MARK: - BlockchainDelegate
-/// The `BlockchainDelegate` protocol is responsible for multi-peer session lobby related events,
+// MARK: - LobbyDelegate
+/// The `LobbyDelegate` protocol is responsible for multi-peer session's lobby related events,
 /// such as receiving messages and peers states.
 extension LobbyView: LobbyDelegate {
     

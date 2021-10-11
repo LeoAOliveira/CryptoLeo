@@ -36,6 +36,7 @@ final class BlockchainBroadcaster {
     func broadcast(information: BroadcastInformation) {
         
         var data: Data?
+        var peers: [MCPeerID] = mcSession.connectedPeers
         
         switch information {
         
@@ -44,42 +45,59 @@ final class BlockchainBroadcaster {
             
         case .newBlock(let block):
             data = try? JSONEncoder().encode(block)
-            
-        case .newTransaction(let transaction):
-            data = try? JSONEncoder().encode(transaction)
         
         case .message(let message):
             data = try? JSONEncoder().encode(message)
+            
+        case .newTransaction(let transaction):
+            
+            data = try? JSONEncoder().encode(transaction)
+            
+            if let miner = chooseRandomMiner() {
+                peers = [miner]
+            }
         }
         
         guard let broadcastData = data else {
             return
         }
         
-        sendDataToPeers(data: broadcastData)
+        sendDataToPeers(data: broadcastData, to: peers)
     }
     
     // MARK: - Private methods
     
-    /// Sends a given `Data` to all connected peers.
+    /// Sends a given `Data` to the given connected peers.
     ///
     /// This method tries to send the given information (in `Data` encoding) to all peers connected to the session with reliability.
     /// If the process fails, it calls the function recursively incrementing 1 to the `attempt` parameter. The method has 3 attempts
     /// to successfully send the information to other peers. Else, it gives up broadcasting it.
     ///
     /// - Parameter data: The information to be sent.
+    /// - Parameter peers: The connected peers that will receive the data.
     /// - Parameter attempt: The attempt for sending the information. Default value is `1`.
-    private func sendDataToPeers(data: Data, attempt: Int = 1) {
+    private func sendDataToPeers(data: Data, to peers: [MCPeerID], attempt: Int = 1) {
         
         if attempt > 3 {
             return
         }
         
         do {
-            try mcSession.send(data, toPeers: mcSession.connectedPeers, with: .reliable)
+            try mcSession.send(data, toPeers: peers, with: .reliable)
             
         } catch {
-            sendDataToPeers(data: data, attempt: attempt + 1)
+            sendDataToPeers(data: data, to: peers, attempt: attempt + 1)
         }
+    }
+    
+    /// Chooses a random miner between all connected peers in the local network session
+    /// - Returns: A random `MCPeerID`.
+    private func chooseRandomMiner() -> MCPeerID? {
+        
+        if let miner = mcSession.connectedPeers.randomElement() {
+            return miner
+        }
+        
+        return nil
     }
 }

@@ -10,10 +10,14 @@ import UIKit
 
 final class LoadingView: UIView {
     
+    var hasFadeInAnimation: Bool = false
+    
     var titleText: String = "" {
         
         didSet {
-            titleLabel.text = titleText
+            if canEditText {
+                titleLabel.text = titleText
+            }
         }
     }
     
@@ -21,6 +25,12 @@ final class LoadingView: UIView {
         
         didSet {
             subtitleLabel.text = subtitleText
+            
+            if let text = subtitleLabel.text, text.contains("iterações") {
+                titleText = "Bloco minerado com sucesso"
+                canEditText = false
+                fadeOutAnimation()
+            }
         }
     }
     
@@ -35,21 +45,23 @@ final class LoadingView: UIView {
         }
     }
     
-    override var isHidden: Bool {
+    var hide: Bool = true {
         
         didSet {
-            if isHidden {
-                activityIndicator.stopAnimating()
-            } else {
-                activityIndicator.startAnimating()
+            if !hide && hasFadeInAnimation {
+                fadeInAnimation()
+            } else if hide {
+                fadeOutAnimation()
             }
         }
     }
     
+    private var canEditText = true
+    
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     
     private let blurEffectView: UIVisualEffectView = {
-        let effect = UIBlurEffect(style: .regular)
+        let effect = UIBlurEffect(style: .systemUltraThinMaterial)
         return UIVisualEffectView(effect: effect)
     }()
     
@@ -63,7 +75,7 @@ final class LoadingView: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.font = .systemFont(ofSize: 17, weight: .bold)
         label.textAlignment = .center
         label.textColor = .label
         label.text = titleText
@@ -72,11 +84,11 @@ final class LoadingView: UIView {
     
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = UIFont(name: "SFMono-Regular", size: 17)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = .label
-        label.text = titleText
+        label.text = " "
         return label
     }()
     
@@ -126,5 +138,26 @@ final class LoadingView: UIView {
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
+    }
+    
+    private func fadeInAnimation() {
+        
+        if !activityIndicatorIsHidden {
+            activityIndicator.startAnimating()
+        }
+        
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn) { [weak self] in
+            self?.alpha = 1
+        }
+    }
+    
+    private func fadeOutAnimation() {
+        
+        UIView.animate(withDuration: 0.25, delay: 4, options: .curveEaseIn) { [weak self] in
+            self?.alpha = 0
+        } completion: { [weak self] _ in
+            self?.activityIndicator.stopAnimating()
+            self?.canEditText = true
+        }
     }
 }
