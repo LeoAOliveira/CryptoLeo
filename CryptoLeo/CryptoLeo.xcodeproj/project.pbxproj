@@ -33,6 +33,7 @@
 		A77310F027147A8000C1FAC6 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310EF27147A8000C1FAC6 /* AlertFactory.swift */; };
 		A77310F427148B8D00C1FAC6 /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310F327148B8D00C1FAC6 /* SessionView.swift */; };
 		A77310F627148BC800C1FAC6 /* SessionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310F527148BC800C1FAC6 /* SessionInfoView.swift */; };
+		A77310F827149C5100C1FAC6 /* SessionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310F727149C5100C1FAC6 /* SessionInfo.swift */; };
 		A79F85E92710DD830043E432 /* BroadcastInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79F85E82710DD830043E432 /* BroadcastInformation.swift */; };
 		A7A1F0412711D139004F8F55 /* BlockchainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A1F0402711D139004F8F55 /* BlockchainView.swift */; };
 		A7A1F09E271245AA004F8F55 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A1F09D271245AA004F8F55 /* LobbyViewController.swift */; };
@@ -95,6 +96,7 @@
 		A77310EF27147A8000C1FAC6 /* AlertFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertFactory.swift; sourceTree = "<group>"; };
 		A77310F327148B8D00C1FAC6 /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
 		A77310F527148BC800C1FAC6 /* SessionInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInfoView.swift; sourceTree = "<group>"; };
+		A77310F727149C5100C1FAC6 /* SessionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInfo.swift; sourceTree = "<group>"; };
 		A79F85E82710DD830043E432 /* BroadcastInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastInformation.swift; sourceTree = "<group>"; };
 		A7A1F0402711D139004F8F55 /* BlockchainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainView.swift; sourceTree = "<group>"; };
 		A7A1F09D271245AA004F8F55 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 			children = (
 				A77310F327148B8D00C1FAC6 /* SessionView.swift */,
 				A77310F527148BC800C1FAC6 /* SessionInfoView.swift */,
+				A77310F727149C5100C1FAC6 /* SessionInfo.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				A7721FD0270BD60400BB7FD5 /* Peer.swift in Sources */,
 				A7A1F0A927129700004F8F55 /* BlockchainBroadcaster.swift in Sources */,
 				A756748E2702BD5A004438B5 /* Transaction.swift in Sources */,
+				A77310F827149C5100C1FAC6 /* SessionInfo.swift in Sources */,
 				A7721FEE270E837600BB7FD5 /* Blockchain.swift in Sources */,
 				A7A1F0412711D139004F8F55 /* BlockchainView.swift in Sources */,
 				A77310E427136DFC00C1FAC6 /* BalanceView.swift in Sources */,

@@ -132,20 +132,25 @@ final class BlockchainViewController: UIViewController {
         transactor.didCreateBlockchain = { [weak self] blockchain in
             self?.broadcaster.broadcast(information: .updatedBlockchain(blockchain))
             self?.setGenesisBlockLoading(isHidden: true)
+            self?.containerView.updateSessionInfo(sessionInfo: .blockchain)
             print("Blockchain created and genesis block mined")
         }
         
-        transactor.didUpdateBlockchain = { blockchain in
+        transactor.didUpdateBlockchain = { [weak self] blockchain in
+            self?.containerView.updateSessionInfo(sessionInfo: .blockchain)
             print("Blockchain updated to \(blockchain.blocks.count) blocks")
         }
         
-        transactor.didAddNewBlock = { block in
+        transactor.didAddNewBlock = { [weak self] block in
+            self?.containerView.updateSessionInfo(sessionInfo: .blockchain)
             print("Add new block: \(block.key)")
         }
         
         /// When finishes mining a block, the `setMiningBlockLoading` method is called with
         /// `true` as parameter in order to hide the `LoadingView`.
         transactor.didFinishMining = { [weak self] block in
+            self?.containerView.updateSessionInfo(sessionInfo: .blockchain)
+            self?.containerView.updateSessionInfo(sessionInfo: .minedBlocks)
             self?.containerView.setMiningBlockLoading(isHidden: true)
             print("Finished mining: \(block.hash)")
         }
@@ -188,6 +193,8 @@ final class BlockchainViewController: UIViewController {
                                 description: "Não foi possível assinar a transação com a sua assinatura digital. Tente novamente.")
             return
         }
+        
+        containerView.updateSessionInfo(sessionInfo: .transactionsSent)
         
         if mineBlocks {
             

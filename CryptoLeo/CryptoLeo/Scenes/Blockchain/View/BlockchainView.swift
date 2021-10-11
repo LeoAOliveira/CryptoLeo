@@ -84,6 +84,24 @@ final class BlockchainView: UIView {
         }
     }
     
+    func updateSessionInfo(sessionInfo: SessionInfo) {
+        
+        switch sessionInfo {
+            
+        case .blockchain:
+            sessionView.blockchainInfoNumber += 1
+            
+        case .minedBlocks:
+            sessionView.minedBlocksInfoNumber += 1
+            
+        case .transactionsSent:
+            sessionView.sentTransactionsInfoNumber += 1
+            
+        case .transactionsReceived:
+            sessionView.receivedTransactionsInfoNumber += 1
+        }
+    }
+    
     // MARK: - Private methods
     
     private func setup() {
