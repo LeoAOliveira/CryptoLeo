@@ -14,11 +14,14 @@ final class TransactionView: UIView {
     // MARK: - Internal properties
     
     var didTapTransfer: ((MCPeerID, Double) -> Void)?
+    var didSurpassLimit: (() -> Void)?
     
     // MARK: - Private properties
     
     /// Peers connected in the local network session.
     private let peers: [MCPeerID]
+    
+    private let cryptoLeoAmount: Double
     
     private var receiver: MCPeerID?
     
@@ -84,8 +87,10 @@ final class TransactionView: UIView {
     /// Initializes a `TransactionView`.
     ///
     /// - Parameter peers: Peers connected in the session.
-    init(peers: [MCPeerID]) {
+    /// - Parameter cryptoLeoAmount: Amount of cryptocurrency that the user has.
+    init(peers: [MCPeerID], cryptoLeoAmount: Double) {
         self.peers = peers
+        self.cryptoLeoAmount = cryptoLeoAmount
         super.init(frame: .zero)
         setup()
     }
@@ -165,6 +170,11 @@ final class TransactionView: UIView {
     @objc
     private func transferButtonHandler() {
         
+        if amount > cryptoLeoAmount {
+            didSurpassLimit?()
+            return
+        }
+        
         guard let peer = receiver else {
             return
         }
@@ -195,7 +205,7 @@ extension TransactionView: UIPickerViewDataSource, UIPickerViewDelegate {
             return "- Favorecido -"
         }
         
-        return peers[row-1].displayName
+        return "\(peers[row-1].displayName.split(separator: ":")[0])"
     }
     
     func pickerView(_ pickerView: UIPickerView,
@@ -227,6 +237,10 @@ extension TransactionView: UITextFieldDelegate {
         }
         
         setButtonVisibility()
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.text = ""
     }
 }
 

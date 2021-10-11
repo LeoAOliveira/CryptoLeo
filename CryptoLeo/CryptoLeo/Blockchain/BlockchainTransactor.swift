@@ -127,7 +127,7 @@ final class BlockchainTransactor {
         
         let privateKey = Curve25519.Signing.PrivateKey()
         let publicKey = privateKey.publicKey.rawRepresentation
-        let sender = Peer(name: "Leo", publicKey: publicKey)
+        let sender = Peer(name: userPeer.name, uuid: userPeer.uuid, publicKey: publicKey)
         
         guard let transaction = createTransaction(amount: amount,
                                                   sender: sender,
@@ -158,7 +158,7 @@ final class BlockchainTransactor {
         let previousHash = blocks[blocks.count-1].hash
         let index = blocks.count
         let timestamp = Timestamp.string()
-        let message = "\(userPeer.name) gets L$ 5.00 for mining the block on \(timestamp)"
+        let message = "\(userPeer.name) ganhou L$ 5.00 por minerar o bloco em \(timestamp)"
         
         let reward = Reward(miner: userPeer,
                             amount: 5,
@@ -234,7 +234,7 @@ final class BlockchainTransactor {
                                    receiver: Peer,
                                    privateKey: Curve25519.Signing.PrivateKey) -> Transaction? {
         
-        let message = "\(sender.name) pays \(receiver.name) L$ \(String(format: "%.2f", amount)) on \(Timestamp.string())"
+        let message = "\(sender.name) transferiu L$ \(String(format: "%.2f", amount)) para \(receiver.name) em \(Timestamp.string())"
         
         guard let publicKey = sender.publicKey,
               let signature = sign(message: message,
@@ -294,9 +294,9 @@ final class BlockchainTransactor {
         
         var ledger: String = "Index: \(index)\n"
         
-        ledger += "Previous hash: \(previousHash)\n"
-        ledger += "Reward: \(rewardMessage)\n"
-        ledger += "Transaction: \(transactionMessage)\n"
+        ledger += "Hash do bloco anterior: \(previousHash)\n"
+        ledger += "Recompensa por mineração: \(rewardMessage)\n"
+        ledger += "Transação: \(transactionMessage)\n"
         
         return ledger
     }
@@ -334,7 +334,7 @@ final class BlockchainTransactor {
     /// - Parameter miner: Peer that will mine the genesis block.
     private func mineGenesisBlock(miner: Peer) {
         
-        let ledger = "Index: 0\nMessage: Genesis Block, created by \(miner.name) on \(Timestamp.string())\n"
+        let ledger = "Índice: 0\nMensagem: Bloco Gênesis, criado por \(miner.name) em \(Timestamp.string())\n"
         
         var nonce = 0
         

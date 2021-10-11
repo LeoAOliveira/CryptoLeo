@@ -13,7 +13,7 @@ final class ControlsView: UIStackView {
     // MARK: - Internal properties
     
     var didTapTransfer: (() -> Void)?
-    var didTapBlockchain: (() -> Void)?
+    var didTapAudit: (() -> Void)?
     var didTapAbout: (() -> Void)?
     var didTapConnection: (() -> Void)?
     var didChangeSwitch: ((Bool) -> Void)?
@@ -29,10 +29,10 @@ final class ControlsView: UIStackView {
         return button
     }()
     
-    private let blockchainButton: ControlButton = {
+    private let auditButton: ControlButton = {
         let button = ControlButton()
-        button.title = "Blockchain"
-        button.image = UIImage(systemName: "cube")
+        button.title = "Auditar"
+        button.image = UIImage(systemName: "magnifyingglass")
         return button
     }()
     
@@ -68,15 +68,6 @@ final class ControlsView: UIStackView {
         return view
     }()
     
-    private let mainStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.alignment = .fill
-        view.distribution = .equalSpacing
-        view.spacing = 20
-        return view
-    }()
-    
     // MARK: - Initializers
     
     init() {
@@ -97,7 +88,7 @@ final class ControlsView: UIStackView {
         axis = .vertical
         alignment = .fill
         distribution = .equalSpacing
-        spacing = 20
+        spacing = 32
         
         buildView()
         bindViewEvents()
@@ -106,7 +97,7 @@ final class ControlsView: UIStackView {
     private func buildView() {
         
         transactionButton.translatesAutoresizingMaskIntoConstraints = false
-        blockchainButton.translatesAutoresizingMaskIntoConstraints = false
+        auditButton.translatesAutoresizingMaskIntoConstraints = false
         aboutButton.translatesAutoresizingMaskIntoConstraints = false
         connectionButton.translatesAutoresizingMaskIntoConstraints = false
         miningSwitch.translatesAutoresizingMaskIntoConstraints = false
@@ -114,13 +105,13 @@ final class ControlsView: UIStackView {
         secondRowStackView.translatesAutoresizingMaskIntoConstraints = false
         
         firstRowStackView.addArrangedSubview(transactionButton)
-        firstRowStackView.addArrangedSubview(blockchainButton)
+        firstRowStackView.addArrangedSubview(auditButton)
         
         secondRowStackView.addArrangedSubview(aboutButton)
         secondRowStackView.addArrangedSubview(connectionButton)
         
         addArrangedSubview(firstRowStackView)
-        addArrangedSubview(secondRowStackView)
+//        addArrangedSubview(secondRowStackView)
         addArrangedSubview(miningSwitch)
     }
     
@@ -130,8 +121,8 @@ final class ControlsView: UIStackView {
             self?.didTapTransfer?()
         }
         
-        blockchainButton.didTapButton = { [weak self] in
-            self?.didTapBlockchain?()
+        auditButton.didTapButton = { [weak self] in
+            self?.didTapAudit?()
         }
         
         aboutButton.didTapButton = { [weak self] in

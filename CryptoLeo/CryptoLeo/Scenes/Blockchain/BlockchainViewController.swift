@@ -41,6 +41,13 @@ final class BlockchainViewController: UIViewController {
     /// Boolean describing if the user is set to mine blocks.
     private var mineBlocks = true
     
+    /// Amount of CryptoLeo that the user has.
+    private var cryptoLeoAmount: Double = 1000.00 {
+        didSet {
+            containerView.updateAmount(to: cryptoLeoAmount)
+        }
+    }
+    
     // MARK: - Initializers
     
     /// Initializes a `BlockchainViewController` and a `BlockchainTransactor`,
@@ -111,6 +118,12 @@ final class BlockchainViewController: UIViewController {
             self?.presentTransactionViewController()
         }
         
+        /// When blockchain button is tapped in the container view, the `presentAuditViewController`
+        /// method is called to perform the navigation.
+        containerView.didTapAudit = { [weak self] in
+            self?.presentAuditViewController()
+        }
+        
         /// When the switch value is changed in the container view, the `mineBlocks`
         /// property is set to the received `isOn`value.
         containerView.didChangeSwitch = { [weak self] isOn in
@@ -150,10 +163,7 @@ final class BlockchainViewController: UIViewController {
         
         /// When finishes mining a block, it hides the `LoadingView` and updates the `SessionView`.
         transactor.didFinishMining = { [weak self] block in
-            self?.containerView.updateSessionInfo(sessionInfo: .blockchain)
-            self?.containerView.updateSessionInfo(sessionInfo: .minedBlocks)
-            self?.containerView.setMiningBlockLoading(isHidden: true)
-            print("Finished mining: \(block.hash)")
+            self?.processMinedBlock(block: block)
         }
         
         /// When a proof-of-work process is updated, it updated the proof-of-work label at `LoadingView` by calling
@@ -186,7 +196,11 @@ final class BlockchainViewController: UIViewController {
     /// - Parameter amount: The amount that will be transferred.
     private func sendTransaction(receiver: MCPeerID, amount: Double) {
         
-        let receiverPeer = Peer(name: receiver.displayName, publicKey: nil)
+        let receiverSubStrings = receiver.displayName.split(separator: ":")
+        
+        let receiverPeer = Peer(name: "\(receiverSubStrings[0])",
+                                uuid: "\(receiverSubStrings[1])",
+                                publicKey: nil)
         
         guard let transaction = try? transactor.createTransaction(amount: amount,
                                                                   receiver: receiverPeer) else {
@@ -205,13 +219,32 @@ final class BlockchainViewController: UIViewController {
                 self?.containerView.setMiningBlockLoading(isHidden: false)
                 self?.transactor.mineBlock(transaction: transaction)
             }
-        
+            
         } else {
             
             let description = "Sua transação foi enviada e será processada em breve."
             presentDefaultAlert(title: "Minerar bloco", description: description)
             broadcaster.broadcast(information: .newTransaction(transaction))
         }
+    }
+    
+    private func processMinedBlock(block: Block) {
+        
+        broadcaster.broadcast(information: .newBlock(block))
+        containerView.updateSessionInfo(sessionInfo: .blockchain)
+        containerView.updateSessionInfo(sessionInfo: .minedBlocks)
+        containerView.setMiningBlockLoading(isHidden: true)
+        
+        if let transaction = block.transaction, transaction.receiver.uuid == userPeer.uuid {
+            containerView.updateSessionInfo(sessionInfo: .transactionsReceived)
+            cryptoLeoAmount += transaction.amount
+        }
+        
+        if let reward = block.reward {
+            cryptoLeoAmount += reward.amount
+        }
+        
+        print("Finished mining: \(block.hash)")
     }
     
     /// Presents a default alert with the given information (created by the `AlertFactory`).
@@ -243,13 +276,24 @@ extension BlockchainViewController {
         let controller = TransactionViewController(mcSession: mcSession,
                                                    broadcaster: broadcaster,
                                                    transactor: transactor,
-                                                   userPeer: userPeer)
+                                                   userPeer: userPeer,
+                                                   cryptoLeoAmount: cryptoLeoAmount)
         
         controller.didSendTransfer = { [weak self] receiver, amount in
             self?.sendTransaction(receiver: receiver, amount: amount)
+            self?.cryptoLeoAmount -= amount
         }
         
         present(controller, animated: true)
+    }
+    
+    /// Creates an `AuditViewController` and presents it.
+    private func presentAuditViewController() {
+        
+        let controller = AuditViewController(blockchain: transactor.blockchain)
+        let navigationController = UINavigationController(rootViewController: controller)
+        
+        present(navigationController, animated: true)
     }
 }
 
@@ -273,8 +317,17 @@ extension BlockchainViewController: BlockchainDelegate {
     
     /// Adds a new block to the blockchain by calling `addBlockToBlockchain` method from `BlockchainTransactor`.
     func addBlockToBlockchain(block: Block) {
+        
         do {
+            
             try transactor.addBlockToBlockchain(block: block)
+            
+            if let transaction = block.transaction,
+               transaction.receiver.uuid == userPeer.uuid {
+                containerView.updateSessionInfo(sessionInfo: .transactionsReceived)
+                cryptoLeoAmount += transaction.amount
+            }
+            
         } catch {
             print(error.localizedDescription)
         }

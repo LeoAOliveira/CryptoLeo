@@ -13,7 +13,9 @@ final class BalanceView: UIStackView {
     var amount: Double = 1000.00 {
         
         didSet {
-            amountLabel.text = "L$ \(String(format: "%.2f", amount))"
+            DispatchQueue.main.async {
+                self.amountLabel.text = "L$ \(String(format: "%.2f", self.amount))"
+            }
         }
     }
     
