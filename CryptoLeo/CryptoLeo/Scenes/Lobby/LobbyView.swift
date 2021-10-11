@@ -156,8 +156,14 @@ extension LobbyView: UITableViewDataSource, UITableViewDelegate {
         
         if indexPath.row != mcSession.connectedPeers.count + 1 {
             
-            let text = indexPath.row == 0 ?
-            "\(userPeer.name) (Eu)" : mcSession.connectedPeers[indexPath.row-1].displayName
+            let index = indexPath.row-1
+            let text: String
+            
+            if indexPath.row == 0 {
+                text = "\(userPeer.name) (Eu)"
+            } else {
+                text = "\(mcSession.connectedPeers[index].displayName.split(separator: ":")[0])"
+            }
             
             cell.textLabel?.text = text
             cell.textLabel?.font = .preferredFont(forTextStyle: .title3)

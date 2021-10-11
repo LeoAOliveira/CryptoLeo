@@ -34,6 +34,10 @@
 		A77310F427148B8D00C1FAC6 /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310F327148B8D00C1FAC6 /* SessionView.swift */; };
 		A77310F627148BC800C1FAC6 /* SessionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310F527148BC800C1FAC6 /* SessionInfoView.swift */; };
 		A77310F827149C5100C1FAC6 /* SessionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310F727149C5100C1FAC6 /* SessionInfo.swift */; };
+		A77310FB2714AB3F00C1FAC6 /* AuditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310FA2714AB3F00C1FAC6 /* AuditViewController.swift */; };
+		A77310FD2714AB8C00C1FAC6 /* AuditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310FC2714AB8C00C1FAC6 /* AuditView.swift */; };
+		A77310FF2714AF6B00C1FAC6 /* BlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310FE2714AF6B00C1FAC6 /* BlockCell.swift */; };
+		A77311012714C11C00C1FAC6 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77311002714C11C00C1FAC6 /* InformationView.swift */; };
 		A79F85E92710DD830043E432 /* BroadcastInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79F85E82710DD830043E432 /* BroadcastInformation.swift */; };
 		A7A1F0412711D139004F8F55 /* BlockchainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A1F0402711D139004F8F55 /* BlockchainView.swift */; };
 		A7A1F09E271245AA004F8F55 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A1F09D271245AA004F8F55 /* LobbyViewController.swift */; };
@@ -97,6 +101,10 @@
 		A77310F327148B8D00C1FAC6 /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
 		A77310F527148BC800C1FAC6 /* SessionInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInfoView.swift; sourceTree = "<group>"; };
 		A77310F727149C5100C1FAC6 /* SessionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInfo.swift; sourceTree = "<group>"; };
+		A77310FA2714AB3F00C1FAC6 /* AuditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditViewController.swift; sourceTree = "<group>"; };
+		A77310FC2714AB8C00C1FAC6 /* AuditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditView.swift; sourceTree = "<group>"; };
+		A77310FE2714AF6B00C1FAC6 /* BlockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockCell.swift; sourceTree = "<group>"; };
+		A77311002714C11C00C1FAC6 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
 		A79F85E82710DD830043E432 /* BroadcastInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastInformation.swift; sourceTree = "<group>"; };
 		A7A1F0402711D139004F8F55 /* BlockchainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainView.swift; sourceTree = "<group>"; };
 		A7A1F09D271245AA004F8F55 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
@@ -301,6 +309,17 @@
 			path = Session;
 			sourceTree = "<group>";
 		};
+		A77310F92714AB1900C1FAC6 /* Audit */ = {
+			isa = PBXGroup;
+			children = (
+				A77310FA2714AB3F00C1FAC6 /* AuditViewController.swift */,
+				A77310FC2714AB8C00C1FAC6 /* AuditView.swift */,
+				A77310FE2714AF6B00C1FAC6 /* BlockCell.swift */,
+				A77311002714C11C00C1FAC6 /* InformationView.swift */,
+			);
+			path = Audit;
+			sourceTree = "<group>";
+		};
 		A79F85DE271091FC0043E432 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
@@ -317,6 +336,7 @@
 				A77310E72713898D00C1FAC6 /* Loading */,
 				A7A1F09A271229A0004F8F55 /* Blockchain */,
 				A77310E82713899E00C1FAC6 /* Transaction */,
+				A77310F92714AB1900C1FAC6 /* Audit */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -486,9 +506,11 @@
 				A756745E2702B088004438B5 /* BlockchainViewController.swift in Sources */,
 				A77310E02713611E00C1FAC6 /* ControlButton.swift in Sources */,
 				A77310E62713898600C1FAC6 /* TransactionViewController.swift in Sources */,
+				A77310FD2714AB8C00C1FAC6 /* AuditView.swift in Sources */,
 				A77310EA27138C9200C1FAC6 /* TransactionView.swift in Sources */,
 				A7A1F0AE27129863004F8F55 /* LobbyDelegate.swift in Sources */,
 				A7721FD2270BEB2100BB7FD5 /* Reward.swift in Sources */,
+				A77310FF2714AF6B00C1FAC6 /* BlockCell.swift in Sources */,
 				A7721FD7270BF3F100BB7FD5 /* Timestamp.swift in Sources */,
 				A7A1F0B22712A0F4004F8F55 /* LoadingView.swift in Sources */,
 				A756745A2702B088004438B5 /* AppDelegate.swift in Sources */,
@@ -512,7 +534,9 @@
 				A77310F827149C5100C1FAC6 /* SessionInfo.swift in Sources */,
 				A7721FEE270E837600BB7FD5 /* Blockchain.swift in Sources */,
 				A7A1F0412711D139004F8F55 /* BlockchainView.swift in Sources */,
+				A77311012714C11C00C1FAC6 /* InformationView.swift in Sources */,
 				A77310E427136DFC00C1FAC6 /* BalanceView.swift in Sources */,
+				A77310FB2714AB3F00C1FAC6 /* AuditViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

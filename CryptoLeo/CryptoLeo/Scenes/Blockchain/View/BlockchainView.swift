@@ -14,7 +14,7 @@ final class BlockchainView: UIView {
     // MARK: - Internal properties
     
     var didTapTransfer: (() -> Void)?
-    var didTapBlockchain: (() -> Void)?
+    var didTapAudit: (() -> Void)?
     var didTapAbout: (() -> Void)?
     var didTapConnection: (() -> Void)?
     var didChangeSwitch: ((Bool) -> Void)?
@@ -23,8 +23,8 @@ final class BlockchainView: UIView {
     // MARK: - Private properties
     
     private let balanceView = BalanceView()
-    private let controlsView = ControlsView()
     private let sessionView = SessionView()
+    private let controlsView = ControlsView()
     
     private let mainStackView: UIStackView = {
         let view = UIStackView()
@@ -102,6 +102,10 @@ final class BlockchainView: UIView {
         }
     }
     
+    func updateAmount(to amount: Double) {
+        balanceView.amount = amount
+    }
+    
     // MARK: - Private methods
     
     private func setup() {
@@ -114,8 +118,8 @@ final class BlockchainView: UIView {
     private func buildView() {
         
         mainStackView.addArrangedSubview(balanceView)
-        mainStackView.addArrangedSubview(controlsView)
         mainStackView.addArrangedSubview(sessionView)
+        mainStackView.addArrangedSubview(controlsView)
         
         addSubview(mainStackView)
         addSubview(loadingView)
@@ -131,7 +135,7 @@ final class BlockchainView: UIView {
         
         NSLayoutConstraint.activate([
             
-            mainStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 28),
+            mainStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 32),
             mainStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
             mainStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20),
             
@@ -141,9 +145,9 @@ final class BlockchainView: UIView {
             loadingView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         
-        mainStackView.setCustomSpacing(28, after: balanceView)
-        mainStackView.setCustomSpacing(20, after: controlsView)
-        mainStackView.setCustomSpacing(20, after: sessionView)
+        mainStackView.setCustomSpacing(40, after: balanceView)
+        mainStackView.setCustomSpacing(32, after: sessionView)
+        mainStackView.setCustomSpacing(32, after: controlsView)
     }
     
     private func bindViewEvents() {
@@ -152,8 +156,8 @@ final class BlockchainView: UIView {
             self?.didTapTransfer?()
         }
         
-        controlsView.didTapBlockchain = { [weak self] in
-            self?.didTapBlockchain?()
+        controlsView.didTapAudit = { [weak self] in
+            self?.didTapAudit?()
         }
         
         controlsView.didTapAbout = { [weak self] in

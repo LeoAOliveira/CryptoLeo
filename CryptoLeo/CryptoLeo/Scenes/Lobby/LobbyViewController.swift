@@ -63,7 +63,7 @@ final class LobbyViewController: UIViewController {
         
         self.sessionRole = sessionRole
         self.userPeer = userPeer
-        self.peerID = MCPeerID(displayName: userPeer.name)
+        self.peerID = MCPeerID(displayName: "\(userPeer.name):\(userPeer.uuid)")
         
         self.mcSession = MCSession(peer: peerID,
                                    securityIdentity: nil,
@@ -149,8 +149,10 @@ final class LobbyViewController: UIViewController {
     private func presentInviteAlert(host: MCPeerID,
                                     invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         
+        let hostName = host.displayName.split(separator: ":")[0]
+        
         let alert = UIAlertController(title: "Convite de sessão",
-                                      message: "Gostaria de ingressar na sessão de \(host.displayName)?",
+                                      message: "Gostaria de ingressar na sessão de \(hostName)?",
                                       preferredStyle: .alert)
         
         let declineAction = UIAlertAction(title: "Rejeitar", style: .default) { _ in

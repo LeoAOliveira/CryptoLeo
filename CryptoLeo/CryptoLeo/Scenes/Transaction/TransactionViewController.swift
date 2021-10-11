@@ -45,13 +45,15 @@ final class TransactionViewController: UIViewController {
     init(mcSession: MCSession,
          broadcaster: BlockchainBroadcaster,
          transactor: BlockchainTransactor,
-         userPeer: Peer) {
+         userPeer: Peer,
+         cryptoLeoAmount: Double) {
         
         self.mcSession = mcSession
         self.userPeer = userPeer
         self.transactor = transactor
         self.broadcaster = broadcaster
-        self.containerView = TransactionView(peers: mcSession.connectedPeers)
+        self.containerView = TransactionView(peers: mcSession.connectedPeers,
+                                             cryptoLeoAmount: cryptoLeoAmount)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -80,6 +82,12 @@ final class TransactionViewController: UIViewController {
             self?.dismiss(animated: true, completion: { [weak self] in
                 self?.didSendTransfer?(receiver, amount)
             })
+        }
+        
+        containerView.didSurpassLimit = { [weak self] in
+            let alert = AlertFactory.createDefaultAlert(title: "Transação negada",
+                                                        description: "Valor de CryptoLeo acima do saldo.")
+            self?.present(alert, animated: true)
         }
     }
 }

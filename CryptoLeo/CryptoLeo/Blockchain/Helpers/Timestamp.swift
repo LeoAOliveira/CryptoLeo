@@ -15,7 +15,7 @@ struct Timestamp {
     static func string() -> String {
         let date = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+        dateFormatter.dateFormat = "dd/MM/yyyy (HH:mm:ss)"
         return dateFormatter.string(from: date)
     }
 }
