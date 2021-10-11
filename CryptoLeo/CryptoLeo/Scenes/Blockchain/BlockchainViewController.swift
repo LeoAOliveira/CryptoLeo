@@ -128,7 +128,7 @@ final class BlockchainViewController: UIViewController {
     private func bindBlockchainEvents() {
         
         /// When blockchain creation is completed, it broadcasts the genesis block to
-        /// connected peers and hides the `LoadingView`.
+        /// connected peers, hides the `LoadingView` and updates the `SessionView`.
         transactor.didCreateBlockchain = { [weak self] blockchain in
             self?.broadcaster.broadcast(information: .updatedBlockchain(blockchain))
             self?.setGenesisBlockLoading(isHidden: true)
@@ -136,18 +136,19 @@ final class BlockchainViewController: UIViewController {
             print("Blockchain created and genesis block mined")
         }
         
+        /// When updates blockchain, it updates the `SessionView`.
         transactor.didUpdateBlockchain = { [weak self] blockchain in
             self?.containerView.updateSessionInfo(sessionInfo: .blockchain)
             print("Blockchain updated to \(blockchain.blocks.count) blocks")
         }
         
+        /// When a new block is added to blockchain, it updates the `SessionView`.
         transactor.didAddNewBlock = { [weak self] block in
             self?.containerView.updateSessionInfo(sessionInfo: .blockchain)
             print("Add new block: \(block.key)")
         }
         
-        /// When finishes mining a block, the `setMiningBlockLoading` method is called with
-        /// `true` as parameter in order to hide the `LoadingView`.
+        /// When finishes mining a block, it hides the `LoadingView` and updates the `SessionView`.
         transactor.didFinishMining = { [weak self] block in
             self?.containerView.updateSessionInfo(sessionInfo: .blockchain)
             self?.containerView.updateSessionInfo(sessionInfo: .minedBlocks)
