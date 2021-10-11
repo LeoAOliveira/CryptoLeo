@@ -17,5 +17,5 @@ struct Peer: Codable, Equatable {
     let name: String
     
     /// Peer's public key, used for verifying transaction's signatures.
-    let publicKey: Data
+    let publicKey: Data?
 }

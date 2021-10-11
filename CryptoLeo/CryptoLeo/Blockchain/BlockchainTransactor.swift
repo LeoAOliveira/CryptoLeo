@@ -14,18 +14,18 @@ final class BlockchainTransactor {
     // MARK: - Internal properties
     
     /// Closure called when peer finishes to mine the genesis block, creating the blockchain.
-    var didCreateBlockchain: ((Block) -> Void)?
+    var didCreateBlockchain: ((Blockchain) -> Void)?
     
     /// Closure called when the blockchain is updated.
     var didUpdateBlockchain: ((Blockchain) -> Void)?
     
-    /// Closure called when cryptocurrency transaction is completed.
-    var didTransferCrypto: ((Transaction) -> Void)?
-    
     /// Closure called when a new block is added to blockchain.
     var didAddNewBlock: ((Block) -> Void)?
     
-    /// Closure called when finishes to mine a given block.
+    /// Closure called when starts mining a given block.
+    var didStartMining: ((Block) -> Void)?
+    
+    /// Closure called when finishes mining a given block.
     var didFinishMining: ((Block) -> Void)?
     
     /// Closure called when proof-of-work value changes.
@@ -36,7 +36,8 @@ final class BlockchainTransactor {
     
     // MARK: - Private properties
     
-    /// Number of zeros as hash's first characters, proof that the block has being mined (computational work put into to it),
+    /// Number of zeros as hash's first characters, cryptographic proof
+    /// that the block has being mined (computational work put into to it),
     private let proofOfWork: String = "0000"
     
     /// User information modeled into the `Peer` struct, containing the user's name and public key.
@@ -96,9 +97,9 @@ final class BlockchainTransactor {
         
         let messageData = Data(transaction.message.utf8)
         let signature = transaction.signature
-        let senderPublicKey = transaction.sender.publicKey
         
-        guard let publicKey = try? Curve25519.Signing.PublicKey(rawRepresentation: senderPublicKey),
+        guard let senderPublicKey = transaction.sender.publicKey,
+              let publicKey = try? Curve25519.Signing.PublicKey(rawRepresentation: senderPublicKey),
               publicKey.isValidSignature(signature, for: messageData) else {
             
             throw CryptoLeoError.transactionSignatureIsInvalid
@@ -112,20 +113,17 @@ final class BlockchainTransactor {
         didAddNewBlock?(block)
     }
     
-    /// Sends a cryptocurrency transaction to another peer.
+    /// Creates a `Transaction` model with the given informations.
     ///
     /// First, this method fetches the sender `Peer` model and it's personal private key from the `UserDefaults`.
-    /// Then, a `Transaction` model is created, secured with a private-public key cryptographic signature.
-    /// If `mineOwnBlock` parameter is `true`, the sender `Peer` will mine the own block.
-    /// Else, the connected miners in the multi-peer session will be communicated that a new block is available for mining.
+    /// Then, a `Transaction` model is created, secured with a private-public key cryptographic signature and
+    /// returned.
     ///
     /// - Parameter amount: Amount of cryptocurrency to be transfer.
     /// - Parameter receiver: Peer that will receive the amount to be transferred.
-    /// - Parameter mineOwnBlock: Boolean describing if the sender will mine the own transaction block.
+    /// - Returns: A `Transaction` model.
     /// - throws: A `CryptoLeoError` with an error description.
-    func sendTransaction(amount: Double,
-                         receiver: Peer,
-                         mineOwnBlock: Bool) throws {
+    func createTransaction(amount: Double, receiver: Peer) throws -> Transaction {
         
         let privateKey = Curve25519.Signing.PrivateKey()
         let publicKey = privateKey.publicKey.rawRepresentation
@@ -138,21 +136,18 @@ final class BlockchainTransactor {
             throw CryptoLeoError.failedToSignTransaction
         }
         
-        if mineOwnBlock {
-            mineBlock(transaction: transaction)
-            
-        } else {
-            didTransferCrypto?(transaction)
-        }
+        return transaction
     }
     
     /// Performs computational work to mine a block.
     ///
     /// This method mines a block by iterating a nonce util the hash of the block's key (composed by index,
-    /// previous block's hash, reward's message, transaction's message and nonce) has 4 zeros as the first 5
-    /// characters. Due to this hash processing, is recommended to call this method in the background thread.
-    /// When the mining computational work is done, the resulting block is added to the blockchain and the
-    /// `didFinishMining` closure is called in the main thread, passing the mined `Block` as parameter.
+    /// previous block's hash, reward's message, transaction's message and nonce) has 4 zeros as the first 4
+    /// characters. Due to this intense processing, the iteration is made in a background thread. During the hash
+    /// processing, the `didUpdateProofOfWork` closure is called (in the main thread) when the nonce is
+    /// divisible by 5000. When the mining computational work is done, the resulting block is added to the blockchain
+    /// and the `didCreateBlockchain` and `didUpdateProofOfWork` closures are called in the main thread,
+    /// passing the mined `Block` as parameter.
     ///
     /// - Parameter transaction: Transaction to be included in the block.
     func mineBlock(transaction: Transaction) {
@@ -175,35 +170,48 @@ final class BlockchainTransactor {
                                   rewardMessage: reward.message,
                                   transactionMessage: transaction.message)
         
-        var key: String {
-            return ledger + "Nonce: \(nonce)"
-        }
-        
-        var blockHash = createHash(key: key)
-        
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             
-            guard let proofOfWork = self?.proofOfWork else { return }
+            var key: String {
+                return ledger + "Nonce: \(nonce)"
+            }
+            
+            guard var blockHash = self?.createHash(key: key),
+                  let proofOfWork = self?.proofOfWork else {
+                return
+            }
             
             while(!blockHash.hasPrefix(proofOfWork)) {
+                
                 nonce += 1
-                guard let hash = self?.createHash(key: key) else { return }
+                
+                guard let hash = self?.createHash(key: key) else {
+                    return
+                }
+                
                 blockHash = hash
+                
+                if nonce % 5000 == 0 {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.didUpdateProofOfWork?("\(blockHash.prefix(4))")
+                    }
+                }
             }
-        }
-        
-        let block = Block(index: index,
-                          hash: blockHash,
-                          previousHash: previousHash,
-                          transaction: transaction,
-                          reward: reward,
-                          key: key,
-                          nonce: nonce)
-        
-        blockchain.blocks.append(block)
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.didFinishMining?(block)
+            
+            let block = Block(index: index,
+                              hash: blockHash,
+                              previousHash: previousHash,
+                              transaction: transaction,
+                              reward: reward,
+                              key: key,
+                              nonce: nonce)
+            
+            self?.blockchain.blocks.append(block)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.didUpdateProofOfWork?("\(blockHash.prefix(4)) em \(nonce) iterações")
+                self?.didFinishMining?(block)
+            }
         }
     }
     
@@ -228,7 +236,10 @@ final class BlockchainTransactor {
         
         let message = "\(sender.name) pays \(receiver.name) L$ \(String(format: "%.2f", amount)) on \(Timestamp.string())"
         
-        guard let signature = sign(message: message, privateKey: privateKey, publicKey: sender.publicKey) else {
+        guard let publicKey = sender.publicKey,
+              let signature = sign(message: message,
+                                   privateKey: privateKey,
+                                   publicKey: publicKey) else {
             return nil
         }
         
@@ -355,9 +366,11 @@ final class BlockchainTransactor {
         
         blockchain.blocks.append(genesisBlock)
         
+        let blockchain = self.blockchain
+        
         DispatchQueue.main.async { [weak self] in
             self?.didUpdateProofOfWork?("\(blockHash.prefix(4)) em \(nonce) iterações")
-            self?.didCreateBlockchain?(genesisBlock)
+            self?.didCreateBlockchain?(blockchain)
         }
     }
 }

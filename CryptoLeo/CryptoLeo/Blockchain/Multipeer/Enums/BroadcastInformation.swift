@@ -12,7 +12,8 @@ import Foundation
 /// The enum contains:
 /// - Current `Blockchain`.
 /// - New `Block` recently mined and added to blockchain.
-/// - Newt `Transaction` available for mining.
+/// - New `Transaction` available for mining.
+/// - A custom `String` message.
 enum BroadcastInformation {
     
     /// A custom `String` message.

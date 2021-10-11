@@ -49,8 +49,7 @@ final class BlockchainView: UIView {
         
         if sessionRole == .host {
             
-            loadingView.titleText = isHidden ?
-            "Mineração completada com sucesso" : "Minerando o bloco gênesis"
+            loadingView.titleText = "Minerando o bloco gênesis"
             
             loadingView.activityIndicatorIsHidden = true
         
@@ -59,6 +58,14 @@ final class BlockchainView: UIView {
             loadingView.activityIndicatorIsHidden = false
             loadingView.hide = isHidden
         }
+    }
+    
+    func setMiningBlockLoading(isHidden: Bool) {
+        
+        loadingView.titleText = "Minerando bloco"
+        loadingView.activityIndicatorIsHidden = true
+        loadingView.hasFadeInAnimation = true
+        loadingView.hide = isHidden
     }
     
     func updateLoadingProofOfWork(message: String) {

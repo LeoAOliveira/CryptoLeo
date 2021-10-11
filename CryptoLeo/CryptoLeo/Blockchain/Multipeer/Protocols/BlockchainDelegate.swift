@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Protocol responsible for delegating blockchain session related events.
 protocol BlockchainDelegate: AnyObject {
     func updateBlockchain(with blockchain: Blockchain)
     func addBlockToBlockchain(block: Block)

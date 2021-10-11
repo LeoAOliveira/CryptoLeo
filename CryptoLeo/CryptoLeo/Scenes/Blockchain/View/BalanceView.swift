@@ -28,7 +28,7 @@ final class BalanceView: UIStackView {
     
     private let amountLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .largeTitle)
+        label.font = .systemFont(ofSize: 34, weight: .bold)
         label.textColor = .label
         label.textAlignment = .center
         label.text = "L$ 1000.00"
