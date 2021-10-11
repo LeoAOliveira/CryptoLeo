@@ -23,7 +23,6 @@ final class MineSwitchView: UIView {
     
     private let miningSwitch: UISwitch = {
         let miningSwitch = UISwitch()
-        miningSwitch.target(forAction: #selector(miningSwitchHandler), withSender: nil)
         miningSwitch.isOn = true
         return miningSwitch
     }()
@@ -46,6 +45,7 @@ final class MineSwitchView: UIView {
         
         buildView()
         addConstraints()
+        addActions()
     }
     
     private func buildView() {
@@ -69,6 +69,12 @@ final class MineSwitchView: UIView {
             miningSwitch.rightAnchor.constraint(equalTo: rightAnchor, constant: -12),
             miningSwitch.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
         ])
+    }
+    
+    private func addActions() {
+        miningSwitch.addTarget(self,
+                               action: #selector(miningSwitchHandler),
+                               for: .valueChanged)
     }
     
     @objc
