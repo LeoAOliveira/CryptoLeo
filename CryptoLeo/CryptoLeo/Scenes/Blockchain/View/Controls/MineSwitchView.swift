@@ -10,7 +10,11 @@ import UIKit
 
 final class MineSwitchView: UIView {
     
+    // MARK: - Internal properties
+    
     var didChangeSwitch: ((Bool) -> Void)?
+    
+    // MARK: - Private properties
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -27,6 +31,8 @@ final class MineSwitchView: UIView {
         return miningSwitch
     }()
     
+    // MARK: - Initializers
+    
     init() {
         super.init(frame: .zero)
         setup()
@@ -37,6 +43,8 @@ final class MineSwitchView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Private methods
     
     private func setup() {
         

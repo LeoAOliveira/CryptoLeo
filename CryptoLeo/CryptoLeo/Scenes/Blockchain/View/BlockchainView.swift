@@ -11,6 +11,8 @@ import UIKit
 /// Object responsible for multi-peer blockchain session interface.
 final class BlockchainView: UIView {
     
+    // MARK: - Internal properties
+    
     var didTapTransfer: (() -> Void)?
     var didTapBlockchain: (() -> Void)?
     var didTapAbout: (() -> Void)?
@@ -18,8 +20,11 @@ final class BlockchainView: UIView {
     var didChangeSwitch: ((Bool) -> Void)?
     var didTapActivity: (() -> Void)?
     
+    // MARK: - Private properties
+    
     private let balanceView = BalanceView()
     private let controlsView = ControlsView()
+    private let sessionView = SessionView()
     
     private let mainStackView: UIStackView = {
         let view = UIStackView()
@@ -34,6 +39,8 @@ final class BlockchainView: UIView {
         return view
     }()
     
+    // MARK: - Initializers
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -44,6 +51,8 @@ final class BlockchainView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Internal methods
     
     func setGenesisBlockLoading(isHidden: Bool, sessionRole: SessionRole) {
         
@@ -75,6 +84,8 @@ final class BlockchainView: UIView {
         }
     }
     
+    // MARK: - Private methods
+    
     private func setup() {
         buildView()
         addConstraints()
@@ -86,6 +97,7 @@ final class BlockchainView: UIView {
         
         mainStackView.addArrangedSubview(balanceView)
         mainStackView.addArrangedSubview(controlsView)
+        mainStackView.addArrangedSubview(sessionView)
         
         addSubview(mainStackView)
         addSubview(loadingView)
@@ -96,6 +108,7 @@ final class BlockchainView: UIView {
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         balanceView.translatesAutoresizingMaskIntoConstraints = false
         controlsView.translatesAutoresizingMaskIntoConstraints = false
+        sessionView.translatesAutoresizingMaskIntoConstraints = false
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -112,6 +125,7 @@ final class BlockchainView: UIView {
         
         mainStackView.setCustomSpacing(28, after: balanceView)
         mainStackView.setCustomSpacing(20, after: controlsView)
+        mainStackView.setCustomSpacing(20, after: sessionView)
     }
     
     private func bindViewEvents() {

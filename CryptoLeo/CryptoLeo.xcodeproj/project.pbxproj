@@ -31,6 +31,8 @@
 		A77310EA27138C9200C1FAC6 /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310E927138C9200C1FAC6 /* TransactionView.swift */; };
 		A77310ED2713D02100C1FAC6 /* SF-Mono-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A77310EC2713D02100C1FAC6 /* SF-Mono-Regular.otf */; };
 		A77310F027147A8000C1FAC6 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310EF27147A8000C1FAC6 /* AlertFactory.swift */; };
+		A77310F427148B8D00C1FAC6 /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310F327148B8D00C1FAC6 /* SessionView.swift */; };
+		A77310F627148BC800C1FAC6 /* SessionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77310F527148BC800C1FAC6 /* SessionInfoView.swift */; };
 		A79F85E92710DD830043E432 /* BroadcastInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79F85E82710DD830043E432 /* BroadcastInformation.swift */; };
 		A7A1F0412711D139004F8F55 /* BlockchainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A1F0402711D139004F8F55 /* BlockchainView.swift */; };
 		A7A1F09E271245AA004F8F55 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A1F09D271245AA004F8F55 /* LobbyViewController.swift */; };
@@ -91,6 +93,8 @@
 		A77310E927138C9200C1FAC6 /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
 		A77310EC2713D02100C1FAC6 /* SF-Mono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Mono-Regular.otf"; sourceTree = "<group>"; };
 		A77310EF27147A8000C1FAC6 /* AlertFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertFactory.swift; sourceTree = "<group>"; };
+		A77310F327148B8D00C1FAC6 /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
+		A77310F527148BC800C1FAC6 /* SessionInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInfoView.swift; sourceTree = "<group>"; };
 		A79F85E82710DD830043E432 /* BroadcastInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastInformation.swift; sourceTree = "<group>"; };
 		A7A1F0402711D139004F8F55 /* BlockchainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainView.swift; sourceTree = "<group>"; };
 		A7A1F09D271245AA004F8F55 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
@@ -234,10 +238,9 @@
 		A77310DC27135B5B00C1FAC6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A77310F127148B2500C1FAC6 /* Controls */,
+				A77310F227148B3600C1FAC6 /* Session */,
 				A7A1F0402711D139004F8F55 /* BlockchainView.swift */,
-				A77310DD27135B8B00C1FAC6 /* ControlsView.swift */,
-				A77310DF2713611E00C1FAC6 /* ControlButton.swift */,
-				A77310E12713659A00C1FAC6 /* MineSwitchView.swift */,
 				A77310E327136DFC00C1FAC6 /* BalanceView.swift */,
 			);
 			path = View;
@@ -274,6 +277,25 @@
 				A77310EF27147A8000C1FAC6 /* AlertFactory.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		A77310F127148B2500C1FAC6 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				A77310DD27135B8B00C1FAC6 /* ControlsView.swift */,
+				A77310DF2713611E00C1FAC6 /* ControlButton.swift */,
+				A77310E12713659A00C1FAC6 /* MineSwitchView.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		A77310F227148B3600C1FAC6 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				A77310F327148B8D00C1FAC6 /* SessionView.swift */,
+				A77310F527148BC800C1FAC6 /* SessionInfoView.swift */,
+			);
+			path = Session;
 			sourceTree = "<group>";
 		};
 		A79F85DE271091FC0043E432 /* Delegates */ = {
@@ -467,12 +489,14 @@
 				A7721FD7270BF3F100BB7FD5 /* Timestamp.swift in Sources */,
 				A7A1F0B22712A0F4004F8F55 /* LoadingView.swift in Sources */,
 				A756745A2702B088004438B5 /* AppDelegate.swift in Sources */,
+				A77310F627148BC800C1FAC6 /* SessionInfoView.swift in Sources */,
 				A756745C2702B088004438B5 /* SceneDelegate.swift in Sources */,
 				A79F85E92710DD830043E432 /* BroadcastInformation.swift in Sources */,
 				A77310F027147A8000C1FAC6 /* AlertFactory.swift in Sources */,
 				A7A1F0B027129881004F8F55 /* BlockchainDelegate.swift in Sources */,
 				A7721FD9270D02FF00BB7FD5 /* BlockchainTransactor.swift in Sources */,
 				A7A26535270A6D9B00C60947 /* CryptoLeoError.swift in Sources */,
+				A77310F427148B8D00C1FAC6 /* SessionView.swift in Sources */,
 				A7A2652B270A0CB300C60947 /* Block.swift in Sources */,
 				A75674642702B088004438B5 /* CryptoLeo.xcdatamodeld in Sources */,
 				A77310E22713659A00C1FAC6 /* MineSwitchView.swift in Sources */,
