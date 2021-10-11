@@ -157,6 +157,7 @@ final class LoadingView: UIView {
             self?.alpha = 0
         } completion: { [weak self] _ in
             self?.activityIndicator.stopAnimating()
+            self?.canEditText = true
         }
     }
 }

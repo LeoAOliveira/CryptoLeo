@@ -193,7 +193,7 @@ final class BlockchainTransactor {
                 
                 if nonce % 5000 == 0 {
                     DispatchQueue.main.async { [weak self] in
-                        self?.didUpdateProofOfWork?("\(blockHash.prefix(4))")
+                        self?.didUpdateProofOfWork?("\(blockHash.prefix(4))\n")
                     }
                 }
             }
@@ -209,7 +209,7 @@ final class BlockchainTransactor {
             self?.blockchain.blocks.append(block)
             
             DispatchQueue.main.async { [weak self] in
-                self?.didUpdateProofOfWork?("\(blockHash.prefix(4)) em \(nonce) iterações")
+                self?.didUpdateProofOfWork?("\(blockHash.prefix(4))\n(\(nonce) iterações)")
                 self?.didFinishMining?(block)
             }
         }
@@ -351,7 +351,7 @@ final class BlockchainTransactor {
             
             if nonce % 5000 == 0 {
                 DispatchQueue.main.async { [weak self] in
-                    self?.didUpdateProofOfWork?("\(blockHash.prefix(4))")
+                    self?.didUpdateProofOfWork?("\(blockHash.prefix(4))\n")
                 }
             }
         }
@@ -369,7 +369,7 @@ final class BlockchainTransactor {
         let blockchain = self.blockchain
         
         DispatchQueue.main.async { [weak self] in
-            self?.didUpdateProofOfWork?("\(blockHash.prefix(4)) em \(nonce) iterações")
+            self?.didUpdateProofOfWork?("\(blockHash.prefix(4))\n(\(nonce) iterações)")
             self?.didCreateBlockchain?(blockchain)
         }
     }

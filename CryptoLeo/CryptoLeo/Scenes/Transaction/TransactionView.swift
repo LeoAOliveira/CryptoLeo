@@ -40,7 +40,7 @@ final class TransactionView: UIView {
         label.textColor = .label
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.text = "Selecione uma pessoa conectada na sessão e quantidade de CryptoLeo que deseja transferir."
+        label.text = "Selecione o valor em CryptoLeo e uma pessoa conectada na sessão para realizar a transferência."
         return label
     }()
     
@@ -110,8 +110,8 @@ final class TransactionView: UIView {
     private func buildView() {
         mainStackView.addArrangedSubview(titleLabel)
         mainStackView.addArrangedSubview(descriptionLabel)
-        mainStackView.addArrangedSubview(peerPicker)
         mainStackView.addArrangedSubview(amountTextField)
+        mainStackView.addArrangedSubview(peerPicker)
         addSubview(transferButton)
         addSubview(mainStackView)
     }
@@ -141,8 +141,8 @@ final class TransactionView: UIView {
         ])
         
         mainStackView.setCustomSpacing(32, after: titleLabel)
-        mainStackView.setCustomSpacing(20, after: titleLabel)
-        mainStackView.setCustomSpacing(20, after: titleLabel)
+        mainStackView.setCustomSpacing(90, after: descriptionLabel)
+        mainStackView.setCustomSpacing(0, after: amountTextField)
     }
     
     private func addActions() {
@@ -202,7 +202,7 @@ extension TransactionView: UIPickerViewDataSource, UIPickerViewDelegate {
                     didSelectRow row: Int,
                     inComponent component: Int) {
         
-        receiver = peers[row-1]
+        receiver = row == 0 ? nil : peers[row-1]
         setButtonVisibility()
     }
 }
@@ -236,16 +236,6 @@ extension TransactionView {
     
     private func setupKeyboard() {
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShowHandler),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHideHandler),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
-        
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
                                         target: nil,
                                         action: nil)
@@ -261,22 +251,6 @@ extension TransactionView {
         
         amountTextField.inputAccessoryView = toolbar
         
-    }
-    
-    @objc
-    private func keyboardWillShowHandler(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if frame.origin.y == 0 {
-                frame.origin.y -= keyboardSize.height
-            }
-        }
-    }
-    
-    @objc
-    private func keyboardWillHideHandler(notification: NSNotification) {
-        if frame.origin.y != 0 {
-            frame.origin.y = 0
-        }
     }
     
     @objc
