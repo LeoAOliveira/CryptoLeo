@@ -29,7 +29,7 @@ final class IntroView: UIView {
         label.font = .preferredFont(forTextStyle: .title3)
         label.textAlignment = .center
         label.textColor = .label
-        label.text = "Bem-vind@"
+        label.text = CryptoLeoStrings.welcome
         return label
     }()
     
@@ -38,7 +38,7 @@ final class IntroView: UIView {
         label.font = .systemFont(ofSize: 34, weight: .bold)
         label.textAlignment = .center
         label.textColor = .label
-        label.text = "CryptoLeo"
+        label.text = CryptoLeoStrings.appTitle
         return label
     }()
     
@@ -48,7 +48,6 @@ final class IntroView: UIView {
         label.textAlignment = .left
         label.textColor = .label
         label.numberOfLines = 0
-        label.text = "CryptoLeo"
         return label
     }()
     
