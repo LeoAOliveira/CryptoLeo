@@ -113,6 +113,9 @@ final class IntroView: UIView {
             button.rightAnchor.constraint(equalTo: rightAnchor, constant: -20),
             button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -40)
         ])
+        
+        mainStackView.setCustomSpacing(8, after: welcomeLabel)
+        mainStackView.setCustomSpacing(40, after: titleLabel)
     }
     
     @objc

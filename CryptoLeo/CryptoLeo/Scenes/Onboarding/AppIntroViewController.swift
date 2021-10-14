@@ -34,7 +34,7 @@ final class AppIntroViewController: UIViewController {
         super.viewDidLoad()
         
         containerView.text = "Olá, \(name)! \(CryptoLeoStrings.appIntro)"
-        containerView.buttonTitle = CryptoLeoStrings.createLocalSession
+        containerView.buttonTitle = CryptoLeoStrings.initialize
         
         navigationItem.setHidesBackButton(true, animated: true)
     }

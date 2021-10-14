@@ -31,7 +31,7 @@ final class ProjectIntroViewController: UIViewController {
         super.viewDidLoad()
         
         containerView.text = CryptoLeoStrings.projectIntro
-        containerView.buttonTitle = CryptoLeoStrings.initialize
+        containerView.buttonTitle = CryptoLeoStrings.insertName
     }
     
     private func bindViewEvents() {
