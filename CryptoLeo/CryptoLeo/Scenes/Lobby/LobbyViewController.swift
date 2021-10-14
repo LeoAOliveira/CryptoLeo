@@ -108,6 +108,7 @@ final class LobbyViewController: UIViewController {
         
         title = "Lobby"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.setHidesBackButton(true, animated: true)
     }
     
     // MARK: - Private methods
