@@ -48,6 +48,10 @@
 		A7A1F0B22712A0F4004F8F55 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A1F0B12712A0F4004F8F55 /* LoadingView.swift */; };
 		A7A2652B270A0CB300C60947 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A2652A270A0CB300C60947 /* Block.swift */; };
 		A7A26535270A6D9B00C60947 /* CryptoLeoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A26534270A6D9B00C60947 /* CryptoLeoError.swift */; };
+		A7C4553D2717B15100EA6639 /* ProjectIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C4553C2717B15100EA6639 /* ProjectIntroViewController.swift */; };
+		A7C4553F2717B7C400EA6639 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C4553E2717B7C400EA6639 /* IntroView.swift */; };
+		A7C455422717B9A900EA6639 /* CryptoLeoStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C455412717B9A900EA6639 /* CryptoLeoStrings.swift */; };
+		A7C455442717BF6C00EA6639 /* AppIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C455432717BF6C00EA6639 /* AppIntroViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +119,10 @@
 		A7A1F0B12712A0F4004F8F55 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		A7A2652A270A0CB300C60947 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		A7A26534270A6D9B00C60947 /* CryptoLeoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoLeoError.swift; sourceTree = "<group>"; };
+		A7C4553C2717B15100EA6639 /* ProjectIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectIntroViewController.swift; sourceTree = "<group>"; };
+		A7C4553E2717B7C400EA6639 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
+		A7C455412717B9A900EA6639 /* CryptoLeoStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoLeoStrings.swift; sourceTree = "<group>"; };
+		A7C455432717BF6C00EA6639 /* AppIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntroViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,7 +178,7 @@
 				A77310EE27147A5800C1FAC6 /* Helpers */,
 				A79F85DF271092170043E432 /* Scenes */,
 				A77310EB2713D02100C1FAC6 /* Fonts */,
-				A75674652702B08A004438B5 /* Assets.xcassets */,
+				A7C455402717B98E00EA6639 /* Resources */,
 				A75674672702B08A004438B5 /* LaunchScreen.storyboard */,
 				A756746A2702B08A004438B5 /* Info.plist */,
 				A75674622702B088004438B5 /* CryptoLeo.xcdatamodeld */,
@@ -332,6 +340,7 @@
 		A79F85DF271092170043E432 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				A7C4553B2717AE8000EA6639 /* Onboarding */,
 				A7A1F0A32712493E004F8F55 /* Lobby */,
 				A77310E72713898D00C1FAC6 /* Loading */,
 				A7A1F09A271229A0004F8F55 /* Blockchain */,
@@ -369,6 +378,25 @@
 				A7A1F0A427124960004F8F55 /* LobbyView.swift */,
 			);
 			path = Lobby;
+			sourceTree = "<group>";
+		};
+		A7C4553B2717AE8000EA6639 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				A7C4553C2717B15100EA6639 /* ProjectIntroViewController.swift */,
+				A7C455432717BF6C00EA6639 /* AppIntroViewController.swift */,
+				A7C4553E2717B7C400EA6639 /* IntroView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		A7C455402717B98E00EA6639 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A75674652702B08A004438B5 /* Assets.xcassets */,
+				A7C455412717B9A900EA6639 /* CryptoLeoStrings.swift */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -512,6 +540,7 @@
 				A7721FD2270BEB2100BB7FD5 /* Reward.swift in Sources */,
 				A77310FF2714AF6B00C1FAC6 /* BlockCell.swift in Sources */,
 				A7721FD7270BF3F100BB7FD5 /* Timestamp.swift in Sources */,
+				A7C4553D2717B15100EA6639 /* ProjectIntroViewController.swift in Sources */,
 				A7A1F0B22712A0F4004F8F55 /* LoadingView.swift in Sources */,
 				A756745A2702B088004438B5 /* AppDelegate.swift in Sources */,
 				A77310F627148BC800C1FAC6 /* SessionInfoView.swift in Sources */,
@@ -519,6 +548,7 @@
 				A79F85E92710DD830043E432 /* BroadcastInformation.swift in Sources */,
 				A77310F027147A8000C1FAC6 /* AlertFactory.swift in Sources */,
 				A7A1F0B027129881004F8F55 /* BlockchainDelegate.swift in Sources */,
+				A7C4553F2717B7C400EA6639 /* IntroView.swift in Sources */,
 				A7721FD9270D02FF00BB7FD5 /* BlockchainTransactor.swift in Sources */,
 				A7A26535270A6D9B00C60947 /* CryptoLeoError.swift in Sources */,
 				A77310F427148B8D00C1FAC6 /* SessionView.swift in Sources */,
@@ -526,6 +556,7 @@
 				A75674642702B088004438B5 /* CryptoLeo.xcdatamodeld in Sources */,
 				A77310E22713659A00C1FAC6 /* MineSwitchView.swift in Sources */,
 				A77310DA27133BA000C1FAC6 /* SessionRole.swift in Sources */,
+				A7C455442717BF6C00EA6639 /* AppIntroViewController.swift in Sources */,
 				A7A1F09E271245AA004F8F55 /* LobbyViewController.swift in Sources */,
 				A7A1F0A527124960004F8F55 /* LobbyView.swift in Sources */,
 				A7721FD0270BD60400BB7FD5 /* Peer.swift in Sources */,
@@ -535,6 +566,7 @@
 				A7721FEE270E837600BB7FD5 /* Blockchain.swift in Sources */,
 				A7A1F0412711D139004F8F55 /* BlockchainView.swift in Sources */,
 				A77311012714C11C00C1FAC6 /* InformationView.swift in Sources */,
+				A7C455422717B9A900EA6639 /* CryptoLeoStrings.swift in Sources */,
 				A77310E427136DFC00C1FAC6 /* BalanceView.swift in Sources */,
 				A77310FB2714AB3F00C1FAC6 /* AuditViewController.swift in Sources */,
 			);
