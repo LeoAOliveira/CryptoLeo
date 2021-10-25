@@ -34,6 +34,6 @@ Blockchain is a technology that presents a secure, distributed and auditable way
 <br/><br/>
 
 ## Poster
-![alt text](https://github.com/LeoAOliveira/CryptoLeo/blob/115b75b1c0cbf3368e5580c57015c83bed80b858/Resources/Poster.png) <br/><br/>
-**Caption**: Article poster.
+![alt text](https://github.com/LeoAOliveira/CryptoLeo/blob/edaea3beb79e5d9d8d595fc3e8b45602f9892b75/Resources/Poster.png) <br/><br/>
+**Caption**: Article poster, available [here](https://github.com/LeoAOliveira/CryptoLeo/blob/develop/Leonardo_Oliveira_poster.pdf).
 <br/><br/>
